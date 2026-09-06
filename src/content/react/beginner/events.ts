@@ -29,12 +29,12 @@ export const events: Unit = {
             "pt-BR": "Qual conecta o handler corretamente sem chamá-lo imediatamente?",
           },
           options: [
-            { en: "onClick={handleClick}" },
             { en: "onClick={handleClick()}" },
             { en: 'onClick="handleClick"' },
+            { en: "onClick={handleClick}" },
             { en: "onClick={handleClick(event)}" },
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           type: "single-choice",
@@ -45,10 +45,6 @@ export const events: Unit = {
           code: `<button onClick={() => setOpen(true)}>Open</button>`,
           options: [
             {
-              en: "setOpen(true) runs, updating state",
-              "pt-BR": "setOpen(true) roda, atualizando o estado",
-            },
-            {
               en: "Nothing, arrow functions don't run in JSX",
               "pt-BR": "Nada, funções de seta não rodam no JSX",
             },
@@ -57,8 +53,12 @@ export const events: Unit = {
               "pt-BR": "Roda uma vez a cada renderização",
             },
             { en: "It throws an error", "pt-BR": "Lança um erro" },
+            {
+              en: "setOpen(true) runs, updating state",
+              "pt-BR": "setOpen(true) roda, atualizando o estado",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
         {
           type: "multi-choice",
@@ -68,23 +68,23 @@ export const events: Unit = {
           },
           options: [
             {
-              en: "They receive an event object as their argument",
-              "pt-BR": "Eles recebem um objeto de evento como argumento",
-            },
-            {
-              en: "Handler prop names are written in camelCase, like onClick",
-              "pt-BR": "Nomes de props de handler são escritos em camelCase, como onClick",
-            },
-            {
               en: "They must be declared outside the component file",
               "pt-BR": "Precisam ser declarados fora do arquivo do componente",
+            },
+            {
+              en: "They receive an event object as their argument",
+              "pt-BR": "Eles recebem um objeto de evento como argumento",
             },
             {
               en: "They can only be arrow functions",
               "pt-BR": "Só podem ser funções de seta",
             },
+            {
+              en: "Handler prop names are written in camelCase, like onClick",
+              "pt-BR": "Nomes de props de handler são escritos em camelCase, como onClick",
+            },
           ],
-          correct: [0, 1],
+          correct: [1, 3],
         },
         {
           type: "single-choice",
@@ -145,18 +145,18 @@ export const events: Unit = {
             "pt-BR": "O que e.preventDefault() faz em um handler de submit de formulário?",
           },
           options: [
-            {
-              en: "Stops the browser from reloading the page",
-              "pt-BR": "Impede que o navegador recarregue a página",
-            },
             { en: "Deletes the form data", "pt-BR": "Apaga os dados do formulário" },
             {
               en: "Prevents the handler from running",
               "pt-BR": "Impede que o handler rode",
             },
             { en: "Submits the form twice", "pt-BR": "Envia o formulário duas vezes" },
+            {
+              en: "Stops the browser from reloading the page",
+              "pt-BR": "Impede que o navegador recarregue a página",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
         {
           type: "single-choice",
@@ -178,17 +178,17 @@ export const events: Unit = {
               en: "They are synthetic wrappers around native browser events",
               "pt-BR": "São wrappers sintéticos em torno dos eventos nativos do navegador",
             },
-            {
-              en: "They behave consistently across different browsers",
-              "pt-BR": "Se comportam de forma consistente entre navegadores diferentes",
-            },
             { en: "They only work in Chrome", "pt-BR": "Só funcionam no Chrome" },
             {
               en: "They replace the need for state entirely",
               "pt-BR": "Substituem completamente a necessidade de estado",
             },
+            {
+              en: "They behave consistently across different browsers",
+              "pt-BR": "Se comportam de forma consistente entre navegadores diferentes",
+            },
           ],
-          correct: [0, 1],
+          correct: [0, 3],
         },
         {
           type: "fill-blank",
@@ -208,12 +208,12 @@ export const events: Unit = {
           code: `<input value={text} />`,
           options: [
             {
-              en: "React warns and the input becomes read-only without an onChange handler",
-              "pt-BR": "O React avisa e o input fica somente leitura sem um handler onChange",
-            },
-            {
               en: "It works exactly like an uncontrolled input",
               "pt-BR": "Funciona exatamente como um input não controlado",
+            },
+            {
+              en: "React warns and the input becomes read-only without an onChange handler",
+              "pt-BR": "O React avisa e o input fica somente leitura sem um handler onChange",
             },
             {
               en: "It throws a compile error",
@@ -224,7 +224,7 @@ export const events: Unit = {
               "pt-BR": "text atualiza automaticamente conforme o usuário digita",
             },
           ],
-          correct: 0,
+          correct: 1,
         },
       ],
     },
@@ -260,12 +260,12 @@ export const events: Unit = {
           code: `<button onClick={remove(id)}>Delete</button>`,
           options: [
             {
-              en: "remove(id) runs immediately during render, not on click",
-              "pt-BR": "remove(id) roda imediatamente durante a renderização, não no clique",
-            },
-            {
               en: "remove is not a valid function name",
               "pt-BR": "remove não é um nome de função válido",
+            },
+            {
+              en: "remove(id) runs immediately during render, not on click",
+              "pt-BR": "remove(id) roda imediatamente durante a renderização, não no clique",
             },
             { en: "id must be a string", "pt-BR": "id precisa ser uma string" },
             {
@@ -273,7 +273,7 @@ export const events: Unit = {
               "pt-BR": "onClick não aceita chamadas de função",
             },
           ],
-          correct: 0,
+          correct: 1,
         },
         {
           type: "fill-blank",
@@ -292,6 +292,10 @@ export const events: Unit = {
           },
           options: [
             {
+              en: "Pass the argument as a string in the prop name",
+              "pt-BR": "Passar o argumento como string no nome da prop",
+            },
+            {
               en: "Wrap the call in an arrow function",
               "pt-BR": "Envolver a chamada em uma função de seta",
             },
@@ -300,15 +304,11 @@ export const events: Unit = {
               "pt-BR": "Usar .bind para pré-preencher argumentos",
             },
             {
-              en: "Pass the argument as a string in the prop name",
-              "pt-BR": "Passar o argumento como string no nome da prop",
-            },
-            {
               en: "Call the handler directly in the JSX attribute",
               "pt-BR": "Chamar o handler diretamente no atributo JSX",
             },
           ],
-          correct: [0, 1],
+          correct: [1, 2],
         },
         {
           type: "single-choice",
@@ -319,10 +319,6 @@ export const events: Unit = {
           },
           options: [
             {
-              en: "Yes, but that's fine for most components",
-              "pt-BR": "Sim, mas isso não é um problema para a maioria dos componentes",
-            },
-            {
               en: "No, React caches inline arrows automatically",
               "pt-BR": "Não, o React armazena em cache as arrow functions automaticamente",
             },
@@ -331,11 +327,15 @@ export const events: Unit = {
               "pt-BR": "Sim, e isso sempre causa um bug",
             },
             {
+              en: "Yes, but that's fine for most components",
+              "pt-BR": "Sim, mas isso não é um problema para a maioria dos componentes",
+            },
+            {
               en: "No, arrow functions are only created once ever",
               "pt-BR": "Não, arrow functions são criadas só uma vez",
             },
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           type: "single-choice",
@@ -344,10 +344,6 @@ export const events: Unit = {
             "pt-BR": "Como componentes filhos normalmente avisam o pai sobre algo que aconteceu?",
           },
           options: [
-            {
-              en: "The parent passes a callback function as a prop, and the child calls it",
-              "pt-BR": "O pai passa uma função de callback como prop, e o filho a chama",
-            },
             {
               en: "The child directly modifies the parent's state variable",
               "pt-BR": "O filho modifica diretamente a variável de estado do pai",
@@ -360,8 +356,12 @@ export const events: Unit = {
               en: "Children cannot communicate with parents",
               "pt-BR": "Filhos não podem se comunicar com pais",
             },
+            {
+              en: "The parent passes a callback function as a prop, and the child calls it",
+              "pt-BR": "O pai passa uma função de callback como prop, e o filho a chama",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
       ],
     },

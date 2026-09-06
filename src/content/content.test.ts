@@ -28,6 +28,21 @@ describe.each(tracks)("track $id", (track) => {
     });
   });
 
+  test("correct answers are not always first", () => {
+    const exercises = refs.flatMap((r) => r.lesson.exercises);
+    const singleChoiceCorrect = exercises
+      .filter((e) => e.type === "single-choice")
+      .map((e) => e.correct);
+    const multiChoiceCorrect = exercises
+      .filter((e) => e.type === "multi-choice")
+      .map((e) => e.correct);
+
+    const firstCount = singleChoiceCorrect.filter((c) => c === 0).length;
+    expect(firstCount).toBeLessThan(singleChoiceCorrect.length / 2);
+
+    expect(multiChoiceCorrect.some((c) => c[0] !== 0 || c[1] !== 1)).toBe(true);
+  });
+
   describe.each(refs)("lesson $lesson.id", ({ lesson }) => {
     test("has 5 to 8 exercises and positive xp", () => {
       expect(lesson.exercises.length).toBeGreaterThanOrEqual(5);

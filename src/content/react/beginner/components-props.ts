@@ -43,8 +43,8 @@ export const componentsProps: Unit = {
             "pt-BR": "Dado esse componente, como você o renderiza?",
           },
           code: `function Card() { return <div>Hi</div>; }`,
-          options: [{ en: "<Card />" }, { en: "<card />" }, { en: "Card()" }, { en: "{Card}" }],
-          correct: 0,
+          options: [{ en: "<card />" }, { en: "<Card />" }, { en: "Card()" }, { en: "{Card}" }],
+          correct: 1,
         },
         {
           type: "fill-blank",
@@ -64,10 +64,6 @@ export const componentsProps: Unit = {
           },
           options: [
             {
-              en: "Lowercase tag names are treated as built-in DOM elements",
-              "pt-BR": "Nomes de tag em minúsculas são tratados como elementos DOM nativos",
-            },
-            {
               en: "React doesn't support components named Card",
               "pt-BR": "React não permite componentes chamados Card",
             },
@@ -76,11 +72,15 @@ export const componentsProps: Unit = {
               "pt-BR": "JSX exige um ponto e vírgula depois da tag",
             },
             {
+              en: "Lowercase tag names are treated as built-in DOM elements",
+              "pt-BR": "Nomes de tag em minúsculas são tratados como elementos DOM nativos",
+            },
+            {
               en: "Card must be imported from react",
               "pt-BR": "Card precisa ser importado do react",
             },
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           type: "multi-choice",
@@ -89,15 +89,15 @@ export const componentsProps: Unit = {
             "pt-BR": "Escolha as 2 regras que um componente deve seguir",
           },
           options: [
+            { en: "It must accept props", "pt-BR": "Ele precisa aceitar props" },
             {
               en: "Its name starts with a capital letter",
               "pt-BR": "Seu nome começa com letra maiúscula",
             },
-            { en: "It returns JSX (or null)", "pt-BR": "Ele retorna JSX (ou null)" },
-            { en: "It must accept props", "pt-BR": "Ele precisa aceitar props" },
             { en: "It must use useState", "pt-BR": "Ele precisa usar useState" },
+            { en: "It returns JSX (or null)", "pt-BR": "Ele retorna JSX (ou null)" },
           ],
-          correct: [0, 1],
+          correct: [1, 3],
         },
         {
           type: "single-choice",
@@ -106,10 +106,6 @@ export const componentsProps: Unit = {
             "pt-BR": "Onde um componente pode ser definido?",
           },
           options: [
-            {
-              en: "At the top level of a module, not nested inside another component",
-              "pt-BR": "No nível superior de um módulo, não aninhado dentro de outro componente",
-            },
             { en: "Only inside App", "pt-BR": "Somente dentro de App" },
             {
               en: "Nested inside another component's function body",
@@ -119,8 +115,12 @@ export const componentsProps: Unit = {
               en: "Only in a file named index.tsx",
               "pt-BR": "Somente em um arquivo chamado index.tsx",
             },
+            {
+              en: "At the top level of a module, not nested inside another component",
+              "pt-BR": "No nível superior de um módulo, não aninhado dentro de outro componente",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
       ],
     },
@@ -149,8 +149,8 @@ export const componentsProps: Unit = {
             "pt-BR": 'Dado <Hello name="Ada" />, o que é props.name dentro de Hello?',
           },
           code: `<Hello name="Ada" />`,
-          options: [{ en: "Ada" }, { en: "name" }, { en: "undefined" }, { en: "{name}" }],
-          correct: 0,
+          options: [{ en: "name" }, { en: "Ada" }, { en: "undefined" }, { en: "{name}" }],
+          correct: 1,
         },
         {
           type: "single-choice",
@@ -158,8 +158,8 @@ export const componentsProps: Unit = {
             en: "How do you pass a number as a prop?",
             "pt-BR": "Como passar um número como prop?",
           },
-          options: [{ en: "age={30}" }, { en: 'age="30"' }, { en: "age=30" }, { en: "age={{30}}" }],
-          correct: 0,
+          options: [{ en: 'age="30"' }, { en: "age=30" }, { en: "age={30}" }, { en: "age={{30}}" }],
+          correct: 2,
         },
         {
           type: "fill-blank",
@@ -182,16 +182,16 @@ export const componentsProps: Unit = {
               "pt-BR": "Props são somente leitura dentro do componente",
             },
             {
-              en: "A prop can be any JavaScript value, including functions",
-              "pt-BR": "Uma prop pode ser qualquer valor JavaScript, incluindo funções",
-            },
-            {
               en: "Props can be reassigned inside the component",
               "pt-BR": "Props podem ser reatribuídas dentro do componente",
             },
+            {
+              en: "A prop can be any JavaScript value, including functions",
+              "pt-BR": "Uma prop pode ser qualquer valor JavaScript, incluindo funções",
+            },
             { en: "Props are only strings", "pt-BR": "Props só podem ser strings" },
           ],
-          correct: [0, 1],
+          correct: [0, 2],
         },
         {
           type: "single-choice",
@@ -200,12 +200,12 @@ export const componentsProps: Unit = {
             "pt-BR": "Qual é o valor de uma prop que não foi passada?",
           },
           options: [
-            { en: "undefined" },
             { en: "null" },
             { en: '""' },
             { en: "throws an error", "pt-BR": "lança um erro" },
+            { en: "undefined" },
           ],
-          correct: 0,
+          correct: 3,
         },
       ],
     },
@@ -235,12 +235,12 @@ export const componentsProps: Unit = {
           },
           code: `<Card><p>Hi</p></Card>`,
           options: [
-            { en: "The <p>Hi</p> element", "pt-BR": "O elemento <p>Hi</p>" },
             { en: "undefined" },
             { en: 'The string "Hi"', "pt-BR": 'A string "Hi"' },
+            { en: "The <p>Hi</p> element", "pt-BR": "O elemento <p>Hi</p>" },
             { en: "An empty array", "pt-BR": "Um array vazio" },
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           type: "single-choice",
@@ -249,12 +249,12 @@ export const componentsProps: Unit = {
             "pt-BR": "Como dar um valor padrão a uma prop?",
           },
           options: [
-            { en: 'function Card({ size = "md" }) {}' },
             { en: 'function Card({ size ?? "md" }) {}' },
             { en: 'function Card({ size: "md" }) {}' },
             { en: 'function Card({ size || "md" }) {}' },
+            { en: 'function Card({ size = "md" }) {}' },
           ],
-          correct: 0,
+          correct: 3,
         },
         {
           type: "multi-choice",
@@ -264,23 +264,23 @@ export const componentsProps: Unit = {
           },
           options: [
             {
-              en: "Extract the shared markup into its own component",
-              "pt-BR": "Extrair a marcação compartilhada para o próprio componente",
-            },
-            {
-              en: "Pass markup as the children prop",
-              "pt-BR": "Passar a marcação como a prop children",
-            },
-            {
               en: "Copy and paste the JSX into every component",
               "pt-BR": "Copiar e colar o JSX em cada componente",
+            },
+            {
+              en: "Extract the shared markup into its own component",
+              "pt-BR": "Extrair a marcação compartilhada para o próprio componente",
             },
             {
               en: "Store the JSX as a string in a database",
               "pt-BR": "Guardar o JSX como uma string no banco de dados",
             },
+            {
+              en: "Pass markup as the children prop",
+              "pt-BR": "Passar a marcação como a prop children",
+            },
           ],
-          correct: [0, 1],
+          correct: [1, 3],
         },
         {
           type: "single-choice",
@@ -310,15 +310,15 @@ export const componentsProps: Unit = {
           },
           code: `function Card() {\n  return (\n    <div>\n      <Title />\n      <Body />\n    </div>\n  );\n}`,
           options: [
+            { en: "In reverse order", "pt-BR": "Em ordem inversa" },
             {
               en: "In the order they're written: Title then Body",
               "pt-BR": "Na ordem em que foram escritos: Title e depois Body",
             },
-            { en: "In reverse order", "pt-BR": "Em ordem inversa" },
             { en: "React decides randomly", "pt-BR": "O React decide aleatoriamente" },
             { en: "Only the last one renders", "pt-BR": "Só o último renderiza" },
           ],
-          correct: 0,
+          correct: 1,
         },
       ],
     },

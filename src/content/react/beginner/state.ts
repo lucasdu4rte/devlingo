@@ -21,18 +21,18 @@ export const state: Unit = {
           },
           code: `let count = 0;\nfunction inc() {\n  count++;\n}`,
           options: [
-            {
-              en: "React doesn't know the value changed, so it doesn't re-render",
-              "pt-BR": "O React não sabe que o valor mudou, então não renderiza de novo",
-            },
             { en: "count is not a number", "pt-BR": "count não é um número" },
             { en: "inc() throws an error", "pt-BR": "inc() lança um erro" },
             {
               en: "JSX caches old values forever",
               "pt-BR": "JSX guarda valores antigos para sempre",
             },
+            {
+              en: "React doesn't know the value changed, so it doesn't re-render",
+              "pt-BR": "O React não sabe que o valor mudou, então não renderiza de novo",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
         {
           type: "single-choice",
@@ -71,15 +71,15 @@ export const state: Unit = {
             "pt-BR": "Onde hooks como useState devem ser chamados?",
           },
           options: [
+            { en: "Anywhere in the file", "pt-BR": "Em qualquer lugar do arquivo" },
             {
               en: "At the top level of a component, not inside conditionals or loops",
               "pt-BR": "No nível superior do componente, não dentro de condicionais ou laços",
             },
-            { en: "Anywhere in the file", "pt-BR": "Em qualquer lugar do arquivo" },
             { en: "Only inside useEffect", "pt-BR": "Somente dentro de useEffect" },
             { en: "Only in class components", "pt-BR": "Somente em componentes de classe" },
           ],
-          correct: 0,
+          correct: 1,
         },
         {
           type: "multi-choice",
@@ -90,16 +90,16 @@ export const state: Unit = {
           options: [
             { en: "The current value", "pt-BR": "O valor atual" },
             {
-              en: "A function to update the value",
-              "pt-BR": "Uma função para atualizar o valor",
-            },
-            {
               en: "The previous render's props",
               "pt-BR": "As props da renderização anterior",
             },
             { en: "A reference to the DOM node", "pt-BR": "Uma referência ao nó do DOM" },
+            {
+              en: "A function to update the value",
+              "pt-BR": "Uma função para atualizar o valor",
+            },
           ],
-          correct: [0, 1],
+          correct: [0, 3],
         },
         {
           type: "single-choice",
@@ -108,12 +108,12 @@ export const state: Unit = {
             "pt-BR": "Qual convenção de nomes é idiomática para estado?",
           },
           options: [
-            { en: "const [count, setCount] = useState(0);" },
             { en: "const [count, count2] = useState(0);" },
             { en: "const [getCount, count] = useState(0);" },
+            { en: "const [count, setCount] = useState(0);" },
             { en: "const state = useState(0);" },
           ],
-          correct: 0,
+          correct: 2,
         },
       ],
     },
@@ -160,19 +160,19 @@ export const state: Unit = {
             "pt-BR": "Por que você deve chamar setCount em vez de reatribuir count diretamente?",
           },
           options: [
+            { en: "count is stored on the server", "pt-BR": "count fica armazenado no servidor" },
             {
               en: "React only knows to re-render when you call the setter function",
               "pt-BR":
                 "O React só sabe que precisa renderizar de novo quando você chama a função setter",
             },
-            { en: "count is stored on the server", "pt-BR": "count fica armazenado no servidor" },
             {
               en: "Reassigning count deletes the component",
               "pt-BR": "Reatribuir count apaga o componente",
             },
             { en: "JSX ignores all variables", "pt-BR": "JSX ignora todas as variáveis" },
           ],
-          correct: 0,
+          correct: 1,
         },
         {
           type: "fill-blank",
@@ -191,6 +191,11 @@ export const state: Unit = {
           },
           options: [
             {
+              en: "State is shared automatically between all instances of a component",
+              "pt-BR":
+                "O estado é compartilhado automaticamente entre todas as instâncias de um componente",
+            },
+            {
               en: "React can batch multiple state updates into one re-render",
               "pt-BR":
                 "O React pode agrupar várias atualizações de estado em uma única renderização",
@@ -200,16 +205,11 @@ export const state: Unit = {
               "pt-BR": "O estado é local àquela instância do componente",
             },
             {
-              en: "State is shared automatically between all instances of a component",
-              "pt-BR":
-                "O estado é compartilhado automaticamente entre todas as instâncias de um componente",
-            },
-            {
               en: "State updates always happen synchronously and immediately",
               "pt-BR": "Atualizações de estado sempre acontecem de forma síncrona e imediata",
             },
           ],
-          correct: [0, 1],
+          correct: [1, 2],
         },
         {
           type: "single-choice",
@@ -220,10 +220,6 @@ export const state: Unit = {
           code: `function handleClick() {\n  setCount(count + 1);\n  setCount(count + 1);\n}`,
           options: [
             {
-              en: "1, because count is stale in both calls",
-              "pt-BR": "1, porque count está desatualizado nas duas chamadas",
-            },
-            {
               en: "2, because both calls add 1",
               "pt-BR": "2, porque as duas chamadas somam 1",
             },
@@ -231,9 +227,13 @@ export const state: Unit = {
               en: "0, because state doesn't update",
               "pt-BR": "0, porque o estado não atualiza",
             },
+            {
+              en: "1, because count is stale in both calls",
+              "pt-BR": "1, porque count está desatualizado nas duas chamadas",
+            },
             { en: "It throws an error", "pt-BR": "Lança um erro" },
           ],
-          correct: 0,
+          correct: 2,
         },
       ],
     },
@@ -255,13 +255,13 @@ export const state: Unit = {
           code: `user.name = "Ada";\nsetUser(user);`,
           options: [
             {
+              en: "user.name cannot be reassigned",
+              "pt-BR": "user.name não pode ser reatribuído",
+            },
+            {
               en: "setUser receives the same object reference, so React sees no change",
               "pt-BR":
                 "setUser recebe a mesma referência de objeto, então o React não percebe mudança",
-            },
-            {
-              en: "user.name cannot be reassigned",
-              "pt-BR": "user.name não pode ser reatribuído",
             },
             {
               en: "setUser only works with numbers",
@@ -272,7 +272,7 @@ export const state: Unit = {
               "pt-BR": "O React renderiza de novo, mas não repinta",
             },
           ],
-          correct: 0,
+          correct: 1,
         },
         {
           type: "fill-blank",
@@ -290,12 +290,12 @@ export const state: Unit = {
             "pt-BR": "Como adicionar um item a um array no estado?",
           },
           options: [
-            { en: "setItems([...items, item])" },
             { en: "items.push(item)" },
             { en: "setItems(items.push(item))" },
+            { en: "setItems([...items, item])" },
             { en: "items[items.length] = item" },
           ],
-          correct: 0,
+          correct: 2,
         },
         {
           type: "fill-blank",
@@ -312,8 +312,8 @@ export const state: Unit = {
             en: "Pick the 2 methods that mutate an array in place",
             "pt-BR": "Escolha os 2 métodos que mutam um array no lugar",
           },
-          options: [{ en: "push" }, { en: "splice" }, { en: "map" }, { en: "filter" }],
-          correct: [0, 1],
+          options: [{ en: "push" }, { en: "map" }, { en: "splice" }, { en: "filter" }],
+          correct: [0, 2],
         },
         {
           type: "single-choice",
@@ -322,18 +322,18 @@ export const state: Unit = {
             "pt-BR": "Quantas chamadas de useState um único componente pode ter?",
           },
           options: [
-            {
-              en: "Any number, one per independent piece of state",
-              "pt-BR": "Qualquer quantidade, uma para cada pedaço independente de estado",
-            },
             { en: "Exactly one", "pt-BR": "Exatamente uma" },
             { en: "At most three", "pt-BR": "No máximo três" },
             {
               en: "Zero, state must be an object",
               "pt-BR": "Zero, o estado precisa ser um objeto",
             },
+            {
+              en: "Any number, one per independent piece of state",
+              "pt-BR": "Qualquer quantidade, uma para cada pedaço independente de estado",
+            },
           ],
-          correct: 0,
+          correct: 3,
         },
       ],
     },
