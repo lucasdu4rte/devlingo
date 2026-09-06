@@ -29,5 +29,9 @@
   "lesson.complete": "Lesson complete!",
   "lesson.xpEarned": "XP earned",
   "lesson.streak": "Streak",
-  "lesson.days": "{n} days"
+  "lesson.days": "{n} days",
+  "lesson.quitTitle": "Quit this lesson?",
+  "lesson.quitBody": "Your progress in this lesson will be lost.",
+  "lesson.quitStay": "Keep learning",
+  "lesson.quitConfirm": "Quit lesson"
 }

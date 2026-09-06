@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Exercise, Lesson } from "@/content/types";
@@ -14,6 +13,7 @@ import { Check, Close } from "./icons";
 import { LessonComplete } from "./LessonComplete";
 import { MultiChoice } from "./MultiChoice";
 import { ProgressBar } from "./ProgressBar";
+import { QuitDialog } from "./QuitDialog";
 import { SingleChoice } from "./SingleChoice";
 
 type Phase = "answering" | "checked" | "complete";
@@ -49,6 +49,7 @@ export function LessonRunner({
   const [answer, setAnswer] = useState<Answer>(() => emptyAnswer(lesson.exercises[0]));
   const [phase, setPhase] = useState<Phase>("answering");
   const [result, setResult] = useState({ xp: 0, streak: 0 });
+  const [quitting, setQuitting] = useState(false);
 
   useEffect(() => {
     if (lessonStatus(lesson.id, previousLessonId, load()) === "locked") router.replace(trackHref);
@@ -60,6 +61,15 @@ export function LessonRunner({
 
   function check() {
     setPhase("checked");
+  }
+
+  function close() {
+    const untouched = index === 0 && phase === "answering" && !isAnswered(exercise, normalized);
+    if (untouched) {
+      router.push(trackHref);
+      return;
+    }
+    setQuitting(true);
   }
 
   function pickAndCheck(option: number) {
@@ -96,14 +106,22 @@ export function LessonRunner({
   const checked = phase === "checked";
   return (
     <div className="mx-auto flex min-h-dvh max-w-2xl flex-col">
+      {quitting && (
+        <QuitDialog
+          locale={locale}
+          onQuit={() => router.push(trackHref)}
+          onStay={() => setQuitting(false)}
+        />
+      )}
       <div className="flex items-center gap-3.5 px-4 pb-2.5 pt-4">
-        <Link
-          href={trackHref}
+        <button
+          type="button"
+          onClick={close}
           aria-label={t(locale, "lesson.close")}
           className="flex h-11 w-11 items-center justify-center text-muted"
         >
           <Close size={20} />
-        </Link>
+        </button>
         <ProgressBar value={index / lesson.exercises.length} />
       </div>
 
