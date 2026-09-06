@@ -8,12 +8,14 @@ export function MultiChoice({
   answer,
   checked,
   onChange,
+  labelledBy,
 }: {
   exercise: Exercise;
   locale: Locale;
   answer: number[];
   checked: boolean;
   onChange: (answer: number[]) => void;
+  labelledBy: string;
 }) {
   function stateOf(i: number): OptionState {
     const picked = answer.includes(i);
@@ -26,7 +28,7 @@ export function MultiChoice({
     onChange(answer.includes(i) ? answer.filter((v) => v !== i) : [...answer, i]);
   }
   return (
-    <div className="flex flex-col gap-2.5">
+    <div role="group" aria-labelledby={labelledBy} className="flex flex-col gap-2.5">
       <div className="-mt-2 text-sm text-muted">{t(locale, "lesson.selectAll")}</div>
       {exercise.options.map((option, i) => (
         <Option

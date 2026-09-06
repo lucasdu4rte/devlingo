@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import { highlight } from "@/lib/highlight";
 import { lessonsOf, tracks } from "./tracks";
 import type { Exercise, Text } from "./types";
 
@@ -21,6 +22,22 @@ describe.each(tracks)("track $id", (track) => {
     expect(new Set(ids).size).toBe(ids.length);
     ids.forEach((id) => expect(id).toMatch(KEBAB));
   });
+
+  test("unit ids are unique and kebab-case", () => {
+    const ids = [...new Set(refs.map((r) => r.unit.id))];
+    expect(new Set(ids).size).toBe(ids.length);
+    ids.forEach((id) => expect(id).toMatch(KEBAB));
+  });
+
+  test("fill-blank code keeps the blank chip after highlighting", async () => {
+    const fillBlanks = refs
+      .flatMap((r) => r.lesson.exercises)
+      .filter((e): e is Extract<Exercise, { type: "fill-blank" }> => e.type === "fill-blank");
+    for (const exercise of fillBlanks) {
+      const html = await highlight(exercise.code);
+      expect(html).toContain('class="blank"');
+    }
+  }, 30_000);
 
   test("previousLessonId chains in order", () => {
     refs.forEach((ref, i) => {
@@ -62,6 +79,7 @@ describe.each(tracks)("track $id", (track) => {
       if (e.type === "multi-choice") {
         expect(e.correct.length).toBeGreaterThanOrEqual(2);
         expect(new Set(e.correct).size).toBe(e.correct.length);
+        e.correct.forEach((c) => expect(c).toBeGreaterThanOrEqual(0));
         e.correct.forEach((c) => expect(c).toBeLessThan(e.options.length));
         expect(new Set(e.options.map((o) => o.en)).size).toBe(e.options.length);
       }

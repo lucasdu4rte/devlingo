@@ -8,12 +8,14 @@ export function SingleChoice({
   answer,
   checked,
   onChange,
+  labelledBy,
 }: {
   exercise: Exercise;
   locale: Locale;
   answer: number | null;
   checked: boolean;
   onChange: (answer: number) => void;
+  labelledBy: string;
 }) {
   function stateOf(i: number): OptionState {
     if (!checked) return answer === i ? "selected" : "idle";
@@ -22,7 +24,7 @@ export function SingleChoice({
     return "idle";
   }
   return (
-    <div role="radiogroup" className="flex flex-col gap-2.5">
+    <div role="radiogroup" aria-labelledby={labelledBy} className="flex flex-col gap-2.5">
       {exercise.options.map((option, i) => (
         <Option
           key={i}

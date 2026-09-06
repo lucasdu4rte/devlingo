@@ -103,7 +103,7 @@ export function LessonRunner({
       </div>
 
       <div className="flex flex-1 flex-col gap-3.5 px-5 py-3.5">
-        <h1 className="font-display text-xl font-bold leading-snug">
+        <h1 id="exercise-prompt" className="font-display text-xl font-bold leading-snug">
           {localize(locale, exercise.prompt)}
         </h1>
         {codeHtml[index] && <CodeBlock html={codeHtml[index]} />}
@@ -114,6 +114,7 @@ export function LessonRunner({
             answer={answer === -1 ? null : (answer as number)}
             checked={checked}
             onChange={setAnswer}
+            labelledBy="exercise-prompt"
           />
         )}
         {exercise.type === "multi-choice" && (
@@ -123,6 +124,7 @@ export function LessonRunner({
             answer={answer as number[]}
             checked={checked}
             onChange={setAnswer}
+            labelledBy="exercise-prompt"
           />
         )}
         {exercise.type === "fill-blank" && (
@@ -145,7 +147,7 @@ export function LessonRunner({
       )}
       {checked && (
         <div
-          className={`flex flex-col gap-1 p-5 pb-6 ${correct ? "bg-ok-soft text-ok-text" : "bg-bad-soft text-bad-text"}`}
+          className={`slide-up flex flex-col gap-1 p-5 pb-6 ${correct ? "bg-ok-soft text-ok-text" : "bg-bad-soft text-bad-text"}`}
         >
           <div className="flex items-center gap-2 text-lg font-extrabold">
             <span

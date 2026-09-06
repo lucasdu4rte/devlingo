@@ -35,11 +35,13 @@ export function LessonPopover({
   }, [onClose]);
 
   useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
     if (locked) {
       cardRef.current?.focus();
     } else {
       startLinkRef.current?.focus();
     }
+    return () => previous?.focus();
   }, [locked]);
 
   return (
