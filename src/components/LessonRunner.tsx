@@ -62,6 +62,11 @@ export function LessonRunner({
     setPhase("checked");
   }
 
+  function pickAndCheck(option: number) {
+    setAnswer(option);
+    setPhase("checked");
+  }
+
   function next() {
     const last = index === lesson.exercises.length - 1;
     if (!last) {
@@ -113,7 +118,7 @@ export function LessonRunner({
             locale={locale}
             answer={answer === -1 ? null : (answer as number)}
             checked={checked}
-            onChange={setAnswer}
+            onChange={pickAndCheck}
             labelledBy="exercise-prompt"
           />
         )}
@@ -138,7 +143,7 @@ export function LessonRunner({
         )}
       </div>
 
-      {!checked && (
+      {!checked && exercise.type !== "single-choice" && (
         <div className="border-t-2 border-border bg-surface p-4 pb-6">
           <Button variant={isAnswered(exercise, normalized) ? "ok" : "disabled"} onClick={check}>
             {t(locale, "lesson.check")}
