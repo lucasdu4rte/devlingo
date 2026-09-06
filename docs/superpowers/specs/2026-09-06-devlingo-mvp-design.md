@@ -90,7 +90,7 @@ Not a route; the last state of `LessonRunner`. Trophy, "Lesson complete!", unit 
 
 ### Components
 
-`TrackPath`, `LessonNode`, `LessonPopover`, `LessonRunner`, `SingleChoice`, `MultiChoice`, `FillBlank`, `CodeBlock` (shiki, server), `ProgressBar`, `Header`, `LocaleSwitcher`, `ThemeToggle`. Root layout in `[locale]/layout.tsx` sets `<html lang>` and renders the header.
+`TrackPath`, `LessonNode`, `LessonPopover`, `LessonRunner`, `SingleChoice`, `MultiChoice`, `FillBlank`, `CodeBlock` (shiki, server), `ProgressBar`, `Header`, `LocaleSwitcher`, `ThemeToggle`. Root layout in `[locale]/layout.tsx` sets `<html lang>`; the header is rendered by the track page only, since the lesson screen replaces it with the close button and progress bar.
 
 ## 3. Visual design
 
@@ -110,7 +110,7 @@ Dark is the default. Preference `"dark" | "light" | "system"` is stored in local
 
 ### Motion
 
-- Screen transitions: Next.js View Transitions (`experimental.viewTransition`) with a short fade + slide. No animation library.
+- Screen transitions: React's `ViewTransition` component (no Next.js config flag needed in Next 16) with a short fade + slide. No animation library.
 - Track: circles cascade in on mount (`@keyframes` with a per-index `animation-delay`), the current circle's ring pulses slowly, the "START" bubble floats. The popover slides up with a short spring.
 - Lesson complete: trophy scales in with a bounce, XP and streak count up from 0, cards enter with a delay.
 - During a question: no idle animation at all. Only responses to actions: option selection (~100ms), the feedback footer sliding up, the progress bar filling with a transition.
