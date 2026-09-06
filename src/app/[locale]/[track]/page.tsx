@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
+import { TrackPath } from "@/components/TrackPath";
 import { findTrack, tracks } from "@/content/tracks";
-import { localize, type Locale } from "@/i18n";
+import type { Locale } from "@/i18n";
 
 export const dynamicParams = false;
 
@@ -20,7 +21,9 @@ export default async function TrackPage({
   return (
     <>
       <Header locale={locale} trackId={track.id} />
-      <main className="p-4">{localize(locale, track.title)}</main>
+      <main>
+        <TrackPath track={track} locale={locale} />
+      </main>
     </>
   );
 }
