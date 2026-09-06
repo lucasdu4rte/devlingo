@@ -49,7 +49,7 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
               </div>
               <div className="flex flex-col items-center gap-6 pb-4 pt-6">
                 {soon
-                  ? [0, 1].map((i) => <ComingSoonNode key={i} offset={offsets[i]} />)
+                  ? [0, 1].map((i) => <ComingSoonNode key={i} offset={offsets[i]} index={i} />)
                   : unit.lessons.map((lesson, i) => {
                       const ref = refByLessonId.get(lesson.id) as LessonRef;
                       const status = statusOf(ref);
@@ -60,6 +60,7 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                           label={localize(locale, lesson.title)}
                           offset={offsets[i % offsets.length]}
                           startLabel={status === "current" ? t(locale, "track.start") : undefined}
+                          index={i}
                           onClick={() => setOpen(ref)}
                         />
                       );

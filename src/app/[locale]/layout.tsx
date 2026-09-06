@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, JetBrains_Mono, Sora } from "next/font/google";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import { isLocale, locales } from "@/i18n";
 import "../globals.css";
 
@@ -43,7 +44,9 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-dvh bg-canvas font-sans text-text">{children}</body>
+      <body className="min-h-dvh bg-canvas font-sans text-text">
+        <ViewTransition default="screen">{children}</ViewTransition>
+      </body>
     </html>
   );
 }
