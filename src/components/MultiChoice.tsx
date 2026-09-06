@@ -35,6 +35,7 @@ export function MultiChoice({
           index={i}
           state={stateOf(i)}
           label={localize(locale, option)}
+          checked={answer.includes(i)}
           disabled={checked}
           onClick={() => toggle(i)}
         />

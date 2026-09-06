@@ -30,6 +30,7 @@ export function SingleChoice({
           index={i}
           state={stateOf(i)}
           label={localize(locale, option)}
+          checked={answer === i}
           disabled={checked}
           onClick={() => onChange(i)}
         />

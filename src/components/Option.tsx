@@ -20,6 +20,7 @@ export function Option({
   kind,
   index,
   label,
+  checked,
   disabled,
   onClick,
 }: {
@@ -27,6 +28,7 @@ export function Option({
   kind: "radio" | "check";
   index: number;
   label: string;
+  checked: boolean;
   disabled: boolean;
   onClick: () => void;
 }) {
@@ -35,7 +37,7 @@ export function Option({
     <button
       type="button"
       role={kind === "radio" ? "radio" : "checkbox"}
-      aria-checked={state !== "idle"}
+      aria-checked={checked}
       disabled={disabled}
       onClick={onClick}
       className={`flex min-h-[52px] w-full items-center gap-3 rounded-2xl border-2 border-b-4 px-4 py-3 text-left text-[15px] font-semibold transition-colors duration-100 ${box[state]}`}
