@@ -15,8 +15,8 @@ export function isCorrect(exercise: Exercise, answer: Answer | null): boolean {
     case "single-choice":
       return answer === exercise.correct;
     case "multi-choice": {
-      const picked = [...(answer as number[])].sort();
-      const expected = [...exercise.correct].sort();
+      const picked = [...(answer as number[])].sort((a, b) => a - b);
+      const expected = [...exercise.correct].sort((a, b) => a - b);
       return picked.length === expected.length && picked.every((v, i) => v === expected[i]);
     }
     case "fill-blank":
