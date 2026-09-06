@@ -7,13 +7,19 @@ const variants = {
   disabled: "bg-surface-2 text-muted",
 };
 
-type Props = ComponentProps<"button"> & { variant: keyof typeof variants };
+export type ButtonVariant = keyof typeof variants;
+
+type Props = ComponentProps<"button"> & { variant: ButtonVariant };
+
+export function buttonClass(variant: ButtonVariant, className = "") {
+  return `block w-full min-h-[50px] rounded-2xl px-4 py-3.5 text-[15px] font-extrabold uppercase tracking-wider transition-transform active:translate-y-[2px] active:shadow-none ${variants[variant]} ${className}`;
+}
 
 export function Button({ variant, className = "", ...rest }: Props) {
   return (
     <button
       disabled={variant === "disabled"}
-      className={`block w-full min-h-[50px] rounded-2xl px-4 py-3.5 text-[15px] font-extrabold uppercase tracking-wider transition-transform active:translate-y-[2px] active:shadow-none ${variants[variant]} ${className}`}
+      className={buttonClass(variant, className)}
       {...rest}
     />
   );
