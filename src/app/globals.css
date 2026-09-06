@@ -1,26 +1,113 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0f1117;
+  --surface: #181b24;
+  --surface-2: #20242f;
+  --border: #2c3140;
+  --text: #e8eaf1;
+  --muted: #9298a8;
+  --primary: #8b7cff;
+  --primary-dark: #5f4fd6;
+  --primary-soft: #2a2650;
+  --ok: #3ddc97;
+  --ok-dark: #22a86e;
+  --ok-soft: #153d2e;
+  --ok-text: #5ff0b0;
+  --ok-on: #0b2a1e;
+  --bad: #ff6b6b;
+  --bad-dark: #c94848;
+  --bad-soft: #4a2024;
+  --bad-text: #ff8a8a;
+  --streak: #ff9f43;
+  --xp: #ffd166;
+  --locked: #2a2e3a;
+  --locked-dark: #1c1f28;
+  --locked-text: #6b7080;
+  --code: #0a0c12;
+  color-scheme: dark;
+}
+
+html.light {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-2: #f0f1f6;
+  --border: #e1e4ec;
+  --text: #1b1d26;
+  --muted: #6a7080;
+  --primary: #6a5cff;
+  --primary-dark: #4a3ed1;
+  --primary-soft: #ebe8ff;
+  --ok: #22c48a;
+  --ok-dark: #178f63;
+  --ok-soft: #dcf7ec;
+  --ok-text: #107a52;
+  --ok-on: #ffffff;
+  --bad: #f0524f;
+  --bad-dark: #c23c3a;
+  --bad-soft: #ffe3e2;
+  --bad-text: #c22f2d;
+  --streak: #f0842a;
+  --xp: #e6a800;
+  --locked: #e6e8ef;
+  --locked-dark: #cfd2dc;
+  --locked-text: #9aa0b0;
+  --code: #1b1d26;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-canvas: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-soft: var(--primary-soft);
+  --color-ok: var(--ok);
+  --color-ok-dark: var(--ok-dark);
+  --color-ok-soft: var(--ok-soft);
+  --color-ok-text: var(--ok-text);
+  --color-ok-on: var(--ok-on);
+  --color-bad: var(--bad);
+  --color-bad-dark: var(--bad-dark);
+  --color-bad-soft: var(--bad-soft);
+  --color-bad-text: var(--bad-text);
+  --color-streak: var(--streak);
+  --color-xp: var(--xp);
+  --color-locked: var(--locked);
+  --color-locked-dark: var(--locked-dark);
+  --color-locked-text: var(--locked-text);
+  --color-code: var(--code);
+  --color-unit-2: #2fb8d6;
+  --color-unit-3: #e26fa0;
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.shiki {
+  background: var(--code) !important;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.shiki .blank {
+  background: var(--xp);
+  color: #1b1d26;
+  border-radius: 4px;
+  padding: 0 8px;
+  font-weight: 700;
 }
