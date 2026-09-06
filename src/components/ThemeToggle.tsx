@@ -27,7 +27,6 @@ function applyTheme(theme: Theme) {
 export function ThemeToggle({ locale }: { locale: Locale }) {
   const [theme, setTheme] = useState<Theme>("dark");
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- read localStorage post-hydration to avoid SSR/client mismatch
   useEffect(() => setTheme(readTheme()), []);
 
   function cycle() {
