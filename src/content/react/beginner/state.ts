@@ -11,7 +11,7 @@ export const state: Unit = {
         en: "Understand why a plain variable does not update the screen.",
         "pt-BR": "Entenda por que uma variável comum não atualiza a tela.",
       },
-      xp: 10,
+      xp: 20,
       exercises: [
         {
           type: "single-choice",
@@ -124,7 +124,7 @@ export const state: Unit = {
         en: "Set new values and trigger re-renders.",
         "pt-BR": "Defina novos valores e dispare novas renderizações.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "fill-blank",
@@ -244,7 +244,7 @@ export const state: Unit = {
         en: "Replace, never mutate.",
         "pt-BR": "Substitua, nunca mute.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "single-choice",

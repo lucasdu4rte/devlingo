@@ -11,7 +11,7 @@ export const events: Unit = {
         en: "Respond to clicks with onClick.",
         "pt-BR": "Responda a cliques com onClick.",
       },
-      xp: 10,
+      xp: 20,
       exercises: [
         {
           type: "fill-blank",
@@ -127,7 +127,7 @@ export const events: Unit = {
         en: "Read input values and prevent default behavior.",
         "pt-BR": "Leia valores de input e previna o comportamento padrão.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "fill-blank",
@@ -235,7 +235,7 @@ export const events: Unit = {
         en: "Send extra data to a handler.",
         "pt-BR": "Envie dados extras para um handler.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "single-choice",

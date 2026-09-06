@@ -11,7 +11,7 @@ export const jsxBasics: Unit = {
         en: "Learn what JSX is and how it turns into React elements.",
         "pt-BR": "Entenda o que é JSX e como ele vira elementos React.",
       },
-      xp: 10,
+      xp: 20,
       exercises: [
         {
           type: "single-choice",
@@ -110,7 +110,7 @@ export const jsxBasics: Unit = {
         en: "Embed variables and function calls with curly braces.",
         "pt-BR": "Insira variáveis e chamadas de função com chaves.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "single-choice",
@@ -192,7 +192,7 @@ export const jsxBasics: Unit = {
         en: "className, camelCase attributes, and nesting elements.",
         "pt-BR": "className, atributos em camelCase e aninhamento de elementos.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "fill-blank",

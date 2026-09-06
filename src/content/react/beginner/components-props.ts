@@ -11,7 +11,7 @@ export const componentsProps: Unit = {
         en: "Write a function component and render it.",
         "pt-BR": "Escreva um componente de função e renderize-o.",
       },
-      xp: 10,
+      xp: 20,
       exercises: [
         {
           type: "single-choice",
@@ -131,7 +131,7 @@ export const componentsProps: Unit = {
         en: "Send data into a component with attributes.",
         "pt-BR": "Envie dados para um componente com atributos.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "fill-blank",
@@ -216,7 +216,7 @@ export const componentsProps: Unit = {
         en: "Nest components and use the children prop.",
         "pt-BR": "Aninhe componentes e use a prop children.",
       },
-      xp: 15,
+      xp: 30,
       exercises: [
         {
           type: "fill-blank",
