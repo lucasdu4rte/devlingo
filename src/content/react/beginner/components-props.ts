@@ -49,8 +49,8 @@ export const componentsProps: Unit = {
         {
           type: "fill-blank",
           prompt: {
-            en: "Name the component in PascalCase to match the usage <Greeting />",
-            "pt-BR": "Nomeie o componente em PascalCase para corresponder ao uso <Greeting />",
+            en: "Name the component in PascalCase to match the usage `<Greeting />`",
+            "pt-BR": "Nomeie o componente em PascalCase para corresponder ao uso `<Greeting />`",
           },
           code: `function ___() { return <p>Hi</p>; }`,
           answer: "Greeting",
@@ -58,14 +58,14 @@ export const componentsProps: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "Why does <card /> try to render an unknown HTML tag instead of your component?",
+            en: "Why does `<card />` try to render an unknown HTML tag instead of your component?",
             "pt-BR":
-              "Por que <card /> tenta renderizar uma tag HTML desconhecida em vez do seu componente?",
+              "Por que `<card />` tenta renderizar uma tag HTML desconhecida em vez do seu componente?",
           },
           options: [
             {
-              en: "React doesn't support components named Card",
-              "pt-BR": "React não permite componentes chamados Card",
+              en: "React doesn't support components named `Card`",
+              "pt-BR": "React não permite componentes chamados `Card`",
             },
             {
               en: "JSX requires a semicolon after the tag",
@@ -76,8 +76,8 @@ export const componentsProps: Unit = {
               "pt-BR": "Nomes de tag em minúsculas são tratados como elementos DOM nativos",
             },
             {
-              en: "Card must be imported from react",
-              "pt-BR": "Card precisa ser importado do react",
+              en: "`Card` must be imported from `react`",
+              "pt-BR": "`Card` precisa ser importado do `react`",
             },
           ],
           correct: 2,
@@ -94,8 +94,8 @@ export const componentsProps: Unit = {
               en: "Its name starts with a capital letter",
               "pt-BR": "Seu nome começa com letra maiúscula",
             },
-            { en: "It must use useState", "pt-BR": "Ele precisa usar useState" },
-            { en: "It returns JSX (or null)", "pt-BR": "Ele retorna JSX (ou null)" },
+            { en: "It must use `useState`", "pt-BR": "Ele precisa usar `useState`" },
+            { en: "It returns JSX (or `null`)", "pt-BR": "Ele retorna JSX (ou `null`)" },
           ],
           correct: [1, 3],
         },
@@ -106,14 +106,14 @@ export const componentsProps: Unit = {
             "pt-BR": "Onde um componente pode ser definido?",
           },
           options: [
-            { en: "Only inside App", "pt-BR": "Somente dentro de App" },
+            { en: "Only inside `App`", "pt-BR": "Somente dentro de `App`" },
             {
               en: "Nested inside another component's function body",
               "pt-BR": "Aninhado dentro do corpo de outra função de componente",
             },
             {
-              en: "Only in a file named index.tsx",
-              "pt-BR": "Somente em um arquivo chamado index.tsx",
+              en: "Only in a file named `index.tsx`",
+              "pt-BR": "Somente em um arquivo chamado `index.tsx`",
             },
             {
               en: "At the top level of a module, not nested inside another component",
@@ -136,8 +136,8 @@ export const componentsProps: Unit = {
         {
           type: "fill-blank",
           prompt: {
-            en: "Accept the props object as a parameter",
-            "pt-BR": "Receba o objeto props como parâmetro",
+            en: "Accept the `props` object as a parameter",
+            "pt-BR": "Receba o objeto `props` como parâmetro",
           },
           code: `function Hello(___) { return <h1>Hi {props.name}</h1>; }`,
           answer: "props",
@@ -145,8 +145,8 @@ export const componentsProps: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: 'Given <Hello name="Ada" />, what is props.name inside Hello?',
-            "pt-BR": 'Dado <Hello name="Ada" />, o que é props.name dentro de Hello?',
+            en: 'Given `<Hello name="Ada" />`, what is `props.name` inside `Hello`?',
+            "pt-BR": 'Dado `<Hello name="Ada" />`, o que é `props.name` dentro de `Hello`?',
           },
           code: `<Hello name="Ada" />`,
           options: [{ en: "name" }, { en: "Ada" }, { en: "undefined" }, { en: "{name}" }],
@@ -164,8 +164,8 @@ export const componentsProps: Unit = {
         {
           type: "fill-blank",
           prompt: {
-            en: "Destructure the name prop directly in the parameter",
-            "pt-BR": "Desestruture a prop name diretamente no parâmetro",
+            en: "Destructure the `name` prop directly in the parameter",
+            "pt-BR": "Desestruture a prop `name` diretamente no parâmetro",
           },
           code: `function Hello({ ___ }) { return <h1>Hi {name}</h1>; }`,
           answer: "name",
@@ -213,16 +213,16 @@ export const componentsProps: Unit = {
       id: "components-props-3",
       title: { en: "Children and composition", "pt-BR": "Children e composição" },
       description: {
-        en: "Nest components and use the children prop.",
-        "pt-BR": "Aninhe componentes e use a prop children.",
+        en: "Nest components and use the `children` prop.",
+        "pt-BR": "Aninhe componentes e use a prop `children`.",
       },
       xp: 30,
       exercises: [
         {
           type: "fill-blank",
           prompt: {
-            en: "Destructure the children prop",
-            "pt-BR": "Desestruture a prop children",
+            en: "Destructure the `children` prop",
+            "pt-BR": "Desestruture a prop `children`",
           },
           code: `function Card({ ___ }) { return <div className="card">{children}</div>; }`,
           answer: "children",
@@ -230,14 +230,14 @@ export const componentsProps: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "Given <Card><p>Hi</p></Card>, what is children inside Card?",
-            "pt-BR": "Dado <Card><p>Hi</p></Card>, o que é children dentro de Card?",
+            en: "Given `<Card><p>Hi</p></Card>`, what is `children` inside `Card`?",
+            "pt-BR": "Dado `<Card><p>Hi</p></Card>`, o que é `children` dentro de `Card`?",
           },
           code: `<Card><p>Hi</p></Card>`,
           options: [
             { en: "undefined" },
-            { en: 'The string "Hi"', "pt-BR": 'A string "Hi"' },
-            { en: "The <p>Hi</p> element", "pt-BR": "O elemento <p>Hi</p>" },
+            { en: 'The string `"Hi"`', "pt-BR": 'A string `"Hi"`' },
+            { en: "The `<p>Hi</p>` element", "pt-BR": "O elemento `<p>Hi</p>`" },
             { en: "An empty array", "pt-BR": "Um array vazio" },
           ],
           correct: 2,
@@ -276,8 +276,8 @@ export const componentsProps: Unit = {
               "pt-BR": "Guardar o JSX como uma string no banco de dados",
             },
             {
-              en: "Pass markup as the children prop",
-              "pt-BR": "Passar a marcação como a prop children",
+              en: "Pass markup as the `children` prop",
+              "pt-BR": "Passar a marcação como a prop `children`",
             },
           ],
           correct: [1, 3],
@@ -305,15 +305,15 @@ export const componentsProps: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "In what order do Title and Body appear in the output?",
-            "pt-BR": "Em que ordem Title e Body aparecem na saída?",
+            en: "In what order do `Title` and `Body` appear in the output?",
+            "pt-BR": "Em que ordem `Title` e `Body` aparecem na saída?",
           },
           code: `function Card() {\n  return (\n    <div>\n      <Title />\n      <Body />\n    </div>\n  );\n}`,
           options: [
             { en: "In reverse order", "pt-BR": "Em ordem inversa" },
             {
-              en: "In the order they're written: Title then Body",
-              "pt-BR": "Na ordem em que foram escritos: Title e depois Body",
+              en: "In the order they're written: `Title` then `Body`",
+              "pt-BR": "Na ordem em que foram escritos: `Title` e depois `Body`",
             },
             { en: "React decides randomly", "pt-BR": "O React decide aleatoriamente" },
             { en: "Only the last one renders", "pt-BR": "Só o último renderiza" },
@@ -327,8 +327,8 @@ export const componentsProps: Unit = {
     {
       type: "fill-blank",
       prompt: {
-        en: 'Complete the call this JSX compiles to: <h1 className="title">Hi</h1>',
-        "pt-BR": 'Complete a chamada para a qual esse JSX compila: <h1 className="title">Hi</h1>',
+        en: 'Complete the call this JSX compiles to: `<h1 className="title">Hi</h1>`',
+        "pt-BR": 'Complete a chamada para a qual esse JSX compila: `<h1 className="title">Hi</h1>`',
       },
       code: `React.___("h1", { className: "title" }, "Hi");`,
       answer: "createElement",
@@ -336,47 +336,47 @@ export const componentsProps: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "What does this render when items.length is 0?",
-        "pt-BR": "O que isso renderiza quando items.length é 0?",
+        en: "What does this render when `items.length` is `0`?",
+        "pt-BR": "O que isso renderiza quando `items.length` é `0`?",
       },
       code: `function List({ items }) {\n  return <div>{items.length && <p>{items.length} items</p>}</div>;\n}`,
       options: [
         {
-          en: "Nothing is rendered because 0 is falsy",
-          "pt-BR": "Nada é renderizado porque 0 é falsy",
+          en: "Nothing is rendered because `0` is falsy",
+          "pt-BR": "Nada é renderizado porque `0` é falsy",
         },
         {
-          en: "A syntax error, because && cannot be used in JSX",
-          "pt-BR": "Um erro de sintaxe, porque && não pode ser usado no JSX",
+          en: "A syntax error, because `&&` cannot be used in JSX",
+          "pt-BR": "Um erro de sintaxe, porque `&&` não pode ser usado no JSX",
         },
         {
-          en: "The literal number 0 is rendered as text",
-          "pt-BR": "O número 0 é renderizado como texto",
+          en: "The literal number `0` is rendered as text",
+          "pt-BR": "O número `0` é renderizado como texto",
         },
-        { en: "<p>0 items</p> is rendered", "pt-BR": "<p>0 items</p> é renderizado" },
+        { en: "`<p>0 items</p>` is rendered", "pt-BR": "`<p>0 items</p>` é renderizado" },
       ],
       correct: 2,
     },
     {
       type: "single-choice",
       prompt: {
-        en: "What renders inside the <p> when isAdmin is false?",
-        "pt-BR": "O que renderiza dentro do <p> quando isAdmin é false?",
+        en: "What renders inside the `<p>` when `isAdmin` is `false`?",
+        "pt-BR": "O que renderiza dentro do `<p>` quando `isAdmin` é `false`?",
       },
       code: `const el = <p>{isAdmin ? "Admin" : null}</p>;`,
       options: [
         {
-          en: "Nothing is rendered inside the <p>",
-          "pt-BR": "Nada é renderizado dentro do <p>",
+          en: "Nothing is rendered inside the `<p>`",
+          "pt-BR": "Nada é renderizado dentro do `<p>`",
         },
         {
-          en: "The word null is rendered as text",
-          "pt-BR": "A palavra null é renderizada como texto",
+          en: "The word `null` is rendered as text",
+          "pt-BR": "A palavra `null` é renderizada como texto",
         },
         { en: "A syntax error", "pt-BR": "Um erro de sintaxe" },
         {
-          en: '"Admin" is rendered regardless',
-          "pt-BR": '"Admin" é renderizado de qualquer forma',
+          en: '`"Admin"` is rendered regardless',
+          "pt-BR": '`"Admin"` é renderizado de qualquer forma',
         },
       ],
       correct: 0,
@@ -388,18 +388,21 @@ export const componentsProps: Unit = {
         "pt-BR": "Escolha as 3 afirmações verdadeiras sobre nomes de atributos no JSX",
       },
       options: [
-        { en: "className is used instead of class", "pt-BR": "className é usado em vez de class" },
         {
-          en: "aria-label keeps its hyphenated name unchanged",
-          "pt-BR": "aria-label mantém o nome com hífen sem alterações",
+          en: "`className` is used instead of `class`",
+          "pt-BR": "`className` é usado em vez de `class`",
         },
         {
-          en: "onclick (all lowercase) works the same as onClick",
-          "pt-BR": "onclick (tudo minúsculo) funciona igual a onClick",
+          en: "`aria-label` keeps its hyphenated name unchanged",
+          "pt-BR": "`aria-label` mantém o nome com hífen sem alterações",
         },
         {
-          en: "data-testid keeps its hyphenated name unchanged",
-          "pt-BR": "data-testid mantém o nome com hífen sem alterações",
+          en: "`onclick` (all lowercase) works the same as `onClick`",
+          "pt-BR": "`onclick` (tudo minúsculo) funciona igual a `onClick`",
+        },
+        {
+          en: "`data-testid` keeps its hyphenated name unchanged",
+          "pt-BR": "`data-testid` mantém o nome com hífen sem alterações",
         },
       ],
       correct: [0, 1, 3],
@@ -407,19 +410,22 @@ export const componentsProps: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "You're rendering a list and need to attach a key without adding an extra DOM node. Which is correct?",
+        en: "You're rendering a list and need to attach a `key` without adding an extra DOM node. Which is correct?",
         "pt-BR":
-          "Você está renderizando uma lista e precisa colocar um key sem adicionar um nó extra no DOM. Qual está correto?",
+          "Você está renderizando uma lista e precisa colocar um `key` sem adicionar um nó extra no DOM. Qual está correto?",
       },
       code: `items.map(item => (\n  <>\n    <dt>{item.term}</dt>\n    <dd>{item.def}</dd>\n  </>\n))`,
       options: [
         { en: "<> key={item.id} ...</>" },
         { en: "<React.Fragment key={item.id}>...</React.Fragment>" },
         {
-          en: "<Fragment>...</Fragment>, no key needed for lists",
-          "pt-BR": "<Fragment>...</Fragment>, sem precisar de key em listas",
+          en: "`<Fragment>...</Fragment>`, no `key` needed for lists",
+          "pt-BR": "`<Fragment>...</Fragment>`, sem precisar de `key` em listas",
         },
-        { en: "Add key to the outer <dl> only", "pt-BR": "Adicione key só na <dl> externa" },
+        {
+          en: "Add `key` to the outer `<dl>` only",
+          "pt-BR": "Adicione `key` só na `<dl>` externa",
+        },
       ],
       correct: 1,
     },
@@ -428,43 +434,46 @@ export const componentsProps: Unit = {
       prompt: { en: "Why does this fail to compile?", "pt-BR": "Por que isso não compila?" },
       code: `<div>{if (isOpen) { "Menu" }}</div>`,
       options: [
-        { en: "isOpen is not defined", "pt-BR": "isOpen não está definido" },
+        { en: "`isOpen` is not defined", "pt-BR": "`isOpen` não está definido" },
         {
-          en: "Curly braces in JSX only accept expressions, and if is a statement",
-          "pt-BR": "Chaves no JSX só aceitam expressões, e if é uma instrução",
+          en: "Curly braces in JSX only accept expressions, and `if` is a statement",
+          "pt-BR": "Chaves no JSX só aceitam expressões, e `if` é uma instrução",
         },
         {
-          en: "div cannot contain conditional content",
-          "pt-BR": "div não pode conter conteúdo condicional",
+          en: "`div` cannot contain conditional content",
+          "pt-BR": "`div` não pode conter conteúdo condicional",
         },
-        { en: "JSX requires an else for every if", "pt-BR": "JSX exige um else para todo if" },
+        {
+          en: "JSX requires an `else` for every `if`",
+          "pt-BR": "JSX exige um `else` para todo `if`",
+        },
       ],
       correct: 1,
     },
     {
       type: "single-choice",
       prompt: {
-        en: "What is the value of the name prop?",
-        "pt-BR": "Qual é o valor da prop name?",
+        en: "What is the value of the `name` prop?",
+        "pt-BR": "Qual é o valor da prop `name`?",
       },
       code: `<Greeting name="{user.name}" />`,
       options: [
-        { en: "The value stored in user.name", "pt-BR": "O valor armazenado em user.name" },
+        { en: "The value stored in `user.name`", "pt-BR": "O valor armazenado em `user.name`" },
         {
-          en: "undefined, because braces need to be a separate attribute value",
-          "pt-BR": "undefined, porque chaves precisam ser um valor de atributo separado",
+          en: "`undefined`, because braces need to be a separate attribute value",
+          "pt-BR": "`undefined`, porque chaves precisam ser um valor de atributo separado",
         },
         { en: "A syntax error", "pt-BR": "Um erro de sintaxe" },
         {
-          en: 'The literal string "{user.name}"',
-          "pt-BR": 'A string literal "{user.name}"',
+          en: 'The literal string `"{user.name}"`',
+          "pt-BR": 'A string literal `"{user.name}"`',
         },
       ],
       correct: 3,
     },
     {
       type: "fill-blank",
-      prompt: { en: "Spread all props onto the div", "pt-BR": "Espalhe todas as props no div" },
+      prompt: { en: "Spread all props onto the `div`", "pt-BR": "Espalhe todas as props no `div`" },
       code: `function Wrapper(props) {\n  return <div {...___} />;\n}`,
       answer: "props",
     },
@@ -480,10 +489,10 @@ export const componentsProps: Unit = {
           en: "A JSX expression must have a single root element",
           "pt-BR": "Uma expressão JSX precisa ter um único elemento raiz",
         },
-        { en: "h2 cannot be followed by p", "pt-BR": "h2 não pode ser seguido de p" },
+        { en: "`h2` cannot be followed by `p`", "pt-BR": "`h2` não pode ser seguido de `p`" },
         {
-          en: "return cannot span multiple lines",
-          "pt-BR": "return não pode ocupar várias linhas",
+          en: "`return` cannot span multiple lines",
+          "pt-BR": "`return` não pode ocupar várias linhas",
         },
         { en: "It compiles fine", "pt-BR": "Compila normalmente" },
       ],
@@ -492,8 +501,8 @@ export const componentsProps: Unit = {
     {
       type: "fill-blank",
       prompt: {
-        en: "Name the required key for dangerouslySetInnerHTML's object",
-        "pt-BR": "Nomeie a chave obrigatória do objeto de dangerouslySetInnerHTML",
+        en: "Name the required key for `dangerouslySetInnerHTML`'s object",
+        "pt-BR": "Nomeie a chave obrigatória do objeto de `dangerouslySetInnerHTML`",
       },
       code: `<div dangerouslySetInnerHTML={{ ___: markup }} />`,
       answer: "__html",
@@ -507,20 +516,21 @@ export const componentsProps: Unit = {
       code: `<button disabled="false">Save</button>`,
       options: [
         {
-          en: "Writing disabled by itself makes the element disabled",
-          "pt-BR": "Escrever disabled sozinho já deixa o elemento desabilitado",
+          en: "Writing `disabled` by itself makes the element disabled",
+          "pt-BR": "Escrever `disabled` sozinho já deixa o elemento desabilitado",
         },
         {
-          en: 'disabled="false" makes the button enabled because the string says false',
-          "pt-BR": 'disabled="false" deixa o botão habilitado porque a string diz false',
+          en: '`disabled="false"` makes the button enabled because the string says `false`',
+          "pt-BR": '`disabled="false"` deixa o botão habilitado porque a string diz `false`',
         },
         {
-          en: "disabled={false} makes the element enabled",
-          "pt-BR": "disabled={false} deixa o elemento habilitado",
+          en: "`disabled={false}` makes the element enabled",
+          "pt-BR": "`disabled={false}` deixa o elemento habilitado",
         },
         {
-          en: "You must always write disabled={true}; disabled alone doesn't work",
-          "pt-BR": "Você sempre precisa escrever disabled={true}; disabled sozinho não funciona",
+          en: "You must always write `disabled={true}`; `disabled` alone doesn't work",
+          "pt-BR":
+            "Você sempre precisa escrever `disabled={true}`; `disabled` sozinho não funciona",
         },
       ],
       correct: [0, 2],
@@ -533,20 +543,20 @@ export const componentsProps: Unit = {
       },
       options: [
         {
-          en: "// comment written directly inside JSX children",
-          "pt-BR": "// comentário escrito diretamente dentro dos filhos do JSX",
+          en: "`//` comment written directly inside JSX children",
+          "pt-BR": "`//` comentário escrito diretamente dentro dos filhos do JSX",
         },
         {
-          en: "{/* comment */} inside JSX children",
-          "pt-BR": "{/* comentário */} dentro dos filhos do JSX",
+          en: "`{/* comment */}` inside JSX children",
+          "pt-BR": "`{/* comentário */}` dentro dos filhos do JSX",
         },
         {
-          en: "<!-- comment --> inside JSX children",
-          "pt-BR": "<!-- comentário --> dentro dos filhos do JSX",
+          en: "`<!-- comment -->` inside JSX children",
+          "pt-BR": "`<!-- comentário -->` dentro dos filhos do JSX",
         },
         {
-          en: "/* comment */ between attributes inside the opening tag",
-          "pt-BR": "/* comentário */ entre atributos dentro da tag de abertura",
+          en: "`/* comment */` between attributes inside the opening tag",
+          "pt-BR": "`/* comentário */` entre atributos dentro da tag de abertura",
         },
       ],
       correct: [1, 3],
@@ -556,11 +566,11 @@ export const componentsProps: Unit = {
       prompt: { en: "Why does this fail to compile?", "pt-BR": "Por que isso não compila?" },
       code: `const el = <img src="cat.png">;`,
       options: [
-        { en: "img is not a valid JSX tag", "pt-BR": "img não é uma tag JSX válida" },
-        { en: "src must be a number", "pt-BR": "src precisa ser um número" },
+        { en: "`img` is not a valid JSX tag", "pt-BR": "`img` não é uma tag JSX válida" },
+        { en: "`src` must be a number", "pt-BR": "`src` precisa ser um número" },
         {
-          en: "Void elements must self-close with />",
-          "pt-BR": "Elementos vazios precisam se auto-fechar com />",
+          en: "Void elements must self-close with `/>`",
+          "pt-BR": "Elementos vazios precisam se auto-fechar com `/>`",
         },
         { en: "It compiles fine", "pt-BR": "Compila normalmente" },
       ],
@@ -576,16 +586,16 @@ export const componentsProps: Unit = {
       options: [
         { en: "React throws a compile error", "pt-BR": "O React lança um erro de compilação" },
         {
-          en: "The card class is silently dropped",
-          "pt-BR": "A classe card é descartada silenciosamente",
+          en: "The `card` class is silently dropped",
+          "pt-BR": "A classe `card` é descartada silenciosamente",
         },
         {
-          en: "className is used automatically instead",
-          "pt-BR": "className é usado automaticamente no lugar",
+          en: "`className` is used automatically instead",
+          "pt-BR": "`className` é usado automaticamente no lugar",
         },
         {
-          en: "React renders it but warns that class should be className",
-          "pt-BR": "O React renderiza, mas avisa que deveria usar className",
+          en: "React renders it but warns that `class` should be `className`",
+          "pt-BR": "O React renderiza, mas avisa que deveria usar `className`",
         },
       ],
       correct: 3,
@@ -593,8 +603,8 @@ export const componentsProps: Unit = {
     {
       type: "fill-blank",
       prompt: {
-        en: "Interpolate the variant into the class name",
-        "pt-BR": "Interpole o variant no nome da classe",
+        en: "Interpolate the `variant` into the class name",
+        "pt-BR": "Interpole o `variant` no nome da classe",
       },
       code: "const el = <div className={`btn ___{variant}`}>Save</div>;",
       answer: "$",

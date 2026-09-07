@@ -8,8 +8,8 @@ export const events: Unit = {
       id: "events-1",
       title: { en: "Click handlers", "pt-BR": "Handlers de clique" },
       description: {
-        en: "Respond to clicks with onClick.",
-        "pt-BR": "Responda a cliques com onClick.",
+        en: "Respond to clicks with `onClick`.",
+        "pt-BR": "Responda a cliques com `onClick`.",
       },
       xp: 20,
       exercises: [
@@ -54,8 +54,8 @@ export const events: Unit = {
             },
             { en: "It throws an error", "pt-BR": "Lança um erro" },
             {
-              en: "setOpen(true) runs, updating state",
-              "pt-BR": "setOpen(true) roda, atualizando o estado",
+              en: "`setOpen(true)` runs, updating state",
+              "pt-BR": "`setOpen(true)` roda, atualizando o estado",
             },
           ],
           correct: 3,
@@ -80,8 +80,8 @@ export const events: Unit = {
               "pt-BR": "Só podem ser funções de seta",
             },
             {
-              en: "Handler prop names are written in camelCase, like onClick",
-              "pt-BR": "Nomes de props de handler são escritos em camelCase, como onClick",
+              en: "Handler prop names are written in camelCase, like `onClick`",
+              "pt-BR": "Nomes de props de handler são escritos em camelCase, como `onClick`",
             },
           ],
           correct: [1, 3],
@@ -141,8 +141,8 @@ export const events: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "What does e.preventDefault() do in a form submit handler?",
-            "pt-BR": "O que e.preventDefault() faz em um handler de submit de formulário?",
+            en: "What does `e.preventDefault()` do in a form submit handler?",
+            "pt-BR": "O que `e.preventDefault()` faz em um handler de submit de formulário?",
           },
           options: [
             { en: "Deletes the form data", "pt-BR": "Apaga os dados do formulário" },
@@ -212,16 +212,16 @@ export const events: Unit = {
               "pt-BR": "Funciona exatamente como um input não controlado",
             },
             {
-              en: "React warns and the input becomes read-only without an onChange handler",
-              "pt-BR": "O React avisa e o input fica somente leitura sem um handler onChange",
+              en: "React warns and the input becomes read-only without an `onChange` handler",
+              "pt-BR": "O React avisa e o input fica somente leitura sem um handler `onChange`",
             },
             {
               en: "It throws a compile error",
               "pt-BR": "Lança um erro de compilação",
             },
             {
-              en: "text updates automatically as the user types",
-              "pt-BR": "text atualiza automaticamente conforme o usuário digita",
+              en: "`text` updates automatically as the user types",
+              "pt-BR": "`text` atualiza automaticamente conforme o usuário digita",
             },
           ],
           correct: 1,
@@ -240,8 +240,8 @@ export const events: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "How do you pass an id argument to a click handler?",
-            "pt-BR": "Como passar um argumento id para um handler de clique?",
+            en: "How do you pass an `id` argument to a click handler?",
+            "pt-BR": "Como passar um argumento `id` para um handler de clique?",
           },
           options: [
             { en: "onClick={() => remove(id)}" },
@@ -260,17 +260,17 @@ export const events: Unit = {
           code: `<button onClick={remove(id)}>Delete</button>`,
           options: [
             {
-              en: "remove is not a valid function name",
-              "pt-BR": "remove não é um nome de função válido",
+              en: "`remove` is not a valid function name",
+              "pt-BR": "`remove` não é um nome de função válido",
             },
             {
-              en: "remove(id) runs immediately during render, not on click",
-              "pt-BR": "remove(id) roda imediatamente durante a renderização, não no clique",
+              en: "`remove(id)` runs immediately during render, not on click",
+              "pt-BR": "`remove(id)` roda imediatamente durante a renderização, não no clique",
             },
-            { en: "id must be a string", "pt-BR": "id precisa ser uma string" },
+            { en: "`id` must be a string", "pt-BR": "`id` precisa ser uma string" },
             {
-              en: "onClick doesn't accept function calls",
-              "pt-BR": "onClick não aceita chamadas de função",
+              en: "`onClick` doesn't accept function calls",
+              "pt-BR": "`onClick` não aceita chamadas de função",
             },
           ],
           correct: 1,
@@ -278,8 +278,8 @@ export const events: Unit = {
         {
           type: "fill-blank",
           prompt: {
-            en: "Pass the whole item to select",
-            "pt-BR": "Passe o item inteiro para select",
+            en: "Pass the whole `item` to `select`",
+            "pt-BR": "Passe o `item` inteiro para `select`",
           },
           code: `<li onClick={() => select(___)}>{item.name}</li>`,
           answer: "item",
@@ -300,8 +300,8 @@ export const events: Unit = {
               "pt-BR": "Envolver a chamada em uma função de seta",
             },
             {
-              en: "Use .bind to pre-fill arguments",
-              "pt-BR": "Usar .bind para pré-preencher argumentos",
+              en: "Use `.bind` to pre-fill arguments",
+              "pt-BR": "Usar `.bind` para pré-preencher argumentos",
             },
             {
               en: "Call the handler directly in the JSX attribute",
@@ -313,9 +313,9 @@ export const events: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "Does writing onClick={() => remove(id)} create a new function on every render?",
+            en: "Does writing `onClick={() => remove(id)}` create a new function on every render?",
             "pt-BR":
-              "Escrever onClick={() => remove(id)} cria uma nova função a cada renderização?",
+              "Escrever `onClick={() => remove(id)}` cria uma nova função a cada renderização?",
           },
           options: [
             {
@@ -379,19 +379,19 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "If count starts at 0, what is count after one click?",
-        "pt-BR": "Se count começa em 0, qual é o valor depois de um clique?",
+        en: "If `count` starts at `0`, what is `count` after one click?",
+        "pt-BR": "Se `count` começa em `0`, qual é o valor depois de um clique?",
       },
       code: `const [count, setCount] = useState(0);\nfunction handleClick() {\n  setCount(c => c + 1);\n  setCount(c => c + 1);\n}`,
       options: [
-        { en: "0, because state doesn't update", "pt-BR": "0, porque o estado não atualiza" },
+        { en: "`0`, because state doesn't update", "pt-BR": "`0`, porque o estado não atualiza" },
         {
-          en: "1, because both calls still read the same c",
-          "pt-BR": "1, porque as duas chamadas leem o mesmo c",
+          en: "`1`, because both calls still read the same `c`",
+          "pt-BR": "`1`, porque as duas chamadas leem o mesmo `c`",
         },
         {
-          en: "2, because each updater receives the latest queued value",
-          "pt-BR": "2, porque cada atualizadora recebe o valor mais recente da fila",
+          en: "`2`, because each updater receives the latest queued value",
+          "pt-BR": "`2`, porque cada atualizadora recebe o valor mais recente da fila",
         },
         { en: "It throws an error", "pt-BR": "Lança um erro" },
       ],
@@ -405,17 +405,18 @@ export const events: Unit = {
       },
       options: [
         {
-          en: "Multiple setState calls inside a single event handler are batched into one re-render",
+          en: "Multiple `setState` calls inside a single event handler are batched into one re-render",
           "pt-BR":
-            "Várias chamadas de setState dentro de um único handler são agrupadas em uma renderização",
+            "Várias chamadas de `setState` dentro de um único handler são agrupadas em uma renderização",
         },
         {
-          en: "setState calls inside a setTimeout callback are batched too",
-          "pt-BR": "Chamadas de setState dentro de um callback de setTimeout também são agrupadas",
+          en: "`setState` calls inside a `setTimeout` callback are batched too",
+          "pt-BR":
+            "Chamadas de `setState` dentro de um callback de `setTimeout` também são agrupadas",
         },
         {
-          en: "Batching means only the last setState call in a handler has any effect",
-          "pt-BR": "Batching significa que só a última chamada de setState no handler tem efeito",
+          en: "Batching means only the last `setState` call in a handler has any effect",
+          "pt-BR": "Batching significa que só a última chamada de `setState` no handler tem efeito",
         },
         { en: "Batching was removed in React 18", "pt-BR": "O batching foi removido no React 18" },
       ],
@@ -424,8 +425,8 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "computeInitialItems() is expensive. Which change avoids running it on every render?",
-        "pt-BR": "computeInitialItems() é custosa. O que evita rodá-la a cada renderização?",
+        en: "`computeInitialItems()` is expensive. Which change avoids running it on every render?",
+        "pt-BR": "`computeInitialItems()` é custosa. O que evita rodá-la a cada renderização?",
       },
       code: `const [items, setItems] = useState(computeInitialItems());`,
       options: [
@@ -439,21 +440,21 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "Why doesn't the UI update after rename() runs?",
-        "pt-BR": "Por que a UI não atualiza depois que rename() roda?",
+        en: "Why doesn't the UI update after `rename()` runs?",
+        "pt-BR": "Por que a UI não atualiza depois que `rename()` roda?",
       },
       code: `function rename() {\n  profile.name = "Ada";\n  setProfile(profile);\n}`,
       options: [
-        { en: "profile.name is read-only", "pt-BR": "profile.name é somente leitura" },
-        { en: "setProfile only accepts strings", "pt-BR": "setProfile só aceita strings" },
+        { en: "`profile.name` is read-only", "pt-BR": "`profile.name` é somente leitura" },
+        { en: "`setProfile` only accepts strings", "pt-BR": "`setProfile` só aceita strings" },
         {
           en: "React batches this update forever",
           "pt-BR": "O React agrupa essa atualização para sempre",
         },
         {
-          en: "setProfile receives the same object reference, so React's Object.is check sees no change",
+          en: "`setProfile` receives the same object reference, so React's `Object.is` check sees no change",
           "pt-BR":
-            "setProfile recebe a mesma referência de objeto, então a checagem Object.is do React não vê mudança",
+            "`setProfile` recebe a mesma referência de objeto, então a checagem `Object.is` do React não vê mudança",
         },
       ],
       correct: 3,
@@ -461,8 +462,8 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "If count is already 5, what happens when handleClick runs?",
-        "pt-BR": "Se count já é 5, o que acontece quando handleClick roda?",
+        en: "If `count` is already `5`, what happens when `handleClick` runs?",
+        "pt-BR": "Se `count` já é `5`, o que acontece quando `handleClick` roda?",
       },
       code: `function handleClick() {\n  setCount(5);\n  setCount(5);\n}`,
       options: [
@@ -475,7 +476,7 @@ export const events: Unit = {
           en: "React throws an error for a duplicate value",
           "pt-BR": "O React lança um erro por valor duplicado",
         },
-        { en: "count becomes 10", "pt-BR": "count vira 10" },
+        { en: "`count` becomes `10`", "pt-BR": "`count` vira `10`" },
       ],
       correct: 0,
     },
@@ -496,16 +497,18 @@ export const events: Unit = {
       },
       options: [
         {
-          en: "useState must be called in the same order on every render",
-          "pt-BR": "useState precisa ser chamado na mesma ordem em toda renderização",
+          en: "`useState` must be called in the same order on every render",
+          "pt-BR": "`useState` precisa ser chamado na mesma ordem em toda renderização",
         },
         {
-          en: "useState can be called inside an if statement as long as the condition is stable",
-          "pt-BR": "useState pode ser chamado dentro de um if desde que a condição seja estável",
+          en: "`useState` can be called inside an `if` statement as long as the condition is stable",
+          "pt-BR":
+            "`useState` pode ser chamado dentro de um `if` desde que a condição seja estável",
         },
         {
-          en: "Calling useState inside a loop can misalign state between renders",
-          "pt-BR": "Chamar useState dentro de um laço pode desalinhar o estado entre renderizações",
+          en: "Calling `useState` inside a loop can misalign state between renders",
+          "pt-BR":
+            "Chamar `useState` dentro de um laço pode desalinhar o estado entre renderizações",
         },
         {
           en: "Hooks can be called inside any regular JavaScript function",
@@ -544,17 +547,17 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "What's the bug if the parent later passes a different user prop?",
-        "pt-BR": "Qual é o bug se o pai depois passar uma user prop diferente?",
+        en: "What's the bug if the parent later passes a different `user` prop?",
+        "pt-BR": "Qual é o bug se o pai depois passar uma `user` prop diferente?",
       },
       code: `function Profile({ user }) {\n  const [name, setName] = useState(user.name);\n  return <p>{name}</p>;\n}`,
       options: [
-        { en: "name updates automatically", "pt-BR": "name atualiza automaticamente" },
+        { en: "`name` updates automatically", "pt-BR": "`name` atualiza automaticamente" },
         { en: "React throws an error", "pt-BR": "O React lança um erro" },
         {
-          en: "name keeps showing the old value, because useState only reads the initial value once",
+          en: "`name` keeps showing the old value, because `useState` only reads the initial value once",
           "pt-BR":
-            "name continua mostrando o valor antigo, porque useState só lê o valor inicial uma vez",
+            "`name` continua mostrando o valor antigo, porque `useState` só lê o valor inicial uma vez",
         },
         { en: "The component unmounts", "pt-BR": "O componente desmonta" },
       ],
@@ -563,8 +566,8 @@ export const events: Unit = {
     {
       type: "fill-blank",
       prompt: {
-        en: "Force Profile to reset its internal state when the user changes",
-        "pt-BR": "Force Profile a reiniciar seu estado interno quando o usuário mudar",
+        en: "Force `Profile` to reset its internal state when the user changes",
+        "pt-BR": "Force `Profile` a reiniciar seu estado interno quando o usuário mudar",
       },
       code: `<Profile ___={userId} />`,
       answer: "key",
@@ -578,11 +581,11 @@ export const events: Unit = {
       code: `function Counter() {\n  const [count, setCount] = useState(0);\n  setCount(count + 1);\n  return <p>{count}</p>;\n}`,
       options: [
         {
-          en: "It renders once and stops, count is 1",
-          "pt-BR": "Renderiza uma vez e para, count é 1",
+          en: "It renders once and stops, `count` is `1`",
+          "pt-BR": "Renderiza uma vez e para, `count` é `1`",
         },
         { en: "It throws a compile error", "pt-BR": "Lança um erro de compilação" },
-        { en: "React ignores the setCount call", "pt-BR": "O React ignora a chamada setCount" },
+        { en: "React ignores the `setCount` call", "pt-BR": "O React ignora a chamada `setCount`" },
         {
           en: "It re-renders in an infinite loop, since every render schedules another update",
           "pt-BR":
@@ -594,15 +597,15 @@ export const events: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "What does console.log(count) print, if count was 4 before the click?",
-        "pt-BR": "O que console.log(count) imprime, se count era 4 antes do clique?",
+        en: "What does `console.log(count)` print, if `count` was `4` before the click?",
+        "pt-BR": "O que `console.log(count)` imprime, se `count` era `4` antes do clique?",
       },
       code: `function handleClick() {\n  setCount(count + 1);\n  console.log(count);\n}`,
       options: [
         { en: "5" },
         {
-          en: "4 — count still holds the value from this render until the next one",
-          "pt-BR": "4 — count ainda guarda o valor desta renderização até a próxima",
+          en: "`4` — `count` still holds the value from this render until the next one",
+          "pt-BR": "`4` — `count` ainda guarda o valor desta renderização até a próxima",
         },
         { en: "undefined" },
         { en: "It throws an error", "pt-BR": "Lança um erro" },
@@ -627,14 +630,14 @@ export const events: Unit = {
       code: `function Field() {\n  const [value, setValue] = useState("");\n  return <input value={value} />;\n}`,
       options: [
         {
-          en: "Nothing appears, because there's no onChange handler to update value",
-          "pt-BR": "Nada aparece, porque não há handler onChange para atualizar value",
+          en: "Nothing appears, because there's no `onChange` handler to update `value`",
+          "pt-BR": "Nada aparece, porque não há handler `onChange` para atualizar `value`",
         },
         { en: "The input updates normally", "pt-BR": "O input atualiza normalmente" },
         { en: "React throws an error", "pt-BR": "O React lança um erro" },
         {
-          en: "value resets to empty on every keystroke automatically",
-          "pt-BR": "value volta a ficar vazio a cada tecla automaticamente",
+          en: "`value` resets to empty on every keystroke automatically",
+          "pt-BR": "`value` volta a ficar vazio a cada tecla automaticamente",
         },
       ],
       correct: 0,
