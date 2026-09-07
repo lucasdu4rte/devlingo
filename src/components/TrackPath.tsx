@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { lessonsOf, type LessonRef } from "@/content/tracks";
-import type { Track } from "@/content/types";
+import type { Track, Unit } from "@/content/types";
 import { localize, t, type Locale } from "@/i18n";
 import { EMPTY, lessonStatus, load } from "@/lib/progress";
+import { Bolt } from "./icons";
+import { JumpDialog } from "./JumpDialog";
 import { ComingSoonNode, LessonNode } from "./LessonNode";
 import { LessonPopover } from "./LessonPopover";
 
@@ -14,6 +16,7 @@ const unitColors = ["bg-primary", "bg-unit-2", "bg-unit-3"];
 export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
   const [progress, setProgress] = useState(EMPTY);
   const [open, setOpen] = useState<LessonRef | null>(null);
+  const [jump, setJump] = useState<Unit | null>(null);
   useEffect(() => setProgress(load()), []);
 
   const refs = lessonsOf(track);
@@ -30,22 +33,37 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
           const unitIndex = i + 1;
           const soon = unit.lessons.length === 0;
           const color = unitColors[(unitIndex - 1) % unitColors.length];
+          const firstRef = soon ? undefined : refByLessonId.get(unit.lessons[0].id);
+          const locked = firstRef !== undefined && statusOf(firstRef) === "locked";
+          const canJump = locked && unit.challenge !== undefined;
           return (
             <section key={unit.id} className="mb-2">
               <div
-                className={`mb-4 flex flex-col gap-0.5 rounded-2xl px-4 py-3.5 ${soon ? "border-2 border-dashed border-border bg-surface-2 text-muted" : `${color} text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]`}`}
+                className={`mb-4 flex items-center justify-between gap-3 rounded-2xl px-4 py-3.5 ${soon ? "border-2 border-dashed border-border bg-surface-2 text-muted" : `${color} text-white shadow-[0_4px_0_rgba(0,0,0,0.35)]`}`}
               >
-                <div className="text-[11px] font-bold uppercase tracking-wider opacity-85">
-                  {localize(locale, level.title)} · {t(locale, "track.unit", { n: unitIndex })}
+                <div className="flex flex-col gap-0.5">
+                  <div className="text-[11px] font-bold uppercase tracking-wider opacity-85">
+                    {localize(locale, level.title)} · {t(locale, "track.unit", { n: unitIndex })}
+                  </div>
+                  <div className="font-display text-lg font-bold">
+                    {localize(locale, unit.title)}
+                    {soon && (
+                      <span className="ml-2 font-sans text-xs font-semibold">
+                        {t(locale, "track.comingSoon")}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className="font-display text-lg font-bold">
-                  {localize(locale, unit.title)}
-                  {soon && (
-                    <span className="ml-2 font-sans text-xs font-semibold">
-                      {t(locale, "track.comingSoon")}
-                    </span>
-                  )}
-                </div>
+                {canJump && (
+                  <button
+                    type="button"
+                    onClick={() => setJump(unit)}
+                    className="flex min-h-11 shrink-0 items-center gap-1.5 rounded-xl border-2 border-white/40 bg-black/20 px-3 text-xs font-extrabold uppercase tracking-wider text-white"
+                  >
+                    <Bolt size={14} />
+                    {t(locale, "track.jumpHere")}
+                  </button>
+                )}
               </div>
               <div className="flex flex-col items-center gap-6 pb-4 pt-6">
                 {soon
@@ -105,6 +123,15 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
           locale={locale}
           href={`/${locale}/${track.id}/${open.lesson.id}`}
           onClose={() => setOpen(null)}
+        />
+      )}
+
+      {jump && (
+        <JumpDialog
+          unitTitle={localize(locale, jump.title)}
+          href={`/${locale}/${track.id}/challenge/${jump.id}`}
+          locale={locale}
+          onClose={() => setJump(null)}
         />
       )}
     </div>
