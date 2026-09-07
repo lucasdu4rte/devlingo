@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { CHALLENGE_SIZE } from "@/lib/challenge";
-import { highlight } from "@/lib/highlight";
+import { highlightExercise } from "@/lib/highlight";
 import { lessonsOf, tracks, unitsOf } from "./tracks";
 import type { Exercise, Text } from "./types";
 
@@ -55,8 +55,8 @@ describe.each(tracks)("track $id", (track) => {
       .flatMap((r) => r.lesson.exercises)
       .filter((e): e is Extract<Exercise, { type: "fill-blank" }> => e.type === "fill-blank");
     for (const exercise of fillBlanks) {
-      const html = await highlight(exercise.code);
-      expect(html).toContain('class="blank"');
+      const html = (await highlightExercise(exercise)) as string;
+      expect(html).toContain(`class="blank">${"_".repeat(exercise.answer.length)}<`);
     }
   }, 30_000);
 
