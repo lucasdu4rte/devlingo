@@ -78,25 +78,27 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                       const ref = refByLessonId.get(lesson.id) as LessonRef;
                       const status = statusOf(ref);
                       return (
-                        <LessonNode
-                          key={lesson.id}
-                          status={status}
-                          label={localize(locale, lesson.title)}
-                          offset={offsets[i % offsets.length]}
-                          startLabel={status === "current" ? t(locale, "track.start") : undefined}
-                          index={i}
-                          onClick={() => setOpen(ref)}
-                        />
+                        <div key={lesson.id} className="relative flex w-full justify-center">
+                          {i === 1 && questRef && (
+                            <SideQuestNode
+                              status={statusOf(questRef)}
+                              label={localize(locale, questRef.lesson.title)}
+                              side={unitIndex % 2 === 0 ? "left" : "right"}
+                              lessonOffset={offsets[i % offsets.length]}
+                              onClick={() => setOpen(questRef)}
+                            />
+                          )}
+                          <LessonNode
+                            status={status}
+                            label={localize(locale, lesson.title)}
+                            offset={offsets[i % offsets.length]}
+                            startLabel={status === "current" ? t(locale, "track.start") : undefined}
+                            index={i}
+                            onClick={() => setOpen(ref)}
+                          />
+                        </div>
                       );
                     })}
-                {questRef && (
-                  <SideQuestNode
-                    status={statusOf(questRef)}
-                    label={localize(locale, questRef.lesson.title)}
-                    side={unitIndex % 2 === 0 ? "left" : "right"}
-                    onClick={() => setOpen(questRef)}
-                  />
-                )}
               </div>
             </section>
           );

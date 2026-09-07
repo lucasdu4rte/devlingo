@@ -11,11 +11,13 @@ export function SideQuestNode({
   status,
   label,
   side,
+  lessonOffset,
   onClick,
 }: {
   status: LessonStatus;
   label: string;
   side: "left" | "right";
+  lessonOffset: number;
   onClick: () => void;
 }) {
   const Icon = status === "locked" ? Lock : Star;
@@ -23,7 +25,8 @@ export function SideQuestNode({
     <>
       <span
         aria-hidden="true"
-        className={`absolute top-1/2 h-0 w-10 -translate-y-1/2 border-t-2 border-dashed border-border ${side === "left" ? "left-14" : "right-14"}`}
+        style={{ width: `calc(50% - ${88 + (side === "left" ? -lessonOffset : lessonOffset)}px)` }}
+        className={`pointer-events-none absolute top-1/2 h-0 -translate-y-1/2 border-t-2 border-dashed border-border ${side === "left" ? "left-14" : "right-14"}`}
       />
       <button
         type="button"
