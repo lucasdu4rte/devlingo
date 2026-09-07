@@ -96,4 +96,8 @@ describe("passChallenge", () => {
     expect(passChallenge(["a", "b"], 300)).toEqual(load());
     expect(load().xp).toBe(20);
   });
+  test("increments the streak on the next day", () => {
+    save({ xp: 0, streak: 3, lastActiveDay: "2026-09-05", completedLessons: [] });
+    expect(passChallenge(["a"], 300).streak).toBe(4);
+  });
 });

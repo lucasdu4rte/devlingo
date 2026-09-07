@@ -115,6 +115,11 @@ describe.each(tracks)("track $id", (track) => {
         const singles = exercises.filter((e) => e.type === "single-choice");
         const firsts = singles.filter((e) => e.correct === 0).length;
         expect(firsts).toBeLessThan(singles.length / 2);
+
+        const multiChoiceCorrect = exercises
+          .filter((e) => e.type === "multi-choice")
+          .map((e) => e.correct);
+        expect(multiChoiceCorrect.some((c) => c[0] !== 0 || c[1] !== 1)).toBe(true);
       });
     });
   });

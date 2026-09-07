@@ -63,7 +63,7 @@ export function LessonRunner({
       }
       return;
     }
-    if (load().completedLessons.includes(mode.lessonIds.at(-1) as string)) {
+    if (load().completedLessons.includes(mode.lessonIds[mode.lessonIds.length - 1])) {
       router.replace(trackHref);
     }
   }, [mode, router, trackHref]);
