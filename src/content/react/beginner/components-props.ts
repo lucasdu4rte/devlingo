@@ -413,7 +413,7 @@ export const componentsProps: Unit = {
       },
       code: `items.map(item => (\n  <>\n    <dt>{item.term}</dt>\n    <dd>{item.def}</dd>\n  </>\n))`,
       options: [
-        { en: "<> key={item.id}>...</>" },
+        { en: "<> key={item.id} ...</>" },
         { en: "<React.Fragment key={item.id}>...</React.Fragment>" },
         {
           en: "<Fragment>...</Fragment>, no key needed for lists",
@@ -545,8 +545,8 @@ export const componentsProps: Unit = {
           "pt-BR": "<!-- comentário --> dentro dos filhos do JSX",
         },
         {
-          en: "{/* comment */} above a prop, outside the tag's children",
-          "pt-BR": "{/* comentário */} acima de uma prop, fora dos filhos da tag",
+          en: "/* comment */ between attributes inside the opening tag",
+          "pt-BR": "/* comentário */ entre atributos dentro da tag de abertura",
         },
       ],
       correct: [1, 3],
