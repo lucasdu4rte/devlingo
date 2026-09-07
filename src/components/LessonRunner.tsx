@@ -47,12 +47,14 @@ export function LessonRunner({
   mode,
   exercises,
   codeHtml,
+  optionsHtml,
   locale,
   trackHref,
 }: {
   mode: RunnerMode;
   exercises: Exercise[];
   codeHtml: (string | null)[];
+  optionsHtml: ((string | null)[] | null)[];
   locale: Locale;
   trackHref: string;
 }) {
@@ -249,6 +251,7 @@ export function LessonRunner({
             onChange={pickAndCheck}
             labelledBy="exercise-prompt"
             order={order}
+            html={optionsHtml[index]}
           />
         )}
         {exercise.type === "multi-choice" && order && (
@@ -262,6 +265,7 @@ export function LessonRunner({
             onChange={setAnswer}
             labelledBy="exercise-prompt"
             order={order}
+            html={optionsHtml[index]}
           />
         )}
         {exercise.type === "fill-blank" && (

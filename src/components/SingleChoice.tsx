@@ -1,5 +1,5 @@
 import type { SingleChoice as Exercise } from "@/content/types";
-import { isCode, localize, type Locale } from "@/i18n";
+import { localize, type Locale } from "@/i18n";
 import { Option, type OptionState } from "./Option";
 
 export function SingleChoice({
@@ -12,6 +12,7 @@ export function SingleChoice({
   onChange,
   labelledBy,
   order,
+  html,
 }: {
   exercise: Exercise;
   locale: Locale;
@@ -22,6 +23,7 @@ export function SingleChoice({
   onChange: (answer: number) => void;
   labelledBy: string;
   order: number[];
+  html: (string | null)[] | null;
 }) {
   function stateOf(i: number): OptionState {
     if (!checked) return answer === i ? "selected" : "idle";
@@ -43,7 +45,7 @@ export function SingleChoice({
           index={position}
           state={stateOf(i)}
           label={localize(locale, exercise.options[i])}
-          mono={isCode(exercise.options[i])}
+          html={html?.[i] ?? undefined}
           checked={answer === i}
           disabled={checked}
           onClick={() => onChange(i)}
