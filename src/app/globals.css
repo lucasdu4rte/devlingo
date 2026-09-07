@@ -91,6 +91,10 @@ html.light {
   --font-mono: var(--font-jetbrains-mono);
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
