@@ -1,5 +1,5 @@
 import type { SingleChoice as Exercise } from "@/content/types";
-import { localize, type Locale } from "@/i18n";
+import { isCode, localize, type Locale } from "@/i18n";
 import { Option, type OptionState } from "./Option";
 
 export function SingleChoice({
@@ -11,6 +11,7 @@ export function SingleChoice({
   correct,
   onChange,
   labelledBy,
+  order,
 }: {
   exercise: Exercise;
   locale: Locale;
@@ -20,6 +21,7 @@ export function SingleChoice({
   correct: boolean;
   onChange: (answer: number) => void;
   labelledBy: string;
+  order: number[];
 }) {
   function stateOf(i: number): OptionState {
     if (!checked) return answer === i ? "selected" : "idle";
@@ -34,13 +36,14 @@ export function SingleChoice({
   }
   return (
     <div role="radiogroup" aria-labelledby={labelledBy} className="flex flex-col gap-2.5">
-      {exercise.options.map((option, i) => (
+      {order.map((i, position) => (
         <Option
           key={i}
           kind="radio"
-          index={i}
+          index={position}
           state={stateOf(i)}
-          label={localize(locale, option)}
+          label={localize(locale, exercise.options[i])}
+          mono={isCode(exercise.options[i])}
           checked={answer === i}
           disabled={checked}
           onClick={() => onChange(i)}
