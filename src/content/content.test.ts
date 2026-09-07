@@ -12,7 +12,11 @@ function texts(exercise: Exercise): Text[] {
 }
 
 function expectValidExercise(e: Exercise) {
-  texts(e).forEach((text) => expect(text.en.trim()).not.toBe(""));
+  texts(e).forEach((text) => {
+    expect(text.en.trim()).not.toBe("");
+    expect(text.en.split("`").length % 2, `unbalanced backticks: ${text.en}`).toBe(1);
+    if (text["pt-BR"]) expect(text["pt-BR"].split("`").length % 2).toBe(1);
+  });
   if (e.type === "single-choice") {
     expect(e.correct).toBeGreaterThanOrEqual(0);
     expect(e.correct).toBeLessThan(e.options.length);

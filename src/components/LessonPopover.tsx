@@ -8,6 +8,7 @@ import type { LessonStatus } from "@/lib/progress";
 import { Button, buttonClass } from "./Button";
 import { Dialog } from "./Dialog";
 import { Lock } from "./icons";
+import { RichText } from "./RichText";
 
 export function LessonPopover({
   lesson,
@@ -44,7 +45,7 @@ export function LessonPopover({
         {localize(locale, lesson.lesson.title)}
       </div>
       <p className="mb-2 text-sm leading-relaxed text-muted">
-        {localize(locale, lesson.lesson.description)}
+        <RichText text={localize(locale, lesson.lesson.description)} />
         {!locked &&
           ` · ${t(locale, "track.exercises", { n: lesson.lesson.exercises.length, xp: lesson.lesson.xp })}`}
       </p>
