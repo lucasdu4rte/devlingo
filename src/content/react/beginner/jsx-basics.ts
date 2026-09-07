@@ -314,11 +314,10 @@ export const jsxBasics: Unit = {
       {
         type: "fill-blank",
         prompt: {
-          en: "Name the object CSS Modules gives you, whose keys map to scoped class names",
-          "pt-BR":
-            "Nomeie o objeto que o CSS Modules fornece, cujas chaves mapeiam para nomes de classe com escopo",
+          en: "Complete the import so the binding matches the one used below",
+          "pt-BR": "Complete o import para que o nome bata com o usado abaixo",
         },
-        code: `import ___ from "./Card.module.css";`,
+        code: `import ___ from "./Card.module.css";\n\nfunction Card() {\n  return <div className={styles.card}>Hi</div>;\n}`,
         answer: "styles",
       },
       {

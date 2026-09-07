@@ -40,9 +40,9 @@ export function LessonPopover({
         className={`flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-wider ${locked ? "text-muted" : extra ? "text-xp" : "text-primary"}`}
       >
         {locked ? <Lock size={13} /> : extra ? <Star size={13} /> : null}
-        {extra
-          ? t(locale, "track.extra")
-          : t(locale, "track.lesson", { n: (lesson as LessonRef).indexInUnit + 1 })}{" "}
+        {"indexInUnit" in lesson
+          ? t(locale, "track.lesson", { n: lesson.indexInUnit + 1 })
+          : t(locale, "track.extra")}{" "}
         · {localize(locale, lesson.unit.title)}
       </div>
       <div id={titleId} className="font-display text-lg font-bold">
