@@ -323,4 +323,281 @@ export const componentsProps: Unit = {
       ],
     },
   ],
+  challenge: [
+    {
+      type: "fill-blank",
+      prompt: {
+        en: 'Complete the call this JSX compiles to: <h1 className="title">Hi</h1>',
+        "pt-BR": 'Complete a chamada para a qual esse JSX compila: <h1 className="title">Hi</h1>',
+      },
+      code: `React.___("h1", { className: "title" }, "Hi");`,
+      answer: "createElement",
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "What does this render when items.length is 0?",
+        "pt-BR": "O que isso renderiza quando items.length é 0?",
+      },
+      code: `function List({ items }) {\n  return <div>{items.length && <p>{items.length} items</p>}</div>;\n}`,
+      options: [
+        {
+          en: "Nothing is rendered because 0 is falsy",
+          "pt-BR": "Nada é renderizado porque 0 é falsy",
+        },
+        {
+          en: "A syntax error, because && cannot be used in JSX",
+          "pt-BR": "Um erro de sintaxe, porque && não pode ser usado no JSX",
+        },
+        {
+          en: "The literal number 0 is rendered as text",
+          "pt-BR": "O número 0 é renderizado como texto",
+        },
+        { en: "<p>0 items</p> is rendered", "pt-BR": "<p>0 items</p> é renderizado" },
+      ],
+      correct: 2,
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "What renders inside the <p> when isAdmin is false?",
+        "pt-BR": "O que renderiza dentro do <p> quando isAdmin é false?",
+      },
+      code: `const el = <p>{isAdmin ? "Admin" : null}</p>;`,
+      options: [
+        {
+          en: "Nothing is rendered inside the <p>",
+          "pt-BR": "Nada é renderizado dentro do <p>",
+        },
+        {
+          en: "The word null is rendered as text",
+          "pt-BR": "A palavra null é renderizada como texto",
+        },
+        { en: "A syntax error", "pt-BR": "Um erro de sintaxe" },
+        {
+          en: '"Admin" is rendered regardless',
+          "pt-BR": '"Admin" é renderizado de qualquer forma',
+        },
+      ],
+      correct: 0,
+    },
+    {
+      type: "multi-choice",
+      prompt: {
+        en: "Pick the 3 true statements about JSX attribute names",
+        "pt-BR": "Escolha as 3 afirmações verdadeiras sobre nomes de atributos no JSX",
+      },
+      options: [
+        { en: "className is used instead of class", "pt-BR": "className é usado em vez de class" },
+        {
+          en: "aria-label keeps its hyphenated name unchanged",
+          "pt-BR": "aria-label mantém o nome com hífen sem alterações",
+        },
+        {
+          en: "onclick (all lowercase) works the same as onClick",
+          "pt-BR": "onclick (tudo minúsculo) funciona igual a onClick",
+        },
+        {
+          en: "data-testid keeps its hyphenated name unchanged",
+          "pt-BR": "data-testid mantém o nome com hífen sem alterações",
+        },
+      ],
+      correct: [0, 1, 3],
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "You're rendering a list and need to attach a key without adding an extra DOM node. Which is correct?",
+        "pt-BR":
+          "Você está renderizando uma lista e precisa colocar um key sem adicionar um nó extra no DOM. Qual está correto?",
+      },
+      code: `items.map(item => (\n  <>\n    <dt>{item.term}</dt>\n    <dd>{item.def}</dd>\n  </>\n))`,
+      options: [
+        { en: "<> key={item.id}>...</>" },
+        { en: "<React.Fragment key={item.id}>...</React.Fragment>" },
+        {
+          en: "<Fragment>...</Fragment>, no key needed for lists",
+          "pt-BR": "<Fragment>...</Fragment>, sem precisar de key em listas",
+        },
+        { en: "Add key to the outer <dl> only", "pt-BR": "Adicione key só na <dl> externa" },
+      ],
+      correct: 1,
+    },
+    {
+      type: "single-choice",
+      prompt: { en: "Why does this fail to compile?", "pt-BR": "Por que isso não compila?" },
+      code: `<div>{if (isOpen) { "Menu" }}</div>`,
+      options: [
+        { en: "isOpen is not defined", "pt-BR": "isOpen não está definido" },
+        {
+          en: "Curly braces in JSX only accept expressions, and if is a statement",
+          "pt-BR": "Chaves no JSX só aceitam expressões, e if é uma instrução",
+        },
+        {
+          en: "div cannot contain conditional content",
+          "pt-BR": "div não pode conter conteúdo condicional",
+        },
+        { en: "JSX requires an else for every if", "pt-BR": "JSX exige um else para todo if" },
+      ],
+      correct: 1,
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "What is the value of the name prop?",
+        "pt-BR": "Qual é o valor da prop name?",
+      },
+      code: `<Greeting name="{user.name}" />`,
+      options: [
+        { en: "The value stored in user.name", "pt-BR": "O valor armazenado em user.name" },
+        {
+          en: "undefined, because braces need to be a separate attribute value",
+          "pt-BR": "undefined, porque chaves precisam ser um valor de atributo separado",
+        },
+        { en: "A syntax error", "pt-BR": "Um erro de sintaxe" },
+        {
+          en: 'The literal string "{user.name}"',
+          "pt-BR": 'A string literal "{user.name}"',
+        },
+      ],
+      correct: 3,
+    },
+    {
+      type: "fill-blank",
+      prompt: { en: "Spread all props onto the div", "pt-BR": "Espalhe todas as props no div" },
+      code: `function Wrapper(props) {\n  return <div {...___} />;\n}`,
+      answer: "props",
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "Why does this component fail to compile?",
+        "pt-BR": "Por que esse componente não compila?",
+      },
+      code: `function Card() {\n  return (\n    <h2>Title</h2>\n    <p>Body</p>\n  );\n}`,
+      options: [
+        {
+          en: "A JSX expression must have a single root element",
+          "pt-BR": "Uma expressão JSX precisa ter um único elemento raiz",
+        },
+        { en: "h2 cannot be followed by p", "pt-BR": "h2 não pode ser seguido de p" },
+        {
+          en: "return cannot span multiple lines",
+          "pt-BR": "return não pode ocupar várias linhas",
+        },
+        { en: "It compiles fine", "pt-BR": "Compila normalmente" },
+      ],
+      correct: 0,
+    },
+    {
+      type: "fill-blank",
+      prompt: {
+        en: "Name the required key for dangerouslySetInnerHTML's object",
+        "pt-BR": "Nomeie a chave obrigatória do objeto de dangerouslySetInnerHTML",
+      },
+      code: `<div dangerouslySetInnerHTML={{ ___: markup }} />`,
+      answer: "__html",
+    },
+    {
+      type: "multi-choice",
+      prompt: {
+        en: "Pick the 2 true statements about boolean attributes in JSX",
+        "pt-BR": "Escolha as 2 afirmações verdadeiras sobre atributos booleanos no JSX",
+      },
+      code: `<button disabled="false">Save</button>`,
+      options: [
+        {
+          en: "Writing disabled by itself makes the element disabled",
+          "pt-BR": "Escrever disabled sozinho já deixa o elemento desabilitado",
+        },
+        {
+          en: 'disabled="false" makes the button enabled because the string says false',
+          "pt-BR": 'disabled="false" deixa o botão habilitado porque a string diz false',
+        },
+        {
+          en: "disabled={false} makes the element enabled",
+          "pt-BR": "disabled={false} deixa o elemento habilitado",
+        },
+        {
+          en: "You must always write disabled={true}; disabled alone doesn't work",
+          "pt-BR": "Você sempre precisa escrever disabled={true}; disabled sozinho não funciona",
+        },
+      ],
+      correct: [0, 2],
+    },
+    {
+      type: "multi-choice",
+      prompt: {
+        en: "Pick the 2 valid ways to comment inside JSX",
+        "pt-BR": "Escolha as 2 formas válidas de comentar dentro do JSX",
+      },
+      options: [
+        {
+          en: "// comment written directly inside JSX children",
+          "pt-BR": "// comentário escrito diretamente dentro dos filhos do JSX",
+        },
+        {
+          en: "{/* comment */} inside JSX children",
+          "pt-BR": "{/* comentário */} dentro dos filhos do JSX",
+        },
+        {
+          en: "<!-- comment --> inside JSX children",
+          "pt-BR": "<!-- comentário --> dentro dos filhos do JSX",
+        },
+        {
+          en: "{/* comment */} above a prop, outside the tag's children",
+          "pt-BR": "{/* comentário */} acima de uma prop, fora dos filhos da tag",
+        },
+      ],
+      correct: [1, 3],
+    },
+    {
+      type: "single-choice",
+      prompt: { en: "Why does this fail to compile?", "pt-BR": "Por que isso não compila?" },
+      code: `const el = <img src="cat.png">;`,
+      options: [
+        { en: "img is not a valid JSX tag", "pt-BR": "img não é uma tag JSX válida" },
+        { en: "src must be a number", "pt-BR": "src precisa ser um número" },
+        {
+          en: "Void elements must self-close with />",
+          "pt-BR": "Elementos vazios precisam se auto-fechar com />",
+        },
+        { en: "It compiles fine", "pt-BR": "Compila normalmente" },
+      ],
+      correct: 2,
+    },
+    {
+      type: "single-choice",
+      prompt: {
+        en: "What happens when this renders?",
+        "pt-BR": "O que acontece quando isso renderiza?",
+      },
+      code: `const el = <div class="card">Hi</div>;`,
+      options: [
+        { en: "React throws a compile error", "pt-BR": "O React lança um erro de compilação" },
+        {
+          en: "The card class is silently dropped",
+          "pt-BR": "A classe card é descartada silenciosamente",
+        },
+        {
+          en: "className is used automatically instead",
+          "pt-BR": "className é usado automaticamente no lugar",
+        },
+        {
+          en: "React renders it but warns that class should be className",
+          "pt-BR": "O React renderiza, mas avisa que deveria usar className",
+        },
+      ],
+      correct: 3,
+    },
+    {
+      type: "fill-blank",
+      prompt: {
+        en: "Interpolate the variant into the class name",
+        "pt-BR": "Interpole o variant no nome da classe",
+      },
+      code: "const el = <div className={`btn ___{variant}`}>Save</div>;",
+      answer: "$",
+    },
+  ],
 };

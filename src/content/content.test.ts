@@ -95,7 +95,7 @@ describe.each(tracks)("track $id", (track) => {
     });
   });
 
-  describe.skipIf(unitsOf(track).every(({ unit }) => !unit.challenge))("challenges", () => {
+  describe("challenges", () => {
     const units = unitsOf(track).map(({ unit }) => unit);
     test("exist exactly on units with lessons after the first one", () => {
       units.forEach((unit, i) => {
