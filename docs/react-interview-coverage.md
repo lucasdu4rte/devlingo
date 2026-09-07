@@ -1,0 +1,124 @@
+# React interview coverage
+
+Date: 2026-09-07
+
+The goal for the React track: a developer who finishes it can answer the questions a React interview actually asks. This maps the 110 questions in [GreatFrontEnd's "100 React interview questions"](https://www.greatfrontend.com/blog/100-react-interview-questions-straight-from-ex-interviewers) onto the track, and records what we deliberately leave out.
+
+## Verdict
+
+| Bucket | Questions |
+| --- | --- |
+| Covered by the 12 lessons that exist today | 9 |
+| Falls into units already named but not yet written | 59 |
+| Needs a new unit (added to the skeleton on 2026-09-07) | 14 |
+| Fits inside an existing unit as one or two exercises | 4 |
+| Out of the track's scope, moved to side quests | 24 |
+
+The track's shape was already right: most of the list lands in units we had named. What was missing is content, plus four units and a place for library-shaped topics.
+
+## Units and the questions they must answer
+
+Numbers are the article's. A unit is "done" when a learner who passed it can answer them.
+
+### Beginner
+
+| Unit | Questions |
+| --- | --- |
+| JSX basics | 2, 6, 45 |
+| Components & props | 5, 9, 20, 21, 59, 60, 61, 62 |
+| State with useState | 23, 49, 16 |
+| Handling events | 52 |
+| Lists & keys | 7, 8 |
+| Conditional rendering | — (feeds 45, 47) |
+| Forms | 15, 63 |
+
+### Intermediate
+
+| Unit | Questions |
+| --- | --- |
+| useEffect | 26, 27, 41 |
+| Data fetching *(new)* | 64, 65, 105 (the `use` half is Expert) |
+| Lifting state up | 16, 44, 50 |
+| Context | 43, 46, 48 |
+| Refs | 28, 36 |
+| Custom hooks | 24, 25, 34, 93, 94 |
+| TypeScript with React *(new)* | 19, 22 |
+| Performance basics | 17, 30, 31, 35, 56 |
+
+### Advanced
+
+| Unit | Questions |
+| --- | --- |
+| Reducers | 32 |
+| Suspense & lazy | 38, 42, 51 |
+| Error boundaries | 37 |
+| Portals | 40 |
+| Render patterns | 47, 62, 18, 33 |
+| Testing components | 87, 88, 89, 90, 91, 92, 97 |
+| Class components (legacy) *(new)* | 10, 11, 29, 53 |
+
+### Expert
+
+| Unit | Questions |
+| --- | --- |
+| Concurrent rendering | 54, 55, 109 |
+| Actions & the `use` hook *(new)* | 101, 102, 103, 104, 105, 110 |
+| Server components | 39, 57, 58, 106, 107 |
+| Compiler & memoization | 108 |
+| Reconciliation internals | 3, 4, 12, 13, 14 |
+
+Questions 1 ("what is React") and 66–79 (Router) are handled below.
+
+## The four new units
+
+1. **Data fetching** (Intermediate, after useEffect) — loading and error states, race conditions, cancelling, why a bare `fetch` in `useEffect` bites.
+2. **TypeScript with React** (Intermediate) — typing props, children, events and hooks; why `PropTypes` faded.
+3. **Class components (legacy)** (Advanced) — lifecycle, `setState` with a callback, where they still turn up. Not to write, to read and answer.
+4. **Actions & the `use` hook** (Expert) — `useActionState`, `useOptimistic`, `use`, form `action`. The article's whole React 19 block.
+
+## Side quests: the out-of-scope topics
+
+24 questions are about libraries, not React: React Router (66–79), `react-intl` (80–86), Redux (98), and obsolete testing tools (95, 100). A developer still meets them in interviews, so they become **side quests**: one optional bonus lesson hanging off each unit, worth double XP, framed by the problem the library solves rather than its name.
+
+| Unit | Side quest | The problem |
+| --- | --- | --- |
+| JSX basics | Styling components | Where do styles live |
+| Components & props | Component libraries | Not rebuilding buttons forever |
+| State with useState | Global state | State two distant components share (Redux, Zustand) |
+| Handling events | Forms at scale | Validation without re-rendering everything |
+| Lists & keys | Long lists | Rendering ten thousand rows |
+| Conditional rendering | Feature flags | Shipping code that is off |
+| Forms | Schema validation | One source of truth for shape (zod) |
+| useEffect | Effects you should not write | Deriving instead of syncing |
+| Data fetching | Server cache | Caching, dedupe, invalidation (React Query, SWR) |
+| Lifting state up | URL as state | Routing (React Router) |
+| Context | Theming | One switch, whole tree |
+| Refs | Animation | Motion without fighting React |
+| Custom hooks | Hook collections | What is worth borrowing |
+| TypeScript with React | Generated types | Types from the API, not by hand |
+| Performance basics | Measuring | Profiler before optimizing |
+| Reducers | State machines | Impossible states (XState) |
+| Suspense & lazy | Bundles | What ships on first load |
+| Error boundaries | Error monitoring | Knowing it broke in production (Sentry) |
+| Portals | Accessible overlays | Dialogs that keyboards survive |
+| Render patterns | Headless components | Behavior without markup |
+| Testing components | End-to-end tests | The click a unit test cannot make |
+| Class components | Migrating | Moving legacy code forward |
+| Concurrent rendering | Streaming | Sending HTML in pieces |
+| Actions & `use` | Forms without a client | Progressive enhancement |
+| Server components | Frameworks | Who runs your React (Next.js) |
+| Compiler & memoization | Build tooling | What the compiler already does |
+| Reconciliation internals | Reading React's source | Where to look when curious |
+
+Question 1 ("what is React and its main features") is the JSX basics intro; 47 (anti-patterns) and 48 (state vs context vs a store) are spread across the units that own each anti-pattern.
+
+## Deliberately not covered
+
+- `react-intl` specifics (81–86) as API questions. The concept lives in the Context side quest; the API is a library manual.
+- Redux internals (98). The Global state side quest covers the problem and the shape of a store.
+- Shallow renderer (95) and TestRenderer (100). Both are deprecated; teaching them would be teaching the wrong answer.
+- Router API trivia (71–79). The URL-as-state side quest covers what interviewers actually probe.
+
+## Interview mode (later)
+
+Once the units exist, a "interview mode" can draw 15 questions from the whole track using the challenge machinery already built. Cheap to add, and it is exactly the end state this document is written for.
