@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { CHALLENGE_SIZE } from "@/lib/challenge";
 import { highlightExercise } from "@/lib/highlight";
 import { lessonsOf, tracks, unitsOf } from "./tracks";
-import type { Exercise, Text } from "./types";
+import type { Exercise, Lesson, Text } from "./types";
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -37,6 +37,7 @@ function expectValidExercise(e: Exercise) {
 
 describe.each(tracks)("track $id", (track) => {
   const refs = lessonsOf(track);
+  const units = unitsOf(track).map(({ unit }) => unit);
 
   test("has at least one lesson", () => {
     expect(refs.length).toBeGreaterThan(0);
@@ -100,7 +101,6 @@ describe.each(tracks)("track $id", (track) => {
   });
 
   describe("challenges", () => {
-    const units = unitsOf(track).map(({ unit }) => unit);
     test("exist exactly on units with lessons after the first one", () => {
       units.forEach((unit, i) => {
         const shouldHave = i > 0 && unit.lessons.length > 0;
@@ -124,6 +124,26 @@ describe.each(tracks)("track $id", (track) => {
           .filter((e) => e.type === "multi-choice")
           .map((e) => e.correct);
         expect(multiChoiceCorrect.some((c) => c[0] !== 0 || c[1] !== 1)).toBe(true);
+      });
+    });
+  });
+
+  describe.skipIf(units.every((u) => !u.sideQuest))("side quests", () => {
+    test("exist exactly on units with lessons", () => {
+      units.forEach((unit) => {
+        expect(unit.sideQuest !== undefined, unit.id).toBe(unit.lessons.length > 0);
+      });
+    });
+    describe.each(units.filter((u) => u.sideQuest))("side quest of $id", (unit) => {
+      const quest = unit.sideQuest as Lesson;
+      test("has the right id, size and double xp", () => {
+        expect(quest.id).toBe(`${unit.id}-extra`);
+        expect(quest.exercises.length).toBeGreaterThanOrEqual(5);
+        expect(quest.exercises.length).toBeLessThanOrEqual(7);
+        expect(quest.xp).toBe(2 * (unit.lessons.at(-1) as Lesson).xp);
+      });
+      test.each(quest.exercises.map((e, i) => [i, e] as const))("exercise %i is valid", (_, e) => {
+        expectValidExercise(e);
       });
     });
   });
