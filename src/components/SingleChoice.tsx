@@ -8,6 +8,7 @@ export function SingleChoice({
   answer,
   checked,
   reveal,
+  correct,
   onChange,
   labelledBy,
 }: {
@@ -16,14 +17,19 @@ export function SingleChoice({
   answer: number | null;
   checked: boolean;
   reveal: boolean;
+  correct: boolean;
   onChange: (answer: number) => void;
   labelledBy: string;
 }) {
   function stateOf(i: number): OptionState {
     if (!checked) return answer === i ? "selected" : "idle";
-    if (!reveal) return i === answer ? "wrong" : "idle";
+    const picked = i === answer;
+    if (!reveal) {
+      if (!picked) return "idle";
+      return correct ? "right" : "wrong";
+    }
     if (i === exercise.correct) return "right";
-    if (i === answer) return "wrong";
+    if (picked) return "wrong";
     return "idle";
   }
   return (

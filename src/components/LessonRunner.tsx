@@ -186,6 +186,7 @@ export function LessonRunner({
             answer={answer === -1 ? null : (answer as number)}
             checked={checked}
             reveal={reveal}
+            correct={correct}
             onChange={pickAndCheck}
             labelledBy="exercise-prompt"
           />
@@ -197,6 +198,7 @@ export function LessonRunner({
             answer={answer as number[]}
             checked={checked}
             reveal={reveal}
+            correct={correct}
             onChange={setAnswer}
             labelledBy="exercise-prompt"
           />
