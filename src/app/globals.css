@@ -115,6 +115,16 @@ body {
   font-weight: 700;
 }
 
+@media (width < 40rem) {
+  body {
+    overflow-wrap: anywhere;
+  }
+
+  .shiki {
+    white-space: pre-wrap;
+  }
+}
+
 @keyframes node-in {
   from {
     opacity: 0;
