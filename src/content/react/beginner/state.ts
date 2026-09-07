@@ -587,8 +587,8 @@ export const state: Unit = {
     {
       type: "single-choice",
       prompt: {
-        en: "If Parent re-renders, what happens to Child by default?",
-        "pt-BR": "Se Parent renderiza de novo, o que acontece com Child por padrão?",
+        en: "If `Parent` re-renders, what happens to `Child` by default?",
+        "pt-BR": "Se `Parent` renderiza de novo, o que acontece com `Child` por padrão?",
       },
       code: `function Parent() {\n  return <Child label="Hi" />;\n}`,
       options: [
