@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { LessonRunner } from "@/components/LessonRunner";
 import { findLesson, findTrack, lessonsOf, tracks } from "@/content/tracks";
 import { localize, type Locale } from "@/i18n";
-import { highlightExercise } from "@/lib/highlight";
+import { highlightExercise, highlightOptions } from "@/lib/highlight";
 
 export const dynamicParams = false;
 
@@ -23,6 +23,7 @@ export default async function LessonPage({
   if (!track || !ref) notFound();
 
   const codeHtml = await Promise.all(ref.lesson.exercises.map(highlightExercise));
+  const optionsHtml = await Promise.all(ref.lesson.exercises.map(highlightOptions));
 
   return (
     <main>
@@ -35,6 +36,7 @@ export default async function LessonPage({
         }}
         exercises={ref.lesson.exercises}
         codeHtml={codeHtml}
+        optionsHtml={optionsHtml}
         locale={locale}
         trackHref={`/${locale}/${track.id}`}
       />

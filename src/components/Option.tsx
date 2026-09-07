@@ -20,7 +20,7 @@ export function Option({
   kind,
   index,
   label,
-  mono,
+  html,
   checked,
   disabled,
   onClick,
@@ -29,7 +29,7 @@ export function Option({
   kind: "radio" | "check";
   index: number;
   label: string;
-  mono: boolean;
+  html?: string;
   checked: boolean;
   disabled: boolean;
   onClick: () => void;
@@ -49,7 +49,14 @@ export function Option({
       >
         {kind === "radio" ? index + 1 : showCheck && <Check size={14} />}
       </span>
-      {mono ? <code className="font-mono text-[14px]">{label}</code> : <span>{label}</span>}
+      {html ? (
+        <code
+          className="rounded-lg bg-code px-2.5 py-1 font-mono text-[14px] leading-7 whitespace-pre-wrap"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      ) : (
+        <span>{label}</span>
+      )}
     </button>
   );
 }

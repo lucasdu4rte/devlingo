@@ -1,5 +1,5 @@
 import type { MultiChoice as Exercise } from "@/content/types";
-import { isCode, localize, t, type Locale } from "@/i18n";
+import { localize, t, type Locale } from "@/i18n";
 import { Option, type OptionState } from "./Option";
 
 export function MultiChoice({
@@ -12,6 +12,7 @@ export function MultiChoice({
   onChange,
   labelledBy,
   order,
+  html,
 }: {
   exercise: Exercise;
   locale: Locale;
@@ -22,6 +23,7 @@ export function MultiChoice({
   onChange: (answer: number[]) => void;
   labelledBy: string;
   order: number[];
+  html: (string | null)[] | null;
 }) {
   function stateOf(i: number): OptionState {
     const picked = answer.includes(i);
@@ -47,7 +49,7 @@ export function MultiChoice({
           index={position}
           state={stateOf(i)}
           label={localize(locale, exercise.options[i])}
-          mono={isCode(exercise.options[i])}
+          html={html?.[i] ?? undefined}
           checked={answer.includes(i)}
           disabled={checked}
           onClick={() => toggle(i)}
