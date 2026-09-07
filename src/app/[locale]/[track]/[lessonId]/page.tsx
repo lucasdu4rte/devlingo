@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { LessonRunner } from "@/components/LessonRunner";
 import { findLesson, findTrack, lessonsOf, tracks } from "@/content/tracks";
 import { localize, type Locale } from "@/i18n";
-import { highlight } from "@/lib/highlight";
+import { highlightExercise } from "@/lib/highlight";
 
 export const dynamicParams = false;
 
@@ -22,9 +22,7 @@ export default async function LessonPage({
   const ref = track && findLesson(track, lessonId);
   if (!track || !ref) notFound();
 
-  const codeHtml = await Promise.all(
-    ref.lesson.exercises.map((exercise) => (exercise.code ? highlight(exercise.code) : null)),
-  );
+  const codeHtml = await Promise.all(ref.lesson.exercises.map(highlightExercise));
 
   return (
     <main>

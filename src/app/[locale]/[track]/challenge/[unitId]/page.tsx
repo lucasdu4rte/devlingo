@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { LessonRunner } from "@/components/LessonRunner";
 import { findTrack, findUnit, lessonsBefore, tracks, unitsOf } from "@/content/tracks";
 import { localize, type Locale } from "@/i18n";
-import { highlight } from "@/lib/highlight";
+import { highlightExercise } from "@/lib/highlight";
 
 export const dynamicParams = false;
 
@@ -24,9 +24,7 @@ export default async function ChallengePage({
   const unit = track && findUnit(track, unitId);
   if (!track || !unit?.challenge) notFound();
 
-  const codeHtml = await Promise.all(
-    unit.challenge.map((exercise) => (exercise.code ? highlight(exercise.code) : null)),
-  );
+  const codeHtml = await Promise.all(unit.challenge.map(highlightExercise));
   const lessonIds = lessonsBefore(track, unit.id).map((ref) => ref.lesson.id);
 
   return (
