@@ -21,6 +21,7 @@
   --bad-text: #ff8a8a;
   --streak: #ff9f43;
   --xp: #ffd166;
+  --xp-dark: #b8860b;
   --locked: #2a2e3a;
   --locked-dark: #1c1f28;
   --locked-text: #6b7080;
@@ -49,6 +50,7 @@ html.light {
   --bad-text: #c22f2d;
   --streak: #f0842a;
   --xp: #e6a800;
+  --xp-dark: #a67c00;
   --locked: #e6e8ef;
   --locked-dark: #cfd2dc;
   --locked-text: #9aa0b0;
@@ -77,6 +79,7 @@ html.light {
   --color-bad-text: var(--bad-text);
   --color-streak: var(--streak);
   --color-xp: var(--xp);
+  --color-xp-dark: var(--xp-dark);
   --color-locked: var(--locked);
   --color-locked-dark: var(--locked-dark);
   --color-locked-text: var(--locked-text);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { lessonsOf, type LessonRef } from "@/content/tracks";
+import { lessonsOf, sideQuestsOf, type LessonRef, type SideQuestRef } from "@/content/tracks";
 import type { Track, Unit } from "@/content/types";
 import { localize, t, type Locale } from "@/i18n";
 import { EMPTY, lessonStatus, load } from "@/lib/progress";
@@ -9,20 +9,25 @@ import { Bolt } from "./icons";
 import { JumpDialog } from "./JumpDialog";
 import { ComingSoonNode, LessonNode } from "./LessonNode";
 import { LessonPopover } from "./LessonPopover";
+import { SideQuestNode } from "./SideQuestNode";
 
 const offsets = [0, -44, 0, 44];
 const unitColors = ["bg-primary", "bg-unit-2", "bg-unit-3"];
 
 export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
   const [progress, setProgress] = useState(EMPTY);
-  const [open, setOpen] = useState<LessonRef | null>(null);
+  const [open, setOpen] = useState<LessonRef | SideQuestRef | null>(null);
   const [jump, setJump] = useState<Unit | null>(null);
   useEffect(() => setProgress(load()), []);
 
   const refs = lessonsOf(track);
   const refByLessonId = new Map(refs.map((ref) => [ref.lesson.id, ref]));
-  const statusOf = (ref: LessonRef) => lessonStatus(ref.lesson.id, ref.previousLessonId, progress);
+  const quests = sideQuestsOf(track);
+  const questByUnitId = new Map(quests.map((ref) => [ref.unit.id, ref]));
+  const statusOf = (ref: LessonRef | SideQuestRef) =>
+    lessonStatus(ref.lesson.id, ref.previousLessonId, progress);
   const done = refs.filter((ref) => statusOf(ref) === "completed").length;
+  const extrasDone = quests.filter((ref) => statusOf(ref) === "completed").length;
   const upNext = refs.find((ref) => statusOf(ref) === "current");
   const unitEntries = track.levels.flatMap((level) => level.units.map((unit) => ({ level, unit })));
 
@@ -36,6 +41,7 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
           const firstRef = soon ? undefined : refByLessonId.get(unit.lessons[0].id);
           const locked = firstRef !== undefined && statusOf(firstRef) === "locked";
           const canJump = locked && unit.challenge !== undefined;
+          const questRef = questByUnitId.get(unit.id);
           return (
             <section key={unit.id} className="mb-2">
               <div
@@ -65,7 +71,7 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                   </button>
                 )}
               </div>
-              <div className="flex flex-col items-center gap-6 pb-4 pt-6">
+              <div className="relative flex flex-col items-center gap-6 pb-4 pt-6">
                 {soon
                   ? [0, 1].map((i) => <ComingSoonNode key={i} offset={offsets[i]} index={i} />)
                   : unit.lessons.map((lesson, i) => {
@@ -83,6 +89,14 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                         />
                       );
                     })}
+                {questRef && (
+                  <SideQuestNode
+                    status={statusOf(questRef)}
+                    label={localize(locale, questRef.lesson.title)}
+                    side={unitIndex % 2 === 0 ? "left" : "right"}
+                    onClick={() => setOpen(questRef)}
+                  />
+                )}
               </div>
             </section>
           );
@@ -101,6 +115,13 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
           <div className="mt-2 h-2.5 overflow-hidden rounded-full border border-border bg-surface-2">
             <div className="h-full bg-ok" style={{ width: `${(done / refs.length) * 100}%` }} />
           </div>
+          {quests.length > 0 && (
+            <div className="flex justify-between text-sm text-muted">
+              <span>
+                {t(locale, "track.extrasCount", { done: extrasDone, total: quests.length })}
+              </span>
+            </div>
+          )}
         </Card>
         <Card label={t(locale, "track.upNext")}>
           {upNext ? (
@@ -123,6 +144,7 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
           locale={locale}
           href={`/${locale}/${track.id}/${open.lesson.id}`}
           onClose={() => setOpen(null)}
+          extra={!("indexInUnit" in open)}
         />
       )}
 

@@ -15,6 +15,8 @@
   "track.track": "Track",
   "track.progress": "Progress",
   "track.progressCount": "{done} / {total} lessons",
+  "track.extra": "Extra",
+  "track.extrasCount": "{done} / {total} extras",
   "track.upNext": "Up next",
   "track.allDone": "All available lessons completed",
   "lesson.close": "Back to track",
