@@ -33,22 +33,22 @@ export const jsxBasics: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "After this line runs, what is stored in el?",
-            "pt-BR": "Depois que essa linha roda, o que fica guardado em el?",
+            en: "After this line runs, what is stored in `el`?",
+            "pt-BR": "Depois que essa linha roda, o que fica guardado em `el`?",
           },
           code: `const el = <h1>Hi</h1>;`,
           options: [
             {
-              en: "An actual <h1> DOM node, already on the page",
-              "pt-BR": "Um nó <h1> real do DOM, já na página",
+              en: "An actual `<h1>` DOM node, already on the page",
+              "pt-BR": "Um nó `<h1>` real do DOM, já na página",
             },
             {
-              en: 'The text "<h1>Hi</h1>" as a plain string',
-              "pt-BR": 'O texto "<h1>Hi</h1>" como uma string comum',
+              en: 'The text `"<h1>Hi</h1>"` as a plain string',
+              "pt-BR": 'O texto `"<h1>Hi</h1>"` como uma string comum',
             },
             {
-              en: "A plain JavaScript object describing an h1 (a React element)",
-              "pt-BR": "Um objeto JavaScript comum descrevendo um h1 (um elemento React)",
+              en: "A plain JavaScript object describing an `h1` (a React element)",
+              "pt-BR": "Um objeto JavaScript comum descrevendo um `h1` (um elemento React)",
             },
             {
               en: "Nothing: JSX cannot be assigned to a variable",
@@ -104,8 +104,8 @@ export const jsxBasics: Unit = {
               en: "JSX must return a single root element",
               "pt-BR": "JSX precisa retornar um único elemento raiz",
             },
-            { en: "p is not allowed after h1", "pt-BR": "p não pode vir depois de h1" },
-            { en: "return cannot contain JSX", "pt-BR": "return não pode conter JSX" },
+            { en: "`p` is not allowed after `h1`", "pt-BR": "`p` não pode vir depois de `h1`" },
+            { en: "`return` cannot contain JSX", "pt-BR": "`return` não pode conter JSX" },
             { en: "It compiles fine", "pt-BR": "Compila normalmente" },
           ],
           correct: 0,
@@ -147,8 +147,8 @@ export const jsxBasics: Unit = {
           },
           options: [
             { en: "Only variables", "pt-BR": "Apenas variáveis" },
-            { en: "if statements", "pt-BR": "Instruções if" },
-            { en: "for loops", "pt-BR": "Laços for" },
+            { en: "`if` statements", "pt-BR": "Instruções `if`" },
+            { en: "`for` loops", "pt-BR": "Laços `for`" },
             { en: "Any JavaScript expression", "pt-BR": "Qualquer expressão JavaScript" },
           ],
           correct: 3,
@@ -198,8 +198,8 @@ export const jsxBasics: Unit = {
       id: "jsx-basics-3",
       title: { en: "Attributes and children", "pt-BR": "Atributos e filhos" },
       description: {
-        en: "className, camelCase attributes, and nesting elements.",
-        "pt-BR": "className, atributos em camelCase e aninhamento de elementos.",
+        en: "`className`, camelCase attributes, and nesting elements.",
+        "pt-BR": "`className`, atributos em camelCase e aninhamento de elementos.",
       },
       xp: 30,
       exercises: [
@@ -235,8 +235,8 @@ export const jsxBasics: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "What is the JSX equivalent of the HTML for attribute on a label?",
-            "pt-BR": "Qual o equivalente em JSX do atributo for de um label?",
+            en: "What is the JSX equivalent of the HTML `for` attribute on a `label`?",
+            "pt-BR": "Qual o equivalente em JSX do atributo `for` de um `label`?",
           },
           options: [{ en: "for" }, { en: "htmlFor" }, { en: "labelFor" }, { en: "forId" }],
           correct: 1,
@@ -265,8 +265,8 @@ export const jsxBasics: Unit = {
           options: [
             { en: "<div>...</div>" },
             { en: "<group>...</group>" },
-            { en: "[...] (an array)", "pt-BR": "[...] (um array)" },
-            { en: "<>...</> (a Fragment)", "pt-BR": "<>...</> (um Fragment)" },
+            { en: "`[...]` (an array)", "pt-BR": "`[...]` (um array)" },
+            { en: "`<>...</>` (a `Fragment`)", "pt-BR": "`<>...</>` (um `Fragment`)" },
           ],
           correct: 3,
         },
