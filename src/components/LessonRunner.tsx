@@ -21,6 +21,8 @@ import { SingleChoice } from "./SingleChoice";
 
 type Phase = "answering" | "checked" | "complete" | "failed";
 
+const HINTS_PER_LESSON = 3;
+
 export type RunnerMode =
   | { kind: "lesson"; lesson: Lesson; unitTitle: string; previousLessonId: string | null }
   | { kind: "challenge"; unitId: string; unitTitle: string; lessonIds: string[] };
@@ -62,6 +64,8 @@ export function LessonRunner({
   const [result, setResult] = useState({ xp: 0, streak: 0 });
   const [quitting, setQuitting] = useState(false);
   const [order, setOrder] = useState<number[] | null>(null);
+  const [hintsLeft, setHintsLeft] = useState(HINTS_PER_LESSON);
+  const [revealed, setRevealed] = useState(0);
 
   useEffect(() => setOrder(orderFor(exercises[0])), [exercises]);
 
@@ -82,8 +86,24 @@ export function LessonRunner({
   const correct = phase === "checked" && isCorrect(exercise, normalized);
 
   function check() {
+    if (phase !== "answering") return;
     if (!isCorrect(exercise, normalize(exercise, answer))) setMistakes((m) => m + 1);
     setPhase("checked");
+  }
+
+  function toggleOption(option: number) {
+    setAnswer((prev) => {
+      const picked = prev as number[];
+      return picked.includes(option) ? picked.filter((v) => v !== option) : [...picked, option];
+    });
+  }
+
+  function revealLetter() {
+    if (exercise.type !== "fill-blank") return;
+    const letters = revealed + 1;
+    setAnswer(exercise.answer.slice(0, letters));
+    setRevealed(letters);
+    setHintsLeft((left) => left - 1);
   }
 
   function close() {
@@ -96,6 +116,7 @@ export function LessonRunner({
   }
 
   function pickAndCheck(option: number) {
+    if (phase !== "answering") return;
     setAnswer(option);
     if (!isCorrect(exercise, normalize(exercise, option))) setMistakes((m) => m + 1);
     setPhase("checked");
@@ -124,6 +145,7 @@ export function LessonRunner({
     setIndex(index + 1);
     setAnswer(emptyAnswer(exercises[index + 1]));
     setOrder(orderFor(exercises[index + 1]));
+    setRevealed(0);
     setPhase("answering");
   }
 
@@ -132,8 +154,34 @@ export function LessonRunner({
     setAnswer(emptyAnswer(exercises[0]));
     setOrder(orderFor(exercises[0]));
     setMistakes(0);
+    setRevealed(0);
     setPhase("answering");
   }
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.repeat || quitting || phase === "complete" || phase === "failed") return;
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (phase === "checked") {
+          next();
+          return;
+        }
+        if (isAnswered(exercise, normalized)) check();
+        return;
+      }
+      if (phase !== "answering" || !order || exercise.type === "fill-blank") return;
+      const position = Number(e.key) - 1;
+      if (!Number.isInteger(position) || position < 0 || position >= order.length) return;
+      if (exercise.type === "single-choice") {
+        pickAndCheck(order[position]);
+        return;
+      }
+      toggleOption(order[position]);
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
 
   if (phase === "failed") {
     return <ChallengeFailed locale={locale} onRetry={retry} trackHref={trackHref} />;
@@ -223,6 +271,15 @@ export function LessonRunner({
             checked={checked}
             correct={correct}
             onChange={setAnswer}
+            hint={
+              mode.kind === "lesson"
+                ? {
+                    left: hintsLeft,
+                    enabled: !checked && hintsLeft > 0 && revealed < exercise.answer.length,
+                    onUse: revealLetter,
+                  }
+                : undefined
+            }
           />
         )}
       </div>
@@ -231,6 +288,7 @@ export function LessonRunner({
         <div className="border-t-2 border-border bg-surface p-4 pb-6">
           <Button variant={isAnswered(exercise, normalized) ? "ok" : "disabled"} onClick={check}>
             {t(locale, "lesson.check")}
+            <Kbd />
           </Button>
         </div>
       )}
@@ -251,6 +309,7 @@ export function LessonRunner({
           )}
           <Button variant={correct ? "ok" : "bad"} onClick={next}>
             {t(locale, "lesson.continue")}
+            <Kbd />
           </Button>
         </div>
       )}
@@ -267,4 +326,12 @@ function explanation(exercise: Exercise, locale: Locale) {
   if (exercise.type === "fill-blank")
     return t(locale, "lesson.correctAnswer", { answer: exercise.answer });
   return t(locale, "lesson.correctHighlighted");
+}
+
+function Kbd() {
+  return (
+    <kbd className="ml-2 hidden rounded-md border border-current/40 px-1.5 font-sans text-[11px] lg:inline">
+      Enter
+    </kbd>
+  );
 }

@@ -44,5 +44,6 @@
   "challenge.failedTitle": "Not this time",
   "challenge.failedBody": "You made more than {n} mistakes. Review the earlier units and try again.",
   "challenge.retry": "Try again",
-  "challenge.back": "Back to track"
+  "challenge.back": "Back to track",
+  "lesson.hint": "Reveal a letter ({n} hints left)"
 }
