@@ -1,15 +1,16 @@
 import { notFound } from "next/navigation";
 import { LessonRunner } from "@/components/LessonRunner";
-import { findLesson, findTrack, lessonsOf, tracks } from "@/content/tracks";
+import { findLesson, findTrack, lessonsOf, sideQuestsOf, tracks } from "@/content/tracks";
 import { localize, type Locale } from "@/i18n";
 import { highlightExercise, highlightOptions } from "@/lib/highlight";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return tracks.flatMap((track) =>
-    lessonsOf(track).map((ref) => ({ track: track.id, lessonId: ref.lesson.id })),
-  );
+  return tracks.flatMap((track) => [
+    ...lessonsOf(track).map((ref) => ({ track: track.id, lessonId: ref.lesson.id })),
+    ...sideQuestsOf(track).map((ref) => ({ track: track.id, lessonId: ref.lesson.id })),
+  ]);
 }
 
 export default async function LessonPage({

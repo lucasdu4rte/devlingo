@@ -37,7 +37,7 @@ test("findUnit and unitsOf agree", () => {
   expect(findUnit(react, "nope")).toBeUndefined();
 });
 
-describe.skipIf(sideQuestsOf(react).length === 0)("sideQuestsOf", () => {
+describe("sideQuestsOf", () => {
   test("returns one ref per unit that has a side quest", () => {
     const refs = sideQuestsOf(react);
     const withQuests = unitsOf(react).filter(({ unit }) => unit.sideQuest);
@@ -56,7 +56,7 @@ describe.skipIf(sideQuestsOf(react).length === 0)("sideQuestsOf", () => {
   });
 });
 
-test.skipIf(sideQuestsOf(react).length === 0)("findLesson resolves a side quest", () => {
+test("findLesson resolves a side quest", () => {
   const ref = findLesson(react, "jsx-basics-extra");
   expect(ref?.lesson.id).toBe("jsx-basics-extra");
   expect(ref?.previousLessonId).toBe(null);

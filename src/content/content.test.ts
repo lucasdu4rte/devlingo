@@ -128,7 +128,7 @@ describe.each(tracks)("track $id", (track) => {
     });
   });
 
-  describe.skipIf(units.every((u) => !u.sideQuest))("side quests", () => {
+  describe("side quests", () => {
     test("exist exactly on units with lessons", () => {
       units.forEach((unit) => {
         expect(unit.sideQuest !== undefined, unit.id).toBe(unit.lessons.length > 0);

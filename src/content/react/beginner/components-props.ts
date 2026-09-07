@@ -610,4 +610,187 @@ export const componentsProps: Unit = {
       answer: "$",
     },
   ],
+  sideQuest: {
+    id: "components-props-extra",
+    title: { en: "Component libraries", "pt-BR": "Bibliotecas de componentes" },
+    description: {
+      en: "See why teams stop rebuilding buttons, and what each kind of library trades away.",
+      "pt-BR":
+        "Veja por que times param de reconstruir botões, e o que cada tipo de biblioteca sacrifica.",
+    },
+    xp: 60,
+    exercises: [
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Every team at a company builds its own `<Button>`, each with slightly different padding, colors, and focus states. What problem does a shared component library solve here?",
+          "pt-BR":
+            "Cada time de uma empresa constrói seu próprio `<Button>`, cada um com padding, cores e estados de foco levemente diferentes. Que problema uma biblioteca de componentes compartilhada resolve aqui?",
+        },
+        options: [
+          {
+            en: "It replaces the need for a design team entirely",
+            "pt-BR": "Ela elimina totalmente a necessidade de um time de design",
+          },
+          {
+            en: "It guarantees consistent look, behavior, and accessibility across every team's UI",
+            "pt-BR":
+              "Ela garante aparência, comportamento e acessibilidade consistentes na UI de todos os times",
+          },
+          {
+            en: "It removes the need for any CSS in the app",
+            "pt-BR": "Ela elimina a necessidade de qualquer CSS no app",
+          },
+          {
+            en: "It automatically fixes bugs in unrelated components",
+            "pt-BR": "Ela corrige automaticamente bugs em componentes não relacionados",
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "What is a design system, most precisely?",
+          "pt-BR": "O que é um design system, de forma mais precisa?",
+        },
+        options: [
+          {
+            en: "A CSS framework that only changes colors",
+            "pt-BR": "Um framework CSS que só muda cores",
+          },
+          {
+            en: "A Figma file with only visual mockups, no code",
+            "pt-BR": "Um arquivo do Figma só com mockups visuais, sem código",
+          },
+          {
+            en: "A shared set of reusable components, design tokens (colors, spacing, typography), and rules that keep a product consistent",
+            "pt-BR":
+              "Um conjunto compartilhado de componentes reutilizáveis, tokens de design (cores, espaçamento, tipografia) e regras que mantêm um produto consistente",
+          },
+          {
+            en: "A tool that auto-generates components from screenshots",
+            "pt-BR": "Uma ferramenta que gera componentes automaticamente a partir de screenshots",
+          },
+        ],
+        correct: 2,
+      },
+      {
+        type: "fill-blank",
+        prompt: {
+          en: "Render the imported `Button` component",
+          "pt-BR": "Renderize o componente `Button` importado",
+        },
+        code: `import { Button } from "@acme/design-system";\n\nfunction Toolbar() {\n  return <___ variant="primary">Save</Button>;\n}`,
+        answer: "Button",
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 things a headless UI library provides, unlike a fully styled component library",
+          "pt-BR":
+            "Escolha as 2 coisas que uma biblioteca de UI headless fornece, diferente de uma biblioteca de componentes totalmente estilizada",
+        },
+        options: [
+          {
+            en: "Behavior, state, and accessibility (keyboard navigation, ARIA attributes) with no visual styling",
+            "pt-BR":
+              "Comportamento, estado e acessibilidade (navegação por teclado, atributos ARIA) sem nenhuma estilização visual",
+          },
+          {
+            en: "A complete set of ready-made colors and CSS classes you never have to write",
+            "pt-BR":
+              "Um conjunto completo de cores e classes CSS prontas que você nunca precisa escrever",
+          },
+          {
+            en: "Full freedom to render your own markup and styles around the provided behavior",
+            "pt-BR":
+              "Liberdade total para renderizar sua própria marcação e estilos em torno do comportamento fornecido",
+          },
+          {
+            en: "Automatic integration with any state management library you use",
+            "pt-BR":
+              "Integração automática com qualquer biblioteca de gerenciamento de estado que você use",
+          },
+        ],
+        correct: [0, 2],
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "A styled component library ships ready-made visual designs. What's the main trade-off?",
+          "pt-BR":
+            "Uma biblioteca de componentes estilizada já vem com designs visuais prontos. Qual é a principal troca?",
+        },
+        options: [
+          {
+            en: "Customizing it beyond its theme options can mean fighting the library's own CSS",
+            "pt-BR":
+              "Customizá-la além das opções de tema pode significar brigar com o próprio CSS da biblioteca",
+          },
+          {
+            en: "It has no accessibility features at all",
+            "pt-BR": "Ela não tem nenhum recurso de acessibilidade",
+          },
+          {
+            en: "It requires no bundle size at all",
+            "pt-BR": "Ela não adiciona nada ao tamanho do bundle",
+          },
+          {
+            en: "It cannot be combined with your own CSS",
+            "pt-BR": "Ela não pode ser combinada com seu próprio CSS",
+          },
+        ],
+        correct: 0,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Pulling in a whole component library just to use its `<Button>` mainly affects which cost?",
+          "pt-BR":
+            "Trazer uma biblioteca de componentes inteira só para usar o `<Button>` dela afeta principalmente qual custo?",
+        },
+        options: [
+          { en: "Runtime crashes", "pt-BR": "Falhas em tempo de execução" },
+          {
+            en: "Bundle size — you ship code for components you never use",
+            "pt-BR": "Tamanho do bundle — você envia código de componentes que nunca usa",
+          },
+          { en: "Type safety", "pt-BR": "Segurança de tipos" },
+          { en: "Server response time", "pt-BR": "Tempo de resposta do servidor" },
+        ],
+        correct: 1,
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 true statements about adopting a third-party component library",
+          "pt-BR":
+            "Escolha as 2 afirmações verdadeiras sobre adotar uma biblioteca de componentes de terceiros",
+        },
+        options: [
+          {
+            en: "It guarantees your app will pass every accessibility audit automatically",
+            "pt-BR":
+              "Ela garante que seu app vai passar em toda auditoria de acessibilidade automaticamente",
+          },
+          {
+            en: "It can lock your codebase into that library's API and update cadence",
+            "pt-BR":
+              "Ela pode prender seu código à API e ao ritmo de atualizações daquela biblioteca",
+          },
+          {
+            en: "It eliminates all future design decisions",
+            "pt-BR": "Ela elimina todas as decisões de design futuras",
+          },
+          {
+            en: "It saves the team from re-implementing and re-testing common UI patterns like modals and dropdowns",
+            "pt-BR":
+              "Ela poupa o time de reimplementar e retestar padrões comuns de UI, como modais e dropdowns",
+          },
+        ],
+        correct: [1, 3],
+      },
+    ],
+  },
 };
