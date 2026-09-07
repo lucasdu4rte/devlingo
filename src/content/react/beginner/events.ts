@@ -525,9 +525,9 @@ export const events: Unit = {
       },
       options: [
         {
-          en: "State defined with useState is shared globally across all uses of that component",
+          en: "State defined with `useState` is shared globally across all uses of that component",
           "pt-BR":
-            "O estado definido com useState é compartilhado globalmente entre todos os usos daquele componente",
+            "O estado definido com `useState` é compartilhado globalmente entre todos os usos daquele componente",
         },
         {
           en: "Two instances of the same component have independent state",
