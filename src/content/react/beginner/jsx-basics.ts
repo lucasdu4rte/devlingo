@@ -33,18 +33,27 @@ export const jsxBasics: Unit = {
         {
           type: "single-choice",
           prompt: {
-            en: "What does this expression evaluate to?",
-            "pt-BR": "O que essa expressão produz?",
+            en: "After this line runs, what is stored in el?",
+            "pt-BR": "Depois que essa linha roda, o que fica guardado em el?",
           },
           code: `const el = <h1>Hi</h1>;`,
           options: [
-            { en: "A real DOM node", "pt-BR": "Um nó real do DOM" },
-            { en: 'The string "<h1>Hi</h1>"', "pt-BR": 'A string "<h1>Hi</h1>"' },
             {
-              en: "A React element describing an h1",
-              "pt-BR": "Um elemento React descrevendo um h1",
+              en: "An actual <h1> DOM node, already on the page",
+              "pt-BR": "Um nó <h1> real do DOM, já na página",
             },
-            { en: "A syntax error", "pt-BR": "Um erro de sintaxe" },
+            {
+              en: 'The text "<h1>Hi</h1>" as a plain string',
+              "pt-BR": 'O texto "<h1>Hi</h1>" como uma string comum',
+            },
+            {
+              en: "A plain JavaScript object describing an h1 (a React element)",
+              "pt-BR": "Um objeto JavaScript comum descrevendo um h1 (um elemento React)",
+            },
+            {
+              en: "Nothing: JSX cannot be assigned to a variable",
+              "pt-BR": "Nada: JSX não pode ser atribuído a uma variável",
+            },
           ],
           correct: 2,
         },

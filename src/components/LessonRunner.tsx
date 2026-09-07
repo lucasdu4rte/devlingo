@@ -7,6 +7,7 @@ import { localize, t, type Locale } from "@/i18n";
 import { isAnswered, isCorrect, type Answer } from "@/lib/check";
 import { CHALLENGE_MAX_MISTAKES, CHALLENGE_XP, challengeOutcome } from "@/lib/challenge";
 import { completeLesson, lessonStatus, load, passChallenge } from "@/lib/progress";
+import { shuffledIndexes } from "@/lib/shuffle";
 import { Button } from "./Button";
 import { ChallengeFailed } from "./ChallengeFailed";
 import { CodeBlock } from "./CodeBlock";
@@ -28,6 +29,11 @@ function emptyAnswer(exercise: Exercise): Answer {
   if (exercise.type === "multi-choice") return [];
   if (exercise.type === "fill-blank") return "";
   return -1;
+}
+
+function orderFor(exercise: Exercise) {
+  if (exercise.type === "fill-blank") return [];
+  return shuffledIndexes(exercise.options.length);
 }
 
 function normalize(exercise: Exercise, answer: Answer): Answer | null {
@@ -55,6 +61,9 @@ export function LessonRunner({
   const [mistakes, setMistakes] = useState(0);
   const [result, setResult] = useState({ xp: 0, streak: 0 });
   const [quitting, setQuitting] = useState(false);
+  const [order, setOrder] = useState<number[] | null>(null);
+
+  useEffect(() => setOrder(orderFor(exercises[0])), [exercises]);
 
   useEffect(() => {
     if (mode.kind === "lesson") {
@@ -114,12 +123,14 @@ export function LessonRunner({
     }
     setIndex(index + 1);
     setAnswer(emptyAnswer(exercises[index + 1]));
+    setOrder(orderFor(exercises[index + 1]));
     setPhase("answering");
   }
 
   function retry() {
     setIndex(0);
     setAnswer(emptyAnswer(exercises[0]));
+    setOrder(orderFor(exercises[0]));
     setMistakes(0);
     setPhase("answering");
   }
@@ -179,7 +190,7 @@ export function LessonRunner({
           {localize(locale, exercise.prompt)}
         </h1>
         {codeHtml[index] && <CodeBlock html={codeHtml[index]} />}
-        {exercise.type === "single-choice" && (
+        {exercise.type === "single-choice" && order && (
           <SingleChoice
             exercise={exercise}
             locale={locale}
@@ -189,9 +200,10 @@ export function LessonRunner({
             correct={correct}
             onChange={pickAndCheck}
             labelledBy="exercise-prompt"
+            order={order}
           />
         )}
-        {exercise.type === "multi-choice" && (
+        {exercise.type === "multi-choice" && order && (
           <MultiChoice
             exercise={exercise}
             locale={locale}
@@ -201,6 +213,7 @@ export function LessonRunner({
             correct={correct}
             onChange={setAnswer}
             labelledBy="exercise-prompt"
+            order={order}
           />
         )}
         {exercise.type === "fill-blank" && (

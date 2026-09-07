@@ -24,3 +24,8 @@ export function t(locale: Locale, key: MessageKey, vars: Record<string, string |
 export function localize(locale: Locale, text: Text) {
   return text[locale] ?? text.en;
 }
+
+// ponytail: options written in English only are code by content convention; add a flag if that stops holding.
+export function isCode(text: Text) {
+  return !("pt-BR" in text);
+}

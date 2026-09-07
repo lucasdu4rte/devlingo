@@ -1,5 +1,5 @@
 import type { MultiChoice as Exercise } from "@/content/types";
-import { localize, t, type Locale } from "@/i18n";
+import { isCode, localize, t, type Locale } from "@/i18n";
 import { Option, type OptionState } from "./Option";
 
 export function MultiChoice({
@@ -11,6 +11,7 @@ export function MultiChoice({
   correct,
   onChange,
   labelledBy,
+  order,
 }: {
   exercise: Exercise;
   locale: Locale;
@@ -20,6 +21,7 @@ export function MultiChoice({
   correct: boolean;
   onChange: (answer: number[]) => void;
   labelledBy: string;
+  order: number[];
 }) {
   function stateOf(i: number): OptionState {
     const picked = answer.includes(i);
@@ -38,13 +40,14 @@ export function MultiChoice({
   return (
     <div role="group" aria-labelledby={labelledBy} className="flex flex-col gap-2.5">
       <div className="-mt-2 text-sm text-muted">{t(locale, "lesson.selectAll")}</div>
-      {exercise.options.map((option, i) => (
+      {order.map((i, position) => (
         <Option
           key={i}
           kind="check"
-          index={i}
+          index={position}
           state={stateOf(i)}
-          label={localize(locale, option)}
+          label={localize(locale, exercise.options[i])}
+          mono={isCode(exercise.options[i])}
           checked={answer.includes(i)}
           disabled={checked}
           onClick={() => toggle(i)}

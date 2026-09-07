@@ -20,6 +20,7 @@ export function Option({
   kind,
   index,
   label,
+  mono,
   checked,
   disabled,
   onClick,
@@ -28,6 +29,7 @@ export function Option({
   kind: "radio" | "check";
   index: number;
   label: string;
+  mono: boolean;
   checked: boolean;
   disabled: boolean;
   onClick: () => void;
@@ -47,7 +49,7 @@ export function Option({
       >
         {kind === "radio" ? index + 1 : showCheck && <Check size={14} />}
       </span>
-      <span>{label}</span>
+      {mono ? <code className="font-mono text-[14px]">{label}</code> : <span>{label}</span>}
     </button>
   );
 }
