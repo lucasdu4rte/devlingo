@@ -26,7 +26,7 @@ export type Lesson = {
   xp: number;
   exercises: Exercise[];
 };
-export type Unit = { id: string; title: Text; lessons: Lesson[] };
+export type Unit = { id: string; title: Text; lessons: Lesson[]; challenge?: Exercise[] };
 export type LevelId = "beginner" | "intermediate" | "advanced" | "expert";
 export type Level = { id: LevelId; title: Text; units: Unit[] };
 export type Track = { id: string; title: Text; levels: Level[] };

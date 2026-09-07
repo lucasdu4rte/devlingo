@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
+import { CHALLENGE_SIZE } from "@/lib/challenge";
 import { highlight } from "@/lib/highlight";
-import { lessonsOf, tracks } from "./tracks";
+import { lessonsOf, tracks, unitsOf } from "./tracks";
 import type { Exercise, Text } from "./types";
 
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -8,6 +9,26 @@ const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 function texts(exercise: Exercise): Text[] {
   if (exercise.type === "fill-blank") return [exercise.prompt];
   return [exercise.prompt, ...exercise.options];
+}
+
+function expectValidExercise(e: Exercise) {
+  texts(e).forEach((text) => expect(text.en.trim()).not.toBe(""));
+  if (e.type === "single-choice") {
+    expect(e.correct).toBeGreaterThanOrEqual(0);
+    expect(e.correct).toBeLessThan(e.options.length);
+    expect(new Set(e.options.map((o) => o.en)).size).toBe(e.options.length);
+  }
+  if (e.type === "multi-choice") {
+    expect(e.correct.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(e.correct).size).toBe(e.correct.length);
+    e.correct.forEach((c) => expect(c).toBeGreaterThanOrEqual(0));
+    e.correct.forEach((c) => expect(c).toBeLessThan(e.options.length));
+    expect(new Set(e.options.map((o) => o.en)).size).toBe(e.options.length);
+  }
+  if (e.type === "fill-blank") {
+    expect(e.code.split("___").length).toBe(2);
+    expect(e.answer.trim()).not.toBe("");
+  }
 }
 
 describe.each(tracks)("track $id", (track) => {
@@ -70,23 +91,31 @@ describe.each(tracks)("track $id", (track) => {
     });
 
     test.each(lesson.exercises.map((e, i) => [i, e] as const))("exercise %i is valid", (_, e) => {
-      texts(e).forEach((text) => expect(text.en.trim()).not.toBe(""));
-      if (e.type === "single-choice") {
-        expect(e.correct).toBeGreaterThanOrEqual(0);
-        expect(e.correct).toBeLessThan(e.options.length);
-        expect(new Set(e.options.map((o) => o.en)).size).toBe(e.options.length);
-      }
-      if (e.type === "multi-choice") {
-        expect(e.correct.length).toBeGreaterThanOrEqual(2);
-        expect(new Set(e.correct).size).toBe(e.correct.length);
-        e.correct.forEach((c) => expect(c).toBeGreaterThanOrEqual(0));
-        e.correct.forEach((c) => expect(c).toBeLessThan(e.options.length));
-        expect(new Set(e.options.map((o) => o.en)).size).toBe(e.options.length);
-      }
-      if (e.type === "fill-blank") {
-        expect(e.code.split("___").length).toBe(2);
-        expect(e.answer.trim()).not.toBe("");
-      }
+      expectValidExercise(e);
+    });
+  });
+
+  describe.skipIf(unitsOf(track).every(({ unit }) => !unit.challenge))("challenges", () => {
+    const units = unitsOf(track).map(({ unit }) => unit);
+    test("exist exactly on units with lessons after the first one", () => {
+      units.forEach((unit, i) => {
+        const shouldHave = i > 0 && unit.lessons.length > 0;
+        expect(unit.challenge !== undefined, unit.id).toBe(shouldHave);
+      });
+    });
+    describe.each(units.filter((u) => u.challenge))("challenge $id", (unit) => {
+      const exercises = unit.challenge as Exercise[];
+      test("has exactly 15 exercises", () => {
+        expect(exercises.length).toBe(CHALLENGE_SIZE);
+      });
+      test.each(exercises.map((e, i) => [i, e] as const))("exercise %i is valid", (_, e) => {
+        expectValidExercise(e);
+      });
+      test("correct answers are not always first", () => {
+        const singles = exercises.filter((e) => e.type === "single-choice");
+        const firsts = singles.filter((e) => e.correct === 0).length;
+        expect(firsts).toBeLessThan(singles.length / 2);
+      });
     });
   });
 });

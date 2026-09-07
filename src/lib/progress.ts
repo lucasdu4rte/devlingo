@@ -50,19 +50,30 @@ function nextStreak(progress: Progress, today: Date) {
   return 1;
 }
 
-// ponytail: no passive streak decay; a missed day only shows once the next lesson is completed.
-export function completeLesson(lessonId: string, xp: number): Progress {
-  const progress = load();
-  if (progress.completedLessons.includes(lessonId)) return progress;
+function record(progress: Progress, newLessonIds: string[], xp: number): Progress {
   const today = new Date();
   const next: Progress = {
     xp: progress.xp + xp,
     streak: nextStreak(progress, today),
     lastActiveDay: dayKey(today),
-    completedLessons: [...progress.completedLessons, lessonId],
+    completedLessons: [...progress.completedLessons, ...newLessonIds],
   };
   save(next);
   return next;
+}
+
+// ponytail: no passive streak decay; a missed day only shows once the next lesson is completed.
+export function completeLesson(lessonId: string, xp: number): Progress {
+  const progress = load();
+  if (progress.completedLessons.includes(lessonId)) return progress;
+  return record(progress, [lessonId], xp);
+}
+
+export function passChallenge(lessonIds: string[], xp: number): Progress {
+  const progress = load();
+  const fresh = lessonIds.filter((id) => !progress.completedLessons.includes(id));
+  if (fresh.length === 0) return progress;
+  return record(progress, fresh, xp);
 }
 
 export function lessonStatus(

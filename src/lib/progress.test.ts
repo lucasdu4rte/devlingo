@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { EMPTY, completeLesson, lessonStatus, load, save } from "./progress";
+import { EMPTY, completeLesson, lessonStatus, load, passChallenge, save } from "./progress";
 
 const store = new Map<string, string>();
 
@@ -78,5 +78,22 @@ describe("lessonStatus", () => {
   });
   test("lesson after an incomplete one is locked", () => {
     expect(lessonStatus("c", "b", progress)).toBe("locked");
+  });
+});
+
+describe("passChallenge", () => {
+  test("completes only the new lessons, adds xp once and starts a streak", () => {
+    save({ xp: 20, streak: 0, lastActiveDay: null, completedLessons: ["a"] });
+    expect(passChallenge(["a", "b", "c"], 300)).toEqual({
+      xp: 320,
+      streak: 1,
+      lastActiveDay: "2026-09-06",
+      completedLessons: ["a", "b", "c"],
+    });
+  });
+  test("is a no-op when everything was already completed", () => {
+    save({ xp: 20, streak: 2, lastActiveDay: "2026-09-01", completedLessons: ["a", "b"] });
+    expect(passChallenge(["a", "b"], 300)).toEqual(load());
+    expect(load().xp).toBe(20);
   });
 });

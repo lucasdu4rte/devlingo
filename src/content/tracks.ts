@@ -37,3 +37,18 @@ export function lessonsOf(track: Track): LessonRef[] {
 export function findLesson(track: Track, lessonId: string) {
   return lessonsOf(track).find((ref) => ref.lesson.id === lessonId);
 }
+
+export function unitsOf(track: Track) {
+  return track.levels.flatMap((level) => level.units.map((unit) => ({ unit, level })));
+}
+
+export function findUnit(track: Track, unitId: string) {
+  return unitsOf(track).find(({ unit }) => unit.id === unitId)?.unit;
+}
+
+export function lessonsBefore(track: Track, unitId: string): LessonRef[] {
+  const refs = lessonsOf(track);
+  const start = refs.findIndex((ref) => ref.unit.id === unitId);
+  if (start === -1) return refs;
+  return refs.slice(0, start);
+}
