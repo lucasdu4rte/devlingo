@@ -636,4 +636,189 @@ export const state: Unit = {
       correct: 2,
     },
   ],
+  sideQuest: {
+    id: "state-extra",
+    title: { en: "Global state", "pt-BR": "Estado global" },
+    description: {
+      en: "Recognize prop drilling and see when a shared store solves what context or lifting doesn't.",
+      "pt-BR":
+        "Reconheça o prop drilling e veja quando um store compartilhado resolve o que context ou lifting não resolvem.",
+    },
+    xp: 60,
+    exercises: [
+      {
+        type: "single-choice",
+        prompt: {
+          en: "A header's cart icon and a product page, on opposite sides of the component tree, both need the same `cartItems` list. Where does that state have to live for both to see it?",
+          "pt-BR":
+            "O ícone de carrinho no cabeçalho e a página de produto, em lados opostos da árvore de componentes, precisam da mesma lista `cartItems`. Onde esse estado precisa viver para que os dois a vejam?",
+        },
+        options: [
+          {
+            en: "In each component separately, kept in sync by copying values back and forth",
+            "pt-BR":
+              "Em cada componente separadamente, sincronizado copiando valores de um lado para o outro",
+          },
+          {
+            en: "In a common ancestor above both — or in a store outside the component tree that both can read",
+            "pt-BR":
+              "Em um ancestral comum acima dos dois — ou em um store fora da árvore de componentes que ambos possam ler",
+          },
+          {
+            en: "It can live in whichever component happens to render first",
+            "pt-BR": "Pode viver em qualquer componente que renderize primeiro",
+          },
+          {
+            en: "Local `useState` in each component, since React syncs same-named state automatically",
+            "pt-BR":
+              "`useState` local em cada componente, já que o React sincroniza estados com o mesmo nome automaticamente",
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "You pass `theme` through 5 components that never use it, just so a 6th one can read it. What is this called, and what does it usually signal?",
+          "pt-BR":
+            "Você passa `theme` por 5 componentes que nunca a usam, só para que um 6º possa lê-la. Como isso se chama, e o que costuma sinalizar?",
+        },
+        options: [
+          {
+            en: '"Composition", and it\'s the recommended pattern',
+            "pt-BR": '"Composição", e é o padrão recomendado',
+          },
+          {
+            en: '"Prop drilling" — a sign the state might belong somewhere more shared, like context or a store',
+            "pt-BR":
+              '"Prop drilling" — um sinal de que o estado talvez devesse estar em algo mais compartilhado, como context ou um store',
+          },
+          {
+            en: '"Hoisting", a compiler optimization',
+            "pt-BR": '"Hoisting", uma otimização do compilador',
+          },
+          {
+            en: '"Memoization", which improves performance',
+            "pt-BR": '"Memoization", que melhora a performance',
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "fill-blank",
+        prompt: {
+          en: "Name the store method that registers a callback to run whenever the state changes",
+          "pt-BR":
+            "Nomeie o método do store que registra um callback para rodar sempre que o estado mudar",
+        },
+        code: `store.___(listener);`,
+        answer: "subscribe",
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 things a global store like Redux or Zustand provides",
+          "pt-BR": "Escolha as 2 coisas que um store global como Redux ou Zustand fornece",
+        },
+        options: [
+          {
+            en: "A single source of truth accessible from any component in the tree",
+            "pt-BR": "Uma única fonte de verdade acessível de qualquer componente na árvore",
+          },
+          {
+            en: "Actions (or setters) that describe how the state changes, plus subscribers that react to it",
+            "pt-BR":
+              "Ações (ou setters) que descrevem como o estado muda, além de subscribers que reagem a isso",
+          },
+          {
+            en: "Automatic elimination of every state-related bug",
+            "pt-BR": "Eliminação automática de todo bug relacionado a estado",
+          },
+          {
+            en: "A guarantee that the app never needs `useState` again",
+            "pt-BR": "Uma garantia de que o app nunca mais vai precisar de `useState`",
+          },
+        ],
+        correct: [0, 1],
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Two sibling components need to share one piece of state, and no other component needs it. What's the simplest fix?",
+          "pt-BR":
+            "Dois componentes irmãos precisam compartilhar um único pedaço de estado, e nenhum outro componente precisa dele. Qual é a solução mais simples?",
+        },
+        options: [
+          { en: "Reach for Redux immediately", "pt-BR": "Recorrer ao Redux imediatamente" },
+          {
+            en: "Lift the state up to their closest common parent and pass it down as props",
+            "pt-BR": "Elevar o estado (lifting) até o pai comum mais próximo e passá-lo como props",
+          },
+          {
+            en: "Put it in a global store so it's available everywhere",
+            "pt-BR": "Colocar em um store global para que fique disponível em todo lugar",
+          },
+          {
+            en: "Duplicate the state in both siblings",
+            "pt-BR": "Duplicar o estado nos dois irmãos",
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "React Context lets a value skip prop drilling. When is context already enough, without reaching for a dedicated state library?",
+          "pt-BR":
+            "O Context do React permite que um valor pule o prop drilling. Quando o context já é suficiente, sem precisar de uma biblioteca de estado dedicada?",
+        },
+        options: [
+          {
+            en: "When the value rarely changes and only a few components deep in the tree need it",
+            "pt-BR":
+              "Quando o valor muda raramente e só alguns componentes no fundo da árvore precisam dele",
+          },
+          {
+            en: "Never — context can't hold state at all",
+            "pt-BR": "Nunca — context não consegue guardar estado",
+          },
+          { en: "Only when the value is a number", "pt-BR": "Só quando o valor é um número" },
+          {
+            en: "Always — no state library is ever needed",
+            "pt-BR": "Sempre — nenhuma biblioteca de estado é necessária",
+          },
+        ],
+        correct: 0,
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 true statements about React Context versus a dedicated state library like Redux or Zustand",
+          "pt-BR":
+            "Escolha as 2 afirmações verdadeiras sobre Context do React comparado a uma biblioteca de estado dedicada, como Redux ou Zustand",
+        },
+        options: [
+          {
+            en: "Context requires installing an external library",
+            "pt-BR": "Context exige instalar uma biblioteca externa",
+          },
+          {
+            en: "Every component reading a context re-renders whenever that context value changes",
+            "pt-BR":
+              "Todo componente que lê um context renderiza de novo sempre que o valor do context muda",
+          },
+          {
+            en: "A dedicated store can let components subscribe to just a slice of state, avoiding unrelated re-renders",
+            "pt-BR":
+              "Um store dedicado pode deixar componentes assinarem só uma fatia do estado, evitando renderizações não relacionadas",
+          },
+          {
+            en: "A dedicated state library can never be combined with Context",
+            "pt-BR": "Uma biblioteca de estado dedicada nunca pode ser combinada com Context",
+          },
+        ],
+        correct: [1, 2],
+      },
+    ],
+  },
 };

@@ -643,4 +643,190 @@ export const events: Unit = {
       correct: 0,
     },
   ],
+  sideQuest: {
+    id: "events-extra",
+    title: { en: "Forms at scale", "pt-BR": "Formulários em escala" },
+    description: {
+      en: "See what breaks down as a form grows, and what a form library buys you.",
+      "pt-BR":
+        "Veja o que passa a falhar conforme um formulário cresce, e o que uma biblioteca de formulários oferece.",
+    },
+    xp: 60,
+    exercises: [
+      {
+        type: "single-choice",
+        prompt: {
+          en: "A form with 40 controlled `<input>`s calls a state setter on every keystroke, and the whole form component re-renders each time. What's the performance concern?",
+          "pt-BR":
+            "Um formulário com 40 `<input>`s controlados chama um setter de estado a cada tecla digitada, e o componente inteiro do formulário renderiza de novo a cada vez. Qual é a preocupação de performance?",
+        },
+        options: [
+          {
+            en: "Controlled inputs never re-render, so there's no concern",
+            "pt-BR": "Inputs controlados nunca renderizam de novo, então não há preocupação",
+          },
+          {
+            en: "The browser stops accepting further keystrokes after 40 fields",
+            "pt-BR": "O navegador para de aceitar novas teclas depois de 40 campos",
+          },
+          {
+            en: "Every keystroke re-renders all 40 inputs and everything else in that component, even though only one field changed",
+            "pt-BR":
+              "Cada tecla renderiza de novo os 40 inputs e tudo mais naquele componente, mesmo que só um campo tenha mudado",
+          },
+          {
+            en: "React batches all 40 fields into a single DOM element, so re-renders are free",
+            "pt-BR":
+              "O React agrupa os 40 campos em um único elemento do DOM, então as renderizações não custam nada",
+          },
+        ],
+        correct: 2,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: 'What makes an input "uncontrolled"?',
+          "pt-BR": 'O que torna um input "uncontrolled" (não controlado)?',
+        },
+        options: [
+          {
+            en: "It cannot have an `onChange` handler",
+            "pt-BR": "Ele não pode ter um handler `onChange`",
+          },
+          {
+            en: "It has no `value` prop tying it to React state — the DOM element keeps its own current value",
+            "pt-BR":
+              "Ele não tem uma prop `value` ligando-o ao estado do React — o próprio elemento do DOM guarda o valor atual",
+          },
+          { en: "It always starts out empty", "pt-BR": "Ele sempre começa vazio" },
+          {
+            en: "It cannot be used inside a `<form>`",
+            "pt-BR": "Ele não pode ser usado dentro de um `<form>`",
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "fill-blank",
+        prompt: {
+          en: "Read the uncontrolled input's current value through the ref",
+          "pt-BR": "Leia o valor atual do input não controlado através do ref",
+        },
+        code: `const inputRef = useRef(null);\nfunction handleSubmit() {\n  console.log(inputRef.current.___);\n}`,
+        answer: "value",
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 things a form library like react-hook-form typically gives you beyond plain controlled inputs",
+          "pt-BR":
+            "Escolha as 2 coisas que uma biblioteca de formulários como react-hook-form costuma dar além de inputs controlados simples",
+        },
+        options: [
+          {
+            en: "Built-in validation rules and per-field error messages",
+            "pt-BR": "Regras de validação prontas e mensagens de erro por campo",
+          },
+          {
+            en: 'Tracking of which fields the user actually touched or changed ("dirty" state)',
+            "pt-BR":
+              'Rastreamento de quais campos o usuário realmente tocou ou mudou (estado "dirty")',
+          },
+          {
+            en: "Automatic integration with every possible backend API",
+            "pt-BR": "Integração automática com qualquer API de backend",
+          },
+          {
+            en: "A guarantee of zero re-renders anywhere in the app",
+            "pt-BR": "Uma garantia de zero renderizações em qualquer lugar do app",
+          },
+        ],
+        correct: [0, 1],
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Why does an `onSubmit` handler on the `<form>` beat a click handler on the submit `<button>`?",
+          "pt-BR":
+            "Por que um handler `onSubmit` no `<form>` é melhor que um handler de clique no `<button>` de envio?",
+        },
+        options: [
+          {
+            en: "`onSubmit` runs before the component mounts",
+            "pt-BR": "`onSubmit` roda antes do componente montar",
+          },
+          {
+            en: "Click handlers on buttons cannot call functions",
+            "pt-BR": "Handlers de clique em botões não podem chamar funções",
+          },
+          {
+            en: "`onSubmit` is the only handler that ever receives an event object",
+            "pt-BR": "`onSubmit` é o único handler que recebe um objeto de evento",
+          },
+          {
+            en: "`onSubmit` also fires for keyboard submission, like pressing Enter in a field, not just a button click",
+            "pt-BR":
+              "`onSubmit` também dispara ao enviar pelo teclado, como apertar Enter em um campo, não só ao clicar no botão",
+          },
+        ],
+        correct: 3,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "What does calling `e.preventDefault()` inside a form's `onSubmit` accomplish?",
+          "pt-BR": "O que chamar `e.preventDefault()` dentro do `onSubmit` de um formulário faz?",
+        },
+        options: [
+          {
+            en: "It stops the browser's default full-page reload, letting your JavaScript handle the submission instead",
+            "pt-BR":
+              "Impede o recarregamento padrão da página inteira pelo navegador, deixando seu JavaScript cuidar do envio",
+          },
+          {
+            en: "It clears all the form fields",
+            "pt-BR": "Limpa todos os campos do formulário",
+          },
+          {
+            en: "It validates every field automatically",
+            "pt-BR": "Valida todos os campos automaticamente",
+          },
+          {
+            en: "It disables the submit button permanently",
+            "pt-BR": "Desabilita o botão de envio permanentemente",
+          },
+        ],
+        correct: 0,
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 true statements about controlled versus uncontrolled inputs",
+          "pt-BR":
+            "Escolha as 2 afirmações verdadeiras sobre inputs controlados versus não controlados",
+        },
+        options: [
+          {
+            en: "Uncontrolled inputs cannot store any value at all",
+            "pt-BR": "Inputs não controlados não conseguem guardar nenhum valor",
+          },
+          {
+            en: "Controlled inputs make the current value available in state on every keystroke; uncontrolled inputs don't",
+            "pt-BR":
+              "Inputs controlados deixam o valor atual disponível no estado a cada tecla; inputs não controlados não",
+          },
+          {
+            en: "Uncontrolled inputs are read on demand, usually via a ref, instead of on every keystroke",
+            "pt-BR":
+              "Inputs não controlados são lidos sob demanda, geralmente via ref, em vez de a cada tecla",
+          },
+          {
+            en: "Controlled inputs are managed entirely by the DOM, not React",
+            "pt-BR": "Inputs controlados são gerenciados inteiramente pelo DOM, não pelo React",
+          },
+        ],
+        correct: [1, 2],
+      },
+    ],
+  },
 };

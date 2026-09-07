@@ -257,10 +257,11 @@ export const jsxBasics: Unit = {
           correct: 2,
         },
         {
-          type: "single-choice",
+          type: "multi-choice",
           prompt: {
-            en: "How do you group siblings without adding a DOM node?",
-            "pt-BR": "Como agrupar irmãos sem adicionar um nó no DOM?",
+            en: "Pick the 2 ways to group sibling elements without adding a wrapper DOM node",
+            "pt-BR":
+              "Escolha as 2 formas de agrupar elementos irmãos sem adicionar um nó de DOM ao redor",
           },
           options: [
             { en: "<div>...</div>" },
@@ -268,9 +269,201 @@ export const jsxBasics: Unit = {
             { en: "`[...]` (an array)", "pt-BR": "`[...]` (um array)" },
             { en: "`<>...</>` (a `Fragment`)", "pt-BR": "`<>...</>` (um `Fragment`)" },
           ],
-          correct: 3,
+          correct: [2, 3],
         },
       ],
     },
   ],
+  sideQuest: {
+    id: "jsx-basics-extra",
+    title: { en: "Styling components", "pt-BR": "Estilizando componentes" },
+    description: {
+      en: "Compare where component styles can live and the trade-off each approach makes.",
+      "pt-BR":
+        "Compare onde os estilos de um componente podem viver e a troca que cada abordagem faz.",
+    },
+    xp: 60,
+    exercises: [
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Two different components each define a class named `.title` in their own plain CSS file, and both files get loaded on the same page. What happens?",
+          "pt-BR":
+            "Dois componentes diferentes definem uma classe chamada `.title` em seus próprios arquivos CSS simples, e os dois arquivos são carregados na mesma página. O que acontece?",
+        },
+        options: [
+          {
+            en: "Both stylesheets are merged without any conflict",
+            "pt-BR": "Os dois arquivos CSS são combinados sem nenhum conflito",
+          },
+          {
+            en: "The build fails with a duplicate class name error",
+            "pt-BR": "O build falha com um erro de nome de classe duplicado",
+          },
+          {
+            en: "Whichever stylesheet loads last wins, and one component's `.title` styles override the other's",
+            "pt-BR":
+              "O arquivo CSS que carrega por último vence, e os estilos de `.title` de um componente sobrescrevem os do outro",
+          },
+          {
+            en: "React automatically renames one of the classes to avoid the clash",
+            "pt-BR": "O React renomeia automaticamente uma das classes para evitar o conflito",
+          },
+        ],
+        correct: 2,
+      },
+      {
+        type: "fill-blank",
+        prompt: {
+          en: "Complete the import so the binding matches the one used below",
+          "pt-BR": "Complete o import para que o nome bata com o usado abaixo",
+        },
+        code: `import ___ from "./Card.module.css";\n\nfunction Card() {\n  return <div className={styles.card}>Hi</div>;\n}`,
+        answer: "styles",
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Given `styles.card` from a CSS Modules import, what ends up in the rendered `className`?",
+          "pt-BR":
+            "Dado `styles.card` de um import do CSS Modules, o que acaba no `className` renderizado?",
+        },
+        code: `import styles from "./Card.module.css";\nfunction Card() {\n  return <div className={styles.card}>Hi</div>;\n}`,
+        options: [
+          { en: 'The literal string `"card"`', "pt-BR": 'A string literal `"card"`' },
+          {
+            en: 'A unique hashed string like `"Card_card__a1b2c"`',
+            "pt-BR": 'Uma string única com hash, como `"Card_card__a1b2c"`',
+          },
+          {
+            en: "`undefined`, because `styles.card` must be called as a function",
+            "pt-BR": "`undefined`, porque `styles.card` precisa ser chamado como função",
+          },
+          {
+            en: "The object `{ card: ... }` itself",
+            "pt-BR": "O próprio objeto `{ card: ... }`",
+          },
+        ],
+        correct: 1,
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 true statements about utility-class libraries like Tailwind CSS",
+          "pt-BR":
+            "Escolha as 2 afirmações verdadeiras sobre bibliotecas de classes utilitárias, como o Tailwind CSS",
+        },
+        options: [
+          {
+            en: "You compose styles by combining many small, single-purpose classes directly in the JSX",
+            "pt-BR":
+              "Você compõe estilos combinando várias classes pequenas e de propósito único direto no JSX",
+          },
+          {
+            en: "Utility classes eliminate the need to write any custom CSS, ever",
+            "pt-BR":
+              "Classes utilitárias eliminam para sempre a necessidade de escrever CSS customizado",
+          },
+          {
+            en: "They reduce the need to invent a unique class name for every one-off style",
+            "pt-BR":
+              "Elas reduzem a necessidade de inventar um nome de classe único para cada estilo pontual",
+          },
+          {
+            en: "Utility classes are automatically scoped to the component that uses them, like CSS Modules",
+            "pt-BR":
+              "Classes utilitárias têm escopo automático para o componente que as usa, como o CSS Modules",
+          },
+        ],
+        correct: [0, 2],
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "A CSS-in-JS library that computes styles while the app runs in the browser, instead of at build time. What's the cost?",
+          "pt-BR":
+            "Uma biblioteca CSS-in-JS que calcula os estilos enquanto o app roda no navegador, em vez de em tempo de build. Qual é o custo?",
+        },
+        options: [
+          {
+            en: "It cannot use JavaScript variables inside styles",
+            "pt-BR": "Ela não consegue usar variáveis JavaScript dentro dos estilos",
+          },
+          {
+            en: "It requires a dedicated server to run",
+            "pt-BR": "Ela exige um servidor dedicado para rodar",
+          },
+          {
+            en: "It always fails to override existing styles",
+            "pt-BR": "Ela sempre falha ao sobrescrever estilos existentes",
+          },
+          {
+            en: "It ships extra JavaScript to the browser and computes styles at runtime, adding bundle size and runtime cost",
+            "pt-BR":
+              "Ela envia JavaScript extra para o navegador e calcula os estilos em tempo de execução, aumentando o tamanho do bundle e o custo de runtime",
+          },
+        ],
+        correct: 3,
+      },
+      {
+        type: "single-choice",
+        prompt: {
+          en: "Why does the inline `style` attribute take a JavaScript object instead of a CSS string?",
+          "pt-BR":
+            "Por que o atributo `style` inline recebe um objeto JavaScript em vez de uma string CSS?",
+        },
+        code: `<div style={{ color: "red", fontSize: 14 }}>Hi</div>`,
+        options: [
+          {
+            en: "JSX attributes inside curly braces must be JavaScript values, and inline styles use camelCase keys like `fontSize`",
+            "pt-BR":
+              "Atributos JSX dentro de chaves precisam ser valores JavaScript, e estilos inline usam chaves em camelCase como `fontSize`",
+          },
+          {
+            en: "Only objects can be sent over the network",
+            "pt-BR": "Só objetos podem ser enviados pela rede",
+          },
+          {
+            en: "Strings are not allowed anywhere in JSX",
+            "pt-BR": "Strings não são permitidas em nenhum lugar do JSX",
+          },
+          {
+            en: "`style` only accepts numeric values",
+            "pt-BR": "`style` só aceita valores numéricos",
+          },
+        ],
+        correct: 0,
+      },
+      {
+        type: "multi-choice",
+        prompt: {
+          en: "Pick the 2 true statements about these styling approaches",
+          "pt-BR": "Escolha as 2 afirmações verdadeiras sobre essas abordagens de estilização",
+        },
+        options: [
+          {
+            en: "Plain stylesheets give no protection against class name collisions across files",
+            "pt-BR":
+              "Arquivos CSS simples não dão nenhuma proteção contra colisões de nomes de classe entre arquivos",
+          },
+          {
+            en: "Inline `style` objects can't express pseudo-classes like `:hover` or media queries",
+            "pt-BR":
+              "Objetos `style` inline não conseguem expressar pseudo-classes como `:hover` ou media queries",
+          },
+          {
+            en: "CSS Modules only work if you also add a runtime CSS-in-JS library",
+            "pt-BR":
+              "O CSS Modules só funciona se você também adicionar uma biblioteca CSS-in-JS em runtime",
+          },
+          {
+            en: "Utility-class libraries always produce a smaller final CSS bundle than hand-written stylesheets",
+            "pt-BR":
+              "Bibliotecas de classes utilitárias sempre produzem um bundle CSS final menor que folhas de estilo escritas à mão",
+          },
+        ],
+        correct: [0, 1],
+      },
+    ],
+  },
 };

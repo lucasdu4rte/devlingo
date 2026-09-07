@@ -14,6 +14,8 @@
   "track.track": "Trilha",
   "track.progress": "Progresso",
   "track.progressCount": "{done} / {total} lições",
+  "track.extra": "Extra",
+  "track.extrasCount": "{done} / {total} extras",
   "track.upNext": "Próxima",
   "track.allDone": "Todas as lições disponíveis concluídas",
   "lesson.close": "Voltar para a trilha",

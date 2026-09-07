@@ -34,8 +34,28 @@ export function lessonsOf(track: Track): LessonRef[] {
   return refs;
 }
 
-export function findLesson(track: Track, lessonId: string) {
-  return lessonsOf(track).find((ref) => ref.lesson.id === lessonId);
+export type SideQuestRef = {
+  lesson: Lesson;
+  unit: Unit;
+  level: Level;
+  previousLessonId: string | null;
+};
+
+export function sideQuestsOf(track: Track): SideQuestRef[] {
+  return unitsOf(track)
+    .filter(({ unit }) => unit.sideQuest)
+    .map(({ unit, level }) => ({
+      lesson: unit.sideQuest as Lesson,
+      unit,
+      level,
+      previousLessonId: lessonsBefore(track, unit.id).at(-1)?.lesson.id ?? null,
+    }));
+}
+
+export function findLesson(track: Track, lessonId: string): LessonRef | SideQuestRef | undefined {
+  const main = lessonsOf(track).find((ref) => ref.lesson.id === lessonId);
+  if (main) return main;
+  return sideQuestsOf(track).find((ref) => ref.lesson.id === lessonId);
 }
 
 export function unitsOf(track: Track) {
