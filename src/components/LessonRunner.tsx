@@ -17,6 +17,7 @@ import { LessonComplete } from "./LessonComplete";
 import { MultiChoice } from "./MultiChoice";
 import { ProgressBar } from "./ProgressBar";
 import { QuitDialog } from "./QuitDialog";
+import { RichText } from "./RichText";
 import { SingleChoice } from "./SingleChoice";
 
 type Phase = "answering" | "checked" | "complete" | "failed";
@@ -237,7 +238,7 @@ export function LessonRunner({
 
       <div className="flex flex-1 flex-col gap-3.5 px-5 py-3.5">
         <h1 id="exercise-prompt" className="font-display text-xl font-bold leading-snug">
-          {localize(locale, exercise.prompt)}
+          <RichText text={localize(locale, exercise.prompt)} />
         </h1>
         {codeHtml[index] && <CodeBlock html={codeHtml[index]} />}
         {exercise.type === "single-choice" && order && (
@@ -309,7 +310,9 @@ export function LessonRunner({
             {t(locale, correct ? "lesson.correct" : "lesson.wrong")}
           </div>
           {!correct && mode.kind === "lesson" && (
-            <div className="mb-3 text-sm">{explanation(exercise, locale)}</div>
+            <div className="mb-3 text-sm">
+              <RichText text={explanation(exercise, locale)} />
+            </div>
           )}
           <Button variant={correct ? "ok" : "bad"} onClick={next}>
             {t(locale, "lesson.continue")}

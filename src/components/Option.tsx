@@ -1,4 +1,5 @@
 import { Check } from "./icons";
+import { RichText } from "./RichText";
 
 export type OptionState = "idle" | "selected" | "right" | "wrong";
 
@@ -55,7 +56,9 @@ export function Option({
           dangerouslySetInnerHTML={{ __html: html }}
         />
       ) : (
-        <span>{label}</span>
+        <span>
+          <RichText text={label} />
+        </span>
       )}
     </button>
   );
