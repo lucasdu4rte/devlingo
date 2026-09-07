@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import type { Exercise, Lesson } from "@/content/types";
 import { localize, t, type Locale } from "@/i18n";
 import { isAnswered, isCorrect, type Answer } from "@/lib/check";
-import { completeLesson, lessonStatus, load } from "@/lib/progress";
+import { CHALLENGE_MAX_MISTAKES, CHALLENGE_XP, challengeOutcome } from "@/lib/challenge";
+import { completeLesson, lessonStatus, load, passChallenge } from "@/lib/progress";
 import { Button } from "./Button";
+import { ChallengeFailed } from "./ChallengeFailed";
 import { CodeBlock } from "./CodeBlock";
 import { FillBlank } from "./FillBlank";
 import { Check, Close } from "./icons";
@@ -16,7 +18,11 @@ import { ProgressBar } from "./ProgressBar";
 import { QuitDialog } from "./QuitDialog";
 import { SingleChoice } from "./SingleChoice";
 
-type Phase = "answering" | "checked" | "complete";
+type Phase = "answering" | "checked" | "complete" | "failed";
+
+export type RunnerMode =
+  | { kind: "lesson"; lesson: Lesson; unitTitle: string; previousLessonId: string | null }
+  | { kind: "challenge"; unitId: string; unitTitle: string; lessonIds: string[] };
 
 function emptyAnswer(exercise: Exercise): Answer {
   if (exercise.type === "multi-choice") return [];
@@ -30,36 +36,44 @@ function normalize(exercise: Exercise, answer: Answer): Answer | null {
 }
 
 export function LessonRunner({
-  lesson,
-  unitTitle,
-  previousLessonId,
+  mode,
+  exercises,
+  codeHtml,
   locale,
   trackHref,
-  codeHtml,
 }: {
-  lesson: Lesson;
-  unitTitle: string;
-  previousLessonId: string | null;
+  mode: RunnerMode;
+  exercises: Exercise[];
+  codeHtml: (string | null)[];
   locale: Locale;
   trackHref: string;
-  codeHtml: (string | null)[];
 }) {
   const router = useRouter();
   const [index, setIndex] = useState(0);
-  const [answer, setAnswer] = useState<Answer>(() => emptyAnswer(lesson.exercises[0]));
+  const [answer, setAnswer] = useState<Answer>(() => emptyAnswer(exercises[0]));
   const [phase, setPhase] = useState<Phase>("answering");
+  const [mistakes, setMistakes] = useState(0);
   const [result, setResult] = useState({ xp: 0, streak: 0 });
   const [quitting, setQuitting] = useState(false);
 
   useEffect(() => {
-    if (lessonStatus(lesson.id, previousLessonId, load()) === "locked") router.replace(trackHref);
-  }, [lesson.id, previousLessonId, router, trackHref]);
+    if (mode.kind === "lesson") {
+      if (lessonStatus(mode.lesson.id, mode.previousLessonId, load()) === "locked") {
+        router.replace(trackHref);
+      }
+      return;
+    }
+    if (load().completedLessons.includes(mode.lessonIds.at(-1) as string)) {
+      router.replace(trackHref);
+    }
+  }, [mode, router, trackHref]);
 
-  const exercise = lesson.exercises[index];
+  const exercise = exercises[index];
   const normalized = normalize(exercise, answer);
   const correct = phase === "checked" && isCorrect(exercise, normalized);
 
   function check() {
+    if (!isCorrect(exercise, normalize(exercise, answer))) setMistakes((m) => m + 1);
     setPhase("checked");
   }
 
@@ -74,28 +88,55 @@ export function LessonRunner({
 
   function pickAndCheck(option: number) {
     setAnswer(option);
+    if (!isCorrect(exercise, normalize(exercise, option))) setMistakes((m) => m + 1);
     setPhase("checked");
   }
 
   function next() {
-    const last = index === lesson.exercises.length - 1;
-    if (!last) {
-      setIndex(index + 1);
-      setAnswer(emptyAnswer(lesson.exercises[index + 1]));
-      setPhase("answering");
+    if (mode.kind === "challenge") {
+      const outcome = challengeOutcome(mistakes, index + 1, exercises.length);
+      if (outcome === "failed") {
+        setPhase("failed");
+        return;
+      }
+      if (outcome === "passed") {
+        const progress = passChallenge(mode.lessonIds, CHALLENGE_XP);
+        setResult({ xp: CHALLENGE_XP, streak: progress.streak });
+        setPhase("complete");
+        return;
+      }
+    } else if (index === exercises.length - 1) {
+      const already = load().completedLessons.includes(mode.lesson.id);
+      const progress = completeLesson(mode.lesson.id, mode.lesson.xp);
+      setResult({ xp: already ? 0 : mode.lesson.xp, streak: progress.streak });
+      setPhase("complete");
       return;
     }
-    const already = load().completedLessons.includes(lesson.id);
-    const progress = completeLesson(lesson.id, lesson.xp);
-    setResult({ xp: already ? 0 : lesson.xp, streak: progress.streak });
-    setPhase("complete");
+    setIndex(index + 1);
+    setAnswer(emptyAnswer(exercises[index + 1]));
+    setPhase("answering");
+  }
+
+  function retry() {
+    setIndex(0);
+    setAnswer(emptyAnswer(exercises[0]));
+    setMistakes(0);
+    setPhase("answering");
+  }
+
+  if (phase === "failed") {
+    return <ChallengeFailed locale={locale} onRetry={retry} trackHref={trackHref} />;
   }
 
   if (phase === "complete") {
+    const subtitle =
+      mode.kind === "lesson"
+        ? `${mode.unitTitle} · ${localize(locale, mode.lesson.title)}`
+        : t(locale, "challenge.subtitle", { unit: mode.unitTitle });
     return (
       <LessonComplete
         locale={locale}
-        subtitle={`${unitTitle} · ${localize(locale, lesson.title)}`}
+        subtitle={subtitle}
         xp={result.xp}
         streak={result.streak}
         trackHref={trackHref}
@@ -104,6 +145,7 @@ export function LessonRunner({
   }
 
   const checked = phase === "checked";
+  const reveal = mode.kind === "lesson";
   return (
     <div className="mx-auto flex min-h-dvh max-w-2xl flex-col">
       {quitting && (
@@ -122,7 +164,14 @@ export function LessonRunner({
         >
           <Close size={20} />
         </button>
-        <ProgressBar value={index / lesson.exercises.length} />
+        <ProgressBar value={index / exercises.length} />
+        {mode.kind === "challenge" && (
+          <span className="whitespace-nowrap text-xs font-bold text-muted">
+            {t(locale, "challenge.mistakesLeft", {
+              n: Math.max(0, CHALLENGE_MAX_MISTAKES - mistakes),
+            })}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3.5 px-5 py-3.5">
@@ -136,6 +185,7 @@ export function LessonRunner({
             locale={locale}
             answer={answer === -1 ? null : (answer as number)}
             checked={checked}
+            reveal={reveal}
             onChange={pickAndCheck}
             labelledBy="exercise-prompt"
           />
@@ -146,6 +196,7 @@ export function LessonRunner({
             locale={locale}
             answer={answer as number[]}
             checked={checked}
+            reveal={reveal}
             onChange={setAnswer}
             labelledBy="exercise-prompt"
           />
@@ -180,7 +231,9 @@ export function LessonRunner({
             </span>
             {t(locale, correct ? "lesson.correct" : "lesson.wrong")}
           </div>
-          {!correct && <div className="mb-3 text-sm">{explanation(exercise, locale)}</div>}
+          {!correct && mode.kind === "lesson" && (
+            <div className="mb-3 text-sm">{explanation(exercise, locale)}</div>
+          )}
           <Button variant={correct ? "ok" : "bad"} onClick={next}>
             {t(locale, "lesson.continue")}
           </Button>

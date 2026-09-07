@@ -29,12 +29,16 @@ export default async function LessonPage({
   return (
     <main>
       <LessonRunner
-        lesson={ref.lesson}
-        unitTitle={localize(locale, ref.unit.title)}
-        previousLessonId={ref.previousLessonId}
+        mode={{
+          kind: "lesson",
+          lesson: ref.lesson,
+          unitTitle: localize(locale, ref.unit.title),
+          previousLessonId: ref.previousLessonId,
+        }}
+        exercises={ref.lesson.exercises}
+        codeHtml={codeHtml}
         locale={locale}
         trackHref={`/${locale}/${track.id}`}
-        codeHtml={codeHtml}
       />
     </main>
   );

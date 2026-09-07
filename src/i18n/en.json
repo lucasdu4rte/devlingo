@@ -33,5 +33,16 @@
   "lesson.quitTitle": "Quit this lesson?",
   "lesson.quitBody": "Your progress in this lesson will be lost.",
   "lesson.quitStay": "Keep learning",
-  "lesson.quitConfirm": "Quit lesson"
+  "lesson.quitConfirm": "Quit lesson",
+  "track.jumpHere": "Jump here",
+  "track.jumpTitle": "Jump to {unit}?",
+  "track.jumpBody": "Pass a {n}-question test on everything before this unit. Up to {mistakes} mistakes allowed.",
+  "track.jumpReward": "Reward: {xp} XP",
+  "track.jumpStart": "Start test",
+  "challenge.mistakesLeft": "{n} mistakes left",
+  "challenge.subtitle": "Challenge · {unit}",
+  "challenge.failedTitle": "Not this time",
+  "challenge.failedBody": "You made more than {n} mistakes. Review the earlier units and try again.",
+  "challenge.retry": "Try again",
+  "challenge.back": "Back to track"
 }

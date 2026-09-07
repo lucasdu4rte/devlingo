@@ -7,6 +7,9 @@ describe("lessonsBefore", () => {
   test("is empty for the first unit", () => {
     expect(lessonsBefore(react, "jsx-basics")).toEqual([]);
   });
+  test("is empty for an unknown unit id", () => {
+    expect(lessonsBefore(react, "nope")).toEqual([]);
+  });
   test("returns every lesson of the previous units in order", () => {
     const ids = lessonsBefore(react, "state").map((ref) => ref.lesson.id);
     expect(ids).toEqual([

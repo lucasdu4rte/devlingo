@@ -49,6 +49,6 @@ export function findUnit(track: Track, unitId: string) {
 export function lessonsBefore(track: Track, unitId: string): LessonRef[] {
   const refs = lessonsOf(track);
   const start = refs.findIndex((ref) => ref.unit.id === unitId);
-  if (start === -1) return refs;
+  if (start === -1) return [];
   return refs.slice(0, start);
 }

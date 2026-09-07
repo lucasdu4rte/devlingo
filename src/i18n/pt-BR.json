@@ -32,5 +32,16 @@
   "lesson.quitTitle": "Sair da lição?",
   "lesson.quitBody": "O progresso desta lição será perdido.",
   "lesson.quitStay": "Continuar estudando",
-  "lesson.quitConfirm": "Sair da lição"
+  "lesson.quitConfirm": "Sair da lição",
+  "track.jumpHere": "Pular para cá",
+  "track.jumpTitle": "Pular para {unit}?",
+  "track.jumpBody": "Passe numa prova de {n} questões sobre tudo antes desta unidade. Até {mistakes} erros permitidos.",
+  "track.jumpReward": "Recompensa: {xp} XP",
+  "track.jumpStart": "Começar prova",
+  "challenge.mistakesLeft": "{n} erros restantes",
+  "challenge.subtitle": "Desafio · {unit}",
+  "challenge.failedTitle": "Não foi dessa vez",
+  "challenge.failedBody": "Você errou mais de {n} vezes. Revise as unidades anteriores e tente de novo.",
+  "challenge.retry": "Tentar de novo",
+  "challenge.back": "Voltar para a trilha"
 }

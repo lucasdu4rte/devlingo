@@ -7,6 +7,7 @@ export function MultiChoice({
   locale,
   answer,
   checked,
+  reveal,
   onChange,
   labelledBy,
 }: {
@@ -14,12 +15,14 @@ export function MultiChoice({
   locale: Locale;
   answer: number[];
   checked: boolean;
+  reveal: boolean;
   onChange: (answer: number[]) => void;
   labelledBy: string;
 }) {
   function stateOf(i: number): OptionState {
     const picked = answer.includes(i);
     if (!checked) return picked ? "selected" : "idle";
+    if (!reveal) return picked ? "wrong" : "idle";
     if (exercise.correct.includes(i)) return "right";
     if (picked) return "wrong";
     return "idle";
