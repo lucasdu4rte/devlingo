@@ -11,13 +11,24 @@
 **Spec:** `docs/superpowers/specs/2026-09-07-track-expansion-design.md`
 **Coverage map (acceptance criterion for content):** `docs/react-interview-coverage.md`
 
+## Progress
+
+| Tasks | Status |
+| --- | --- |
+| 1–3: side quest infrastructure and initial content | Implemented in `d3e05cc`, `fa9c066`, `76f2849`, with integration fixes in `666dde8` |
+| 4: Lists & keys | Implemented: 18 regular exercises, 15 challenge questions and 6 extra exercises |
+| 5–26: remaining units | Pending; resume with Task 5, Conditional rendering |
+
+Tasks 1–3 are historical implementation instructions. The table records their delivered state; their original red-test execution is not repeated when resuming the plan.
+
 ## Global Constraints
 
-- Node via `fnm`; in the Bash tool prefix node/npm commands with `eval "$(fnm env --shell zsh)" && `.
+- Node via `fnm`; use `fnm exec --using 24 <command>` when shell initialization is unavailable.
 - Before every commit: `npm run format && npm run lint && npx tsc --noEmit && npm test`. Content tasks also run `npm run build`.
 - `next dev` writes `AGENTS.md`/`CLAUDE.md` at the repo root: delete them and commit with explicit `git add` paths. Leave `.claude/` untracked.
-- Content rules, all enforced by `src/content/content.test.ts`: lesson ids `<unit>-1..3`, side quest id `<unit>-extra`, 5–7 exercises per lesson, exactly 15 per challenge, XP 20 / 30 / 30 and 60 for the side quest, at least one `fill-blank` and one `multi-choice` per lesson, exactly one `___` per fill-blank with a single-token answer, correct answers spread across positions, `{ en, "pt-BR" }` on every prompt and sentence-like option, backticks around inline code in prose, pure-code options English-only and never backticked.
-- Every exercise must have exactly one defensible correct answer under React 19 semantics; distractors plausible to a skimmer, wrong to someone who knows React.
+- Automated content rules in `src/content/content.test.ts`: three lessons with ids `<unit>-1..3`, side quest id `<unit>-extra`, 5–7 exercises per lesson and extra, exactly 15 per challenge, XP 20 / 30 / 30 and 60 for the side quest, at least one `fill-blank` and one `multi-choice` per lesson and extra, exactly one `___` per fill-blank with a single-token answer, varied correct answer positions, bilingual prompts/titles/descriptions, nonempty translations and balanced prose backticks. Unit and lesson ids are unique, including extras and coming-soon units.
+- Editorial checks: sentence-like options have both languages; English-only options are raw code by the existing `isCode` convention. Reviewers must check that prose is not misclassified, inline code is backticked, each prompt states the multi-choice selection count, and every answer or answer set is uniquely defensible under React 19 semantics. Structural tests cannot establish semantic correctness or topic coverage.
+- Every challenge covers all regular units before its target across all preceding levels. Passing skips that complete prerequisite path; side quests and the target unit's own topics are excluded.
 - No comments in code beyond deliberate `// ponytail:` notes. Early returns, no nested ternaries. Conventional Commits ≤72 chars, no attribution trailers.
 - Work on branch `feat/track-expansion` (already created, holds the four new unit stubs and the coverage map).
 
@@ -275,11 +286,15 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 
 **File:** `src/content/react/beginner/lists-keys.ts` · **Interview questions:** 7, 8
 
-- [ ] **Lesson 1 — Rendering a list / Renderizando uma lista:** `map` returning JSX; why a loop statement does not work inside braces; arrays as children; empty state; nesting `map` inside JSX vs extracting a variable.
-- [ ] **Lesson 2 — The key prop / A prop key:** what React uses keys for; keys must be unique among siblings, not globally; `key` is not readable as a prop; keys on the outermost element of the item, including on a `Fragment` (`<Fragment key>` vs `<>`).
-- [ ] **Lesson 3 — Choosing a key / Escolhendo a key:** index as key and what breaks (reorder, insert at the front, inputs keeping the wrong value); stable ids from the data; generating an id at render as an anti-pattern; when an index is acceptable (static, never reordered).
-- [ ] **Challenge (15):** everything from JSX basics through Handling events.
-- [ ] **Side quest — Long lists / Listas longas:** rendering ten thousand rows; why the DOM, not React, is the bottleneck; windowing/virtualization (render what fits, absolute offsets); pagination and infinite scroll as alternatives; the accessibility cost of virtualizing.
+- [x] **Lesson 1 — Rendering a list / Renderizando uma lista:** `map` returning JSX; why a loop statement does not work inside braces; arrays as children; empty state; nesting `map` inside JSX vs extracting a variable.
+- [x] **Lesson 2 — The key prop / A prop key:** what React uses keys for; keys must be unique among siblings, not globally; `key` is not readable as a prop; keys on the outermost element of the item, including on a `Fragment` (`<Fragment key>` vs `<>`).
+- [x] **Lesson 3 — Choosing a key / Escolhendo a key:** index as key and what breaks (reorder, insert at the front, inputs keeping the wrong value); stable ids from the data; generating an id at render as an anti-pattern; when an index is acceptable (static, never reordered).
+- [x] **Challenge (15):** everything from JSX basics through Handling events.
+- [x] **Side quest — Long lists / Listas longas:** rendering ten thousand rows; recognizing DOM layout/paint cost in a measured scenario without assuming it is always the bottleneck; windowing/virtualization (render what fits, absolute offsets); pagination and infinite scroll as alternatives; the accessibility cost of virtualizing.
+
+Verification on 2026-09-07: all 39 exercises completed through the browser, with English and pt-BR coverage; 360px extra/popover layout checked. Passing the challenge completed only the 12 prior regular lessons for 300 XP. Completing the extra awarded 60 XP without unlocking lesson 2; the regular lessons awarded 20/30/30 XP. Independent content review approved every answer set and both translations. No progress schema or permanent ids changed.
+
+Final automated checks: `npm run format`, `npm run lint` and `npm run build -- --webpack` passed (319 tests, TypeScript, 57 static pages). The default Turbopack build could not bind an internal port in the execution environment, including on an escalated retry; the application configuration remains unchanged.
 
 ---
 
@@ -351,7 +366,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 2 — Re-renders / Re-renderizações:** every consumer re-renders when the value changes; a new object each render as the classic bug; memoizing the value; splitting one context into two.
 - [ ] **Lesson 3 — Choosing / Escolhendo:** context vs lifting vs a store; context is not a state manager; a custom hook wrapping `useContext` with a guard.
 - [ ] **Challenge (15):** Beginner plus useEffect, data fetching, lifting state.
-- [ ] **Side quest — Theming / Temas:** one switch that repaints a tree; tokens vs hardcoded colors; system preference and the flash on first paint; where the choice is stored.
+- [ ] **Side quest — Theming and localization / Temas e localização:** sharing theme and locale through context; tokens vs hardcoded colors; system preference and first-paint consistency; translation catalogs and language fallback; locale-aware number/date formatting with `Intl`, without requiring a translation library's API (question 80).
 
 ---
 
@@ -410,7 +425,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — useReducer / useReducer:** state, action, reducer; `dispatch` instead of setters; when it beats `useState`.
 - [ ] **Lesson 2 — Writing reducers / Escrevendo reducers:** pure, no mutation, returns the next state; the default case; deriving instead of storing; the lazy initializer.
 - [ ] **Lesson 3 — Reducer plus context / Reducer com context:** passing state and dispatch down; splitting the two contexts; where this stops being enough.
-- [ ] **Challenge (15):** the whole Intermediate level.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Performance basics (Beginner and Intermediate).
 - [ ] **Side quest — State machines / Máquinas de estado:** the impossible states a boolean soup allows; states and transitions as data; what XState formalizes; when a reducer is already the machine.
 
 ---
@@ -422,7 +437,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Suspense / Suspense:** a boundary and its fallback; what suspending means; nesting boundaries for granularity.
 - [ ] **Lesson 2 — lazy / lazy:** `lazy` + `import()`; where the boundary goes; what code splitting does to the bundle; splitting by route.
 - [ ] **Lesson 3 — Loading UX / UX de carregamento:** skeleton vs spinner; layout shift; avoiding a fallback flash; `useTransition` keeping the old UI in place.
-- [ ] **Challenge (15):** Intermediate plus reducers.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Reducers.
 - [ ] **Side quest — Bundles / Bundles:** what ships on first load; a bundle analyzer's picture; a dependency that costs more than the feature; splitting by route vs by interaction.
 
 ---
@@ -434,7 +449,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Catching render errors / Capturando erros de renderização:** what a boundary catches and what it does not (events, async, SSR); the class API; the fallback.
 - [ ] **Lesson 2 — Placement / Posicionamento:** one at the root vs one per region; resetting a boundary; what the user should see.
 - [ ] **Lesson 3 — Errors outside render / Erros fora da renderização:** try/catch in handlers and async code; error state in a reducer; unhandled rejections.
-- [ ] **Challenge (15):** Intermediate plus reducers and suspense.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Suspense & lazy.
 - [ ] **Side quest — Error monitoring / Monitoramento de erros:** knowing it broke for someone else; what a report needs (stack, release, user path); source maps; noise and sampling.
 
 ---
@@ -446,7 +461,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — createPortal / createPortal:** rendering into another DOM node while staying in the React tree; the problem it solves (overflow, stacking).
 - [ ] **Lesson 2 — Events through portals / Eventos através de portais:** bubbling follows the React tree, not the DOM; a click outside a portal; context still reaching it.
 - [ ] **Lesson 3 — Overlays / Sobreposições:** a dialog's focus, Escape and scroll lock; `aria-modal`; returning focus on close.
-- [ ] **Challenge (15):** Intermediate plus reducers through error boundaries.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Error boundaries.
 - [ ] **Side quest — Accessible overlays / Sobreposições acessíveis:** what a keyboard user needs from a dialog; the focus trap; what a headless library gives; why hand-rolled dialogs break.
 
 ---
@@ -458,19 +473,19 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Composition / Composição:** `children` as the default extension point; slots as props; composition instead of configuration flags.
 - [ ] **Lesson 2 — HOCs and render props / HOCs e render props:** what each solved; how hooks replaced most of them; where they still appear; the wrapper-hell cost.
 - [ ] **Lesson 3 — Anti-patterns / Anti-padrões:** components defined inside components; keys from indexes; state duplicated from props; side effects during render.
-- [ ] **Challenge (15):** Intermediate plus reducers through portals.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Portals.
 - [ ] **Side quest — Headless components / Componentes headless:** behavior and accessibility without markup; the styling freedom it buys; what you take on; `useId` and generated ids as the glue.
 
 ---
 
 ### Task 20: Testing components (Advanced)
 
-**File:** `src/content/react/advanced/testing.ts` · **Interview questions:** 87, 88, 89, 90, 91, 92, 97
+**File:** `src/content/react/advanced/testing.ts` · **Interview questions:** 87, 88, 89, 90, 91, 92, 93, 94, 96, 97
 
 - [ ] **Lesson 1 — What to test / O que testar:** behavior over implementation; rendering and asserting on what a user sees; queries by role and label; what a snapshot is worth.
 - [ ] **Lesson 2 — Interaction / Interação:** firing events; `findBy` and waiting; testing a form; testing a component that uses context.
 - [ ] **Lesson 3 — Async and mocks / Assíncrono e mocks:** mocking a fetch; faking timers; testing a custom hook; a test that passes for the wrong reason.
-- [ ] **Challenge (15):** Intermediate plus reducers through render patterns.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Render patterns.
 - [ ] **Side quest — End-to-end tests / Testes ponta a ponta:** the click a unit test cannot make; the pyramid and its cost; flakiness and what causes it; what belongs in E2E and what does not.
 
 ---
@@ -482,7 +497,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — The class API / A API de classe:** `render`, `this.props`, `this.state`; `setState` merging, not replacing; the callback argument and why it exists.
 - [ ] **Lesson 2 — Lifecycle / Ciclo de vida:** mount, update, unmount; the three methods that matter today; the `useEffect` equivalents; `componentDidCatch` still being class-only.
 - [ ] **Lesson 3 — Reading old code / Lendo código antigo:** binding `this`; a class translated to a function component; when a class is still the answer.
-- [ ] **Challenge (15):** Intermediate plus reducers through testing.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Testing components.
 - [ ] **Side quest — Migrating / Migrando:** moving a legacy screen forward without a rewrite; the order that keeps it shippable; what not to convert; the risk of a big-bang migration.
 
 ---
@@ -494,7 +509,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Interruptible rendering / Renderização interrompível:** React can pause and resume; urgent vs non-urgent updates; what that buys a typing user.
 - [ ] **Lesson 2 — useTransition / useTransition:** marking an update as a transition; `isPending`; the stale UI staying interactive.
 - [ ] **Lesson 3 — useDeferredValue / useDeferredValue:** deferring a value instead of an update; when it beats a transition; debounce compared with both.
-- [ ] **Challenge (15):** the whole Advanced level.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Class components (Beginner, Intermediate and Advanced).
 - [ ] **Side quest — Streaming / Streaming:** HTML arriving in pieces; what the user sees first; Suspense boundaries as flush points; the cost to time-to-interactive.
 
 ---
@@ -506,7 +521,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Actions / Actions:** an async function passed to `action`; pending, error and result handled for you; the form that works before hydration.
 - [ ] **Lesson 2 — useActionState / useActionState:** the reducer-shaped signature; the returned state and pending flag; submitting the same action twice.
 - [ ] **Lesson 3 — useOptimistic and use / useOptimistic e use:** showing the result before the server answers; reverting on failure; `use` reading a promise or context; why `use` is not `useEffect` + fetch.
-- [ ] **Challenge (15):** Advanced plus concurrent rendering.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Concurrent rendering.
 - [ ] **Side quest — Forms without a client / Formulários sem cliente:** what still works with JavaScript off; progressive enhancement as a default; where that stops being possible.
 
 ---
@@ -518,7 +533,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — Server vs client / Servidor vs cliente:** where each runs; what a server component cannot do (state, effects, handlers); `"use client"` as a boundary, not a file type.
 - [ ] **Lesson 2 — Composing them / Compondo:** passing server-rendered children into a client component; serializable props; the waterfall to avoid.
 - [ ] **Lesson 3 — Rendering strategies / Estratégias de renderização:** SSR, static generation, hydration; what hydration is and how it fails; when each strategy fits.
-- [ ] **Challenge (15):** Advanced plus concurrent and actions.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Actions & the use hook.
 - [ ] **Side quest — Frameworks / Frameworks:** who runs your React; what a framework owns (routing, bundling, data, deployment); the lock-in trade; React without one.
 
 ---
@@ -530,7 +545,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — What the compiler does / O que o compilador faz:** memoizing automatically; the rules it relies on; what it does not fix.
 - [ ] **Lesson 2 — Code it can and cannot help / Código que ele ajuda ou não:** mutation during render; escape hatches; when hand-written `useMemo` still earns its place.
 - [ ] **Lesson 3 — Adopting it / Adotando:** the linter first; incremental adoption; reading the output; measuring the difference.
-- [ ] **Challenge (15):** Advanced plus concurrent through server components.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Server components.
 - [ ] **Side quest — Build tooling / Ferramentas de build:** what a bundler does to your source; dev server vs production build; source maps; the build step you should understand before debugging one.
 
 ---
@@ -542,7 +557,7 @@ The unit's acceptance criterion is the row for it in `docs/react-interview-cover
 - [ ] **Lesson 1 — The virtual DOM / O DOM virtual:** an element tree as plain objects; diffing; the benefit and the cost of the abstraction; Shadow DOM being unrelated.
 - [ ] **Lesson 2 — Reconciliation / Reconciliação:** the same position, the same type, keys; when state is preserved and when it is thrown away; remounting on a type change.
 - [ ] **Lesson 3 — Fiber / Fiber:** work split into units; render and commit phases; why that is what makes interruption possible.
-- [ ] **Challenge (15):** the whole Expert level up to here.
+- [ ] **Challenge (15):** all preceding units, from JSX basics through Compiler & memoization, across every level.
 - [ ] **Side quest — Reading React's source / Lendo o código do React:** where to start; the packages that matter; reading a PR or an RFC; when curiosity pays off.
 
 ---

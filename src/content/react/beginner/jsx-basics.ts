@@ -257,10 +257,11 @@ export const jsxBasics: Unit = {
           correct: 2,
         },
         {
-          type: "single-choice",
+          type: "multi-choice",
           prompt: {
-            en: "How do you group siblings without adding a DOM node?",
-            "pt-BR": "Como agrupar irmãos sem adicionar um nó no DOM?",
+            en: "Pick the 2 ways to group sibling elements without adding a wrapper DOM node",
+            "pt-BR":
+              "Escolha as 2 formas de agrupar elementos irmãos sem adicionar um nó de DOM ao redor",
           },
           options: [
             { en: "<div>...</div>" },
@@ -268,7 +269,7 @@ export const jsxBasics: Unit = {
             { en: "`[...]` (an array)", "pt-BR": "`[...]` (um array)" },
             { en: "`<>...</>` (a `Fragment`)", "pt-BR": "`<>...</>` (um `Fragment`)" },
           ],
-          correct: 3,
+          correct: [2, 3],
         },
       ],
     },

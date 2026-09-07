@@ -62,10 +62,12 @@ A track has levels, levels have units. A unit has three lessons of 5 to 7 exerci
 }
 ```
 
-Rules the test suite enforces: every user-facing string is `{ en, "pt-BR"? }` with English as the fallback; inline code in a sentence goes in backticks; a `fill-blank` has exactly one `___` and a single-token answer; correct answers are spread across positions. Lesson ids are permanent, because they live in people's saved progress.
+The test suite checks three numbered lessons per unit, XP 20/30/30, 5–7 exercises per lesson or extra, a fill-blank and a multi-choice in each, translated prompts and lesson text, balanced backticks, and varied answer positions. A `fill-blank` has exactly one `___` and a single-token answer. Every extra gives 60 XP; every unit after the first has a 15-question challenge on preceding units.
+
+Prose options include both `en` and `pt-BR`; code options use only `en`. This convention also selects how an option is rendered, so reviewers must check that prose is not accidentally marked as code and that inline identifiers use backticks. Answer correctness and topic coverage need review against the React docs. Lesson ids are permanent, because they live in people's saved progress.
 
 Run `npm test` while writing — a broken lesson fails the build before it can ship.
 
 ## Where it is going
 
-`docs/react-interview-coverage.md` maps 110 real interview questions onto the track and is the acceptance criterion for each unit. Four of 27 units have content today; the rest show as "coming soon". Next up: the remaining Beginner units, then a service worker so the whole thing installs and runs offline.
+`docs/react-interview-coverage.md` maps 110 real interview questions onto the track and is the acceptance criterion for each unit. Five of 27 units have content today; the rest show as "coming soon". Next up: Conditional rendering and Forms, followed by the remaining levels. A service worker for installation and offline use is a separate future feature.

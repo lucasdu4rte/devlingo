@@ -3,6 +3,7 @@ import { jsxBasics } from "./react/beginner/jsx-basics";
 import { componentsProps } from "./react/beginner/components-props";
 import { state } from "./react/beginner/state";
 import { events } from "./react/beginner/events";
+import { listsKeys } from "./react/beginner/lists-keys";
 
 const soon = (id: string, en: string, ptBR: string): Unit => ({
   id,
@@ -22,7 +23,7 @@ export const react: Track = {
         componentsProps,
         state,
         events,
-        soon("lists-keys", "Lists & keys", "Listas e keys"),
+        listsKeys,
         soon("conditional-rendering", "Conditional rendering", "Renderização condicional"),
         soon("forms", "Forms", "Formulários"),
       ],

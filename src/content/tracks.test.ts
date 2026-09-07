@@ -61,3 +61,23 @@ test("findLesson resolves a side quest", () => {
   expect(ref?.lesson.id).toBe("jsx-basics-extra");
   expect(ref?.previousLessonId).toBe(null);
 });
+
+test("lists and keys unlocks after events and keeps its extra outside the main path", () => {
+  expect(findLesson(react, "lists-keys-1")?.previousLessonId).toBe("events-3");
+  expect(findLesson(react, "lists-keys-2")?.previousLessonId).toBe("lists-keys-1");
+  expect(findLesson(react, "lists-keys-extra")?.previousLessonId).toBe("events-3");
+  expect(lessonsBefore(react, "lists-keys").map(({ unit }) => unit.id)).toEqual([
+    "jsx-basics",
+    "jsx-basics",
+    "jsx-basics",
+    "components-props",
+    "components-props",
+    "components-props",
+    "state",
+    "state",
+    "state",
+    "events",
+    "events",
+    "events",
+  ]);
+});
