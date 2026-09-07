@@ -89,3 +89,8 @@ export const Trophy = (p: IconProps) => (
     <path d="M8 5H5a3 3 0 0 0 3 5M16 5h3a3 3 0 0 1-3 5M12 13v4M8 21h8M9 17h6" />
   </Svg>
 );
+export const Bulb = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.6 1 1.3 1 2.5h6c0-1.2.3-1.9 1-2.5A6 6 0 0 0 12 3z" />
+  </Svg>
+);

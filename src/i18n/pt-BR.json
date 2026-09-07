@@ -43,5 +43,6 @@
   "challenge.failedTitle": "Não foi dessa vez",
   "challenge.failedBody": "Você errou mais de {n} vezes. Revise as unidades anteriores e tente de novo.",
   "challenge.retry": "Tentar de novo",
-  "challenge.back": "Voltar para a trilha"
+  "challenge.back": "Voltar para a trilha",
+  "lesson.hint": "Revelar uma letra ({n} dicas restantes)"
 }
