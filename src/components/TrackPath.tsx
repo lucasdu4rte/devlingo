@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { lessonsOf, sideQuestsOf, type LessonRef, type SideQuestRef } from "@/content/tracks";
 import type { Track, Unit } from "@/content/types";
 import { localize, t, type Locale } from "@/i18n";
-import { EMPTY, lessonStatus, load } from "@/lib/progress";
+import { EMPTY, lessonStatus, load, type LessonStatus } from "@/lib/progress";
 import { Bolt } from "./icons";
 import { JumpDialog } from "./JumpDialog";
 import { ComingSoonNode, LessonNode } from "./LessonNode";
@@ -72,9 +72,23 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                 )}
               </div>
               <div className="relative flex flex-col items-center gap-6 pb-4 pt-6">
-                {soon
-                  ? [0, 1].map((i) => <ComingSoonNode key={i} offset={offsets[i]} index={i} />)
-                  : unit.lessons.map((lesson, i) => {
+                {soon ? (
+                  <>
+                    <UnitConnector count={2} statusOfIndex={() => "locked"} />
+                    {[0, 1].map((i) => (
+                      <ComingSoonNode key={i} offset={offsets[i]} index={i} />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <UnitConnector
+                      count={unit.lessons.length}
+                      statusOfIndex={(idx) => {
+                        const r = refByLessonId.get(unit.lessons[idx].id);
+                        return r ? statusOf(r) : "locked";
+                      }}
+                    />
+                    {unit.lessons.map((lesson, i) => {
                       const ref = refByLessonId.get(lesson.id) as LessonRef;
                       const status = statusOf(ref);
                       return (
@@ -99,6 +113,8 @@ export function TrackPath({ track, locale }: { track: Track; locale: Locale }) {
                         </div>
                       );
                     })}
+                  </>
+                )}
               </div>
             </section>
           );
@@ -168,5 +184,57 @@ function Card({ label, children }: { label: string; children: React.ReactNode })
       <div className="text-[11px] font-bold uppercase tracking-wider text-muted">{label}</div>
       {children}
     </div>
+  );
+}
+
+const NODE_TOP = 24;
+const NODE_SIZE = 64;
+const NODE_GAP = 24;
+
+const segmentStyles: Record<LessonStatus, { stroke: string; width: number; dash?: string }> = {
+  completed: { stroke: "var(--color-ok)", width: 5 },
+  current: { stroke: "var(--color-primary)", width: 5 },
+  locked: { stroke: "var(--color-border)", width: 4, dash: "6 8" },
+};
+
+// ponytail: geometry mirrors the node column (pt-6, h-16, gap-6); update if that layout changes
+function UnitConnector({
+  count,
+  statusOfIndex,
+}: {
+  count: number;
+  statusOfIndex: (i: number) => LessonStatus;
+}) {
+  if (count < 2) return null;
+  const points = Array.from({ length: count }, (_, i) => ({
+    x: offsets[i % offsets.length],
+    y: NODE_TOP + NODE_SIZE / 2 + i * (NODE_SIZE + NODE_GAP),
+  }));
+
+  return (
+    <svg
+      width="1"
+      height="1"
+      className="pointer-events-none absolute left-1/2 top-0 overflow-visible"
+      aria-hidden="true"
+    >
+      {points.slice(0, -1).map((pt, i) => {
+        const nextPt = points[i + 1];
+        const midY = (pt.y + nextPt.y) / 2;
+        const style = segmentStyles[statusOfIndex(i + 1)];
+        return (
+          <path
+            key={i}
+            d={`M ${pt.x} ${pt.y} C ${pt.x} ${midY}, ${nextPt.x} ${midY}, ${nextPt.x} ${nextPt.y}`}
+            fill="none"
+            stroke={style.stroke}
+            strokeWidth={style.width}
+            strokeDasharray={style.dash}
+            strokeLinecap="round"
+            className="opacity-80"
+          />
+        );
+      })}
+    </svg>
   );
 }
