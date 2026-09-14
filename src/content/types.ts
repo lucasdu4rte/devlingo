@@ -8,6 +8,7 @@ export type SingleChoice = {
   code?: string;
   options: Text[];
   correct: number;
+  explanation?: Text;
 };
 export type MultiChoice = {
   type: "multi-choice";
@@ -15,8 +16,15 @@ export type MultiChoice = {
   code?: string;
   options: Text[];
   correct: number[];
+  explanation?: Text;
 };
-export type FillBlank = { type: "fill-blank"; prompt: Text; code: string; answer: string };
+export type FillBlank = {
+  type: "fill-blank";
+  prompt: Text;
+  code: string;
+  answer: string;
+  explanation?: Text;
+};
 export type Exercise = SingleChoice | MultiChoice | FillBlank;
 
 export type Lesson = {

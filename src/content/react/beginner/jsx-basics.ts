@@ -29,6 +29,11 @@ export const jsxBasics: Unit = {
             },
           ],
           correct: 1,
+          explanation: {
+            en: "JSX is syntax sugar for `React.createElement`. It is not a separate language, but a JavaScript syntax extension.",
+            "pt-BR":
+              "JSX é açúcar sintático para `React.createElement`. Não é uma linguagem separada, mas uma extensão de sintaxe do JavaScript.",
+          },
         },
         {
           type: "single-choice",
@@ -56,6 +61,11 @@ export const jsxBasics: Unit = {
             },
           ],
           correct: 2,
+          explanation: {
+            en: "JSX produces a lightweight React element — a plain object describing what should appear on screen, not a real DOM node.",
+            "pt-BR":
+              "JSX produz um elemento React leve — um objeto comum descrevendo o que deve aparecer na tela, não um nó real do DOM.",
+          },
         },
         {
           type: "fill-blank",

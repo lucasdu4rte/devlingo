@@ -18,8 +18,20 @@ export function Dialog({
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && cardRef.current) trapFocus(e, cardRef.current);
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
@@ -48,4 +60,22 @@ export function Dialog({
       </div>
     </div>
   );
+}
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function trapFocus(e: KeyboardEvent, card: HTMLElement) {
+  const focusable = card.querySelectorAll<HTMLElement>(FOCUSABLE);
+  if (focusable.length === 0) {
+    e.preventDefault();
+    return;
+  }
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const outside = !card.contains(document.activeElement);
+  const edge = e.shiftKey ? first : last;
+  if (!outside && document.activeElement !== edge) return;
+  e.preventDefault();
+  (e.shiftKey ? last : first).focus();
 }

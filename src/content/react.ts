@@ -4,6 +4,8 @@ import { componentsProps } from "./react/beginner/components-props";
 import { state } from "./react/beginner/state";
 import { events } from "./react/beginner/events";
 import { listsKeys } from "./react/beginner/lists-keys";
+import { conditionalRendering } from "./react/beginner/conditional-rendering";
+import { forms } from "./react/beginner/forms";
 
 const soon = (id: string, en: string, ptBR: string): Unit => ({
   id,
@@ -18,15 +20,7 @@ export const react: Track = {
     {
       id: "beginner",
       title: { en: "Beginner", "pt-BR": "Iniciante" },
-      units: [
-        jsxBasics,
-        componentsProps,
-        state,
-        events,
-        listsKeys,
-        soon("conditional-rendering", "Conditional rendering", "Renderização condicional"),
-        soon("forms", "Forms", "Formulários"),
-      ],
+      units: [jsxBasics, componentsProps, state, events, listsKeys, conditionalRendering, forms],
     },
     {
       id: "intermediate",

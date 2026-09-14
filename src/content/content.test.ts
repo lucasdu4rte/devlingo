@@ -17,6 +17,9 @@ function expectLocalizedText(text: Text) {
 
 function expectValidExercise(e: Exercise) {
   expectLocalizedText(e.prompt);
+  if (e.explanation) {
+    expectLocalizedText(e.explanation);
+  }
   if (e.type === "fill-blank") {
     expect(e.code.split("___").length).toBe(2);
     expect(e.answer).toMatch(/^\S+$/);
