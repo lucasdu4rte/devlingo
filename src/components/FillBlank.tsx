@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { t, type Locale } from "@/i18n";
 import { Bulb } from "./icons";
 
@@ -18,11 +19,20 @@ export function FillBlank({
   onChange: (answer: string) => void;
   hint?: Hint;
 }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!checked) {
+      inputRef.current?.focus();
+    }
+  }, [checked]);
+
   let border = "border-border";
   if (checked) border = correct ? "border-ok" : "border-bad";
   return (
     <div className="flex gap-2.5">
       <input
+        ref={inputRef}
         type="text"
         value={answer}
         disabled={checked}

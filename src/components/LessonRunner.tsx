@@ -6,6 +6,7 @@ import type { Exercise, Lesson } from "@/content/types";
 import { localize, t, type Locale } from "@/i18n";
 import { isAnswered, isCorrect, type Answer } from "@/lib/check";
 import { CHALLENGE_MAX_MISTAKES, CHALLENGE_XP, challengeOutcome } from "@/lib/challenge";
+import { answerReview, startReview } from "@/lib/review";
 import { completeLesson, lessonStatus, load, passChallenge } from "@/lib/progress";
 import { shuffledIndexes } from "@/lib/shuffle";
 import { Button } from "./Button";
@@ -60,7 +61,7 @@ export function LessonRunner({
   trackHref: string;
 }) {
   const router = useRouter();
-  const [index, setIndex] = useState(0);
+  const [review, setReview] = useState(() => startReview(exercises.length));
   const [answer, setAnswer] = useState<Answer>(() => emptyAnswer(exercises[0]));
   const [phase, setPhase] = useState<Phase>("answering");
   const [mistakes, setMistakes] = useState(0);
@@ -84,7 +85,8 @@ export function LessonRunner({
     }
   }, [mode, router, trackHref]);
 
-  const exercise = exercises[index];
+  const exerciseIndex = review.queue[review.cursor];
+  const exercise = exercises[exerciseIndex];
   const normalized = normalize(exercise, answer);
   const correct = phase === "checked" && isCorrect(exercise, normalized);
 
@@ -110,7 +112,8 @@ export function LessonRunner({
   }
 
   function close() {
-    const untouched = index === 0 && phase === "answering" && !isAnswered(exercise, normalized);
+    const untouched =
+      review.cursor === 0 && phase === "answering" && !isAnswered(exercise, normalized);
     if (untouched) {
       router.push(trackHref);
       return;
@@ -127,7 +130,7 @@ export function LessonRunner({
 
   function next() {
     if (mode.kind === "challenge") {
-      const outcome = challengeOutcome(mistakes, index + 1, exercises.length);
+      const outcome = challengeOutcome(mistakes, review.cursor + 1, exercises.length);
       if (outcome === "failed") {
         setPhase("failed");
         return;
@@ -138,22 +141,34 @@ export function LessonRunner({
         setPhase("complete");
         return;
       }
-    } else if (index === exercises.length - 1) {
+      const nextCursor = review.cursor + 1;
+      setReview({ ...review, cursor: nextCursor });
+      setAnswer(emptyAnswer(exercises[nextCursor]));
+      setOrder(orderFor(exercises[nextCursor]));
+      setRevealed(0);
+      setPhase("answering");
+      return;
+    }
+
+    const answered = answerReview(review, isCorrect(exercise, normalize(exercise, answer)));
+    setReview(answered);
+    if (answered.done) {
       const already = load().completedLessons.includes(mode.lesson.id);
       const progress = completeLesson(mode.lesson.id, mode.lesson.xp);
       setResult({ xp: already ? 0 : mode.lesson.xp, streak: progress.streak });
       setPhase("complete");
       return;
     }
-    setIndex(index + 1);
-    setAnswer(emptyAnswer(exercises[index + 1]));
-    setOrder(orderFor(exercises[index + 1]));
+
+    const nextExerciseIndex = answered.queue[answered.cursor];
+    setAnswer(emptyAnswer(exercises[nextExerciseIndex]));
+    setOrder(orderFor(exercises[nextExerciseIndex]));
     setRevealed(0);
     setPhase("answering");
   }
 
   function retry() {
-    setIndex(0);
+    setReview(startReview(exercises.length));
     setAnswer(emptyAnswer(exercises[0]));
     setOrder(orderFor(exercises[0]));
     setMistakes(0);
@@ -226,7 +241,13 @@ export function LessonRunner({
         >
           <Close size={20} />
         </button>
-        <ProgressBar value={index / exercises.length} />
+        <ProgressBar
+          value={
+            mode.kind === "challenge"
+              ? review.cursor / exercises.length
+              : review.solved.length / exercises.length
+          }
+        />
         {mode.kind === "challenge" && (
           <span className="whitespace-nowrap text-xs font-bold text-muted">
             {t(locale, "challenge.mistakesLeft", {
@@ -240,7 +261,7 @@ export function LessonRunner({
         <h1 id="exercise-prompt" className="font-display text-xl font-bold leading-snug">
           <RichText text={localize(locale, exercise.prompt)} />
         </h1>
-        {codeHtml[index] && <CodeBlock html={codeHtml[index]} />}
+        {codeHtml[exerciseIndex] && <CodeBlock html={codeHtml[exerciseIndex]} />}
         {exercise.type === "single-choice" && order && (
           <SingleChoice
             exercise={exercise}
@@ -252,7 +273,7 @@ export function LessonRunner({
             onChange={pickAndCheck}
             labelledBy="exercise-prompt"
             order={order}
-            html={optionsHtml[index]}
+            html={optionsHtml[exerciseIndex]}
           />
         )}
         {exercise.type === "multi-choice" && order && (
@@ -266,7 +287,7 @@ export function LessonRunner({
             onChange={setAnswer}
             labelledBy="exercise-prompt"
             order={order}
-            html={optionsHtml[index]}
+            html={optionsHtml[exerciseIndex]}
           />
         )}
         {exercise.type === "fill-blank" && (
@@ -325,6 +346,11 @@ export function LessonRunner({
 }
 
 function explanation(exercise: Exercise, locale: Locale) {
+  const why = exercise.explanation ? ` ${localize(locale, exercise.explanation)}` : "";
+  return correctAnswer(exercise, locale) + why;
+}
+
+function correctAnswer(exercise: Exercise, locale: Locale) {
   if (exercise.type === "single-choice") {
     return t(locale, "lesson.correctAnswer", {
       answer: localize(locale, exercise.options[exercise.correct]),
