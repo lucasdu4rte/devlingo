@@ -7,6 +7,12 @@ export type Progress = {
 
 export type LessonStatus = "completed" | "current" | "locked";
 
+export type StreakStatus = {
+  count: number;
+  activeToday: boolean;
+  atRisk: boolean;
+};
+
 const KEY = "devlingo:progress";
 
 export const EMPTY: Progress = { xp: 0, streak: 0, lastActiveDay: null, completedLessons: [] };
@@ -48,6 +54,23 @@ function nextStreak(progress: Progress, today: Date) {
   if (progress.lastActiveDay === dayKey(today)) return progress.streak;
   if (progress.lastActiveDay === dayKey(yesterday)) return progress.streak + 1;
   return 1;
+}
+
+export function getStreakStatus(progress: Progress, today: Date = new Date()): StreakStatus {
+  if (progress.streak === 0 || !progress.lastActiveDay) {
+    return { count: 0, activeToday: false, atRisk: false };
+  }
+  const todayKey = dayKey(today);
+  const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+  const yesterdayKey = dayKey(yesterday);
+
+  if (progress.lastActiveDay === todayKey) {
+    return { count: progress.streak, activeToday: true, atRisk: false };
+  }
+  if (progress.lastActiveDay === yesterdayKey) {
+    return { count: progress.streak, activeToday: false, atRisk: true };
+  }
+  return { count: 0, activeToday: false, atRisk: false };
 }
 
 function record(progress: Progress, newLessonIds: string[], xp: number): Progress {

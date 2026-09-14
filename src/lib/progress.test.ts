@@ -1,5 +1,13 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { EMPTY, completeLesson, lessonStatus, load, passChallenge, save } from "./progress";
+import {
+  EMPTY,
+  completeLesson,
+  getStreakStatus,
+  lessonStatus,
+  load,
+  passChallenge,
+  save,
+} from "./progress";
 
 const store = new Map<string, string>();
 
@@ -99,5 +107,40 @@ describe("passChallenge", () => {
   test("increments the streak on the next day", () => {
     save({ xp: 0, streak: 3, lastActiveDay: "2026-09-05", completedLessons: [] });
     expect(passChallenge(["a"], 300).streak).toBe(4);
+  });
+});
+
+describe("getStreakStatus", () => {
+  const today = new Date(2026, 8, 6, 12, 0, 0); // 2026-09-06
+
+  test("returns 0 and inactive when empty", () => {
+    expect(getStreakStatus(EMPTY, today)).toEqual({ count: 0, activeToday: false, atRisk: false });
+  });
+
+  test("returns activeToday when last active today", () => {
+    const progress = { xp: 20, streak: 5, lastActiveDay: "2026-09-06", completedLessons: [] };
+    expect(getStreakStatus(progress, today)).toEqual({
+      count: 5,
+      activeToday: true,
+      atRisk: false,
+    });
+  });
+
+  test("returns atRisk when last active yesterday", () => {
+    const progress = { xp: 20, streak: 5, lastActiveDay: "2026-09-05", completedLessons: [] };
+    expect(getStreakStatus(progress, today)).toEqual({
+      count: 5,
+      activeToday: false,
+      atRisk: true,
+    });
+  });
+
+  test("returns inactive when last active 2+ days ago", () => {
+    const progress = { xp: 20, streak: 5, lastActiveDay: "2026-09-04", completedLessons: [] };
+    expect(getStreakStatus(progress, today)).toEqual({
+      count: 0,
+      activeToday: false,
+      atRisk: false,
+    });
   });
 });
